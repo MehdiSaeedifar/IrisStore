@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/themes/base/jqueryUi")
+    @Styles.Render("~/Content/AdminLTE/admintheme")
+    @Styles.Render("~/Content/admin")
+    <link href="~/Content/AdminLTE/AdminLTE.css" rel="stylesheet" />
+    @RenderSection("styles", false)
+
+</head>
+<body class="hold-transition ">
+    @RenderBody()
+    <input id="message" type="hidden" value="@TempData["message"]" />
+    @Scripts.Render("~/bundles/common")
+    @Scripts.Render("~/bundles/adminlayout")
+</body>
+</html>

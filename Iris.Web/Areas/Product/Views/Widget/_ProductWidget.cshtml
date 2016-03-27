@@ -1,0 +1,31 @@
+﻿@using Iris.DomainClasses
+@using Iris.DomainClasses
+@model Iris.ViewModels.ProductWidgetViewModel
+<div class="product-widget">
+    <a href="@Url.Action(MVC.Product.Home.ActionNames.Index, MVC.Product.Home.Name, new { area = MVC.Product.Name, id=Model.Id, slugUrl = Model.SlugUrl})" data-toggle="tooltip" data-placement="top" title="@Model.Name">
+        <figure>
+            <img src="@Model.Image" alt="@Model.Name">
+        </figure>
+        <span class="product-name">
+            @Model.Name
+        </span>
+        <div class="price">
+            <span>
+                @switch (Model.ProductStatus)
+                {
+                    case ProductStatus.Available:
+                        <strong>
+                            <span class="price-number">@Html.DisplayFor(m => m.Price)</span> تومان
+                        </strong>
+                        break;
+                    case ProductStatus.NotAvailable:
+                        <label class="label label-danger product-status">نا موجود</label>
+                        break;
+                    case ProductStatus.ComingSoon:
+                        <label class="label label-info product-status">به زودی</label>
+                        break;
+                }
+            </span>
+        </div>
+    </a>
+</div>

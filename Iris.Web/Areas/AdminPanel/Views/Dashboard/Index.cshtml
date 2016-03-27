@@ -1,0 +1,65 @@
+﻿@model Iris.ViewModels.AdminDashboardViewModel
+@{
+    ViewBag.Title = "پیشخوان مدیریت";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        پیشخوان
+        <small>پنل مدیریت</small>
+    </h1>
+
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>@Model.TotalProductsCount</h3>
+                    <p>کالا</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+                <a href="@Url.Action(MVC.Product.Admin.ActionNames.Index, MVC.Product.Admin.Name, new {area = MVC.Product.Name})" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+            </div>
+        </div><!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>
+                        @Model.AvailableProductsCount
+                    </h3>
+                    <p>کالای موجود</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="@Url.Action(MVC.Product.Admin.ActionNames.Index, MVC.Product.Admin.Name, new {area = MVC.Product.Name})" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+            </div>
+        </div><!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>@Model.UnAvailableProductsCount</h3>
+                        <p>کالای ناموجود</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="@Url.Action(MVC.Product.Admin.ActionNames.Index, MVC.Product.Admin.Name, new {area = MVC.Product.Name})" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+                </div>
+            </div><!-- ./col -->
+
+        </div><!-- /.row -->
+        <!-- Main row -->
+    </section>
+

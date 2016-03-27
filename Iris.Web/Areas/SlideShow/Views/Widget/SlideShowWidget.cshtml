@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Iris.ViewModels.SlideShowViewModel>
+@{
+    var isFirst = true;
+}
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            <li data-target="#carousel-example-generic" data-slide-to="@i" class="@if (isFirst){<text>active</text>}"></li>
+            isFirst = false;
+        }
+    </ol>
+    @{ isFirst = true;}
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        @foreach (var item in Model)
+        {
+            <div class="item @if (isFirst)
+                         {<text>active</text>}">
+                @if (!string.IsNullOrEmpty(item.Link))
+                {
+                    @:<a href="@item.Link">
+                }
+                <img src="@item.Image" alt="@item.Title">
+                @if (!string.IsNullOrEmpty(item.Title) || !string.IsNullOrEmpty(item.Description))
+                {
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1 class="animated lightSpeedIn">@item.Title</h1>
+                            <span class="lead animated fadeInDown">@item.Description</span>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(item.Link))
+                {
+                    @:</a>
+                }
+            </div>
+            isFirst = false;
+        }
+    </div>
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+</div>

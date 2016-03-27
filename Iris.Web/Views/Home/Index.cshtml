@@ -1,0 +1,84 @@
+﻿@using Iris.Web.ViewModels
+@model Iris.ViewModels.HomePageViewModel
+
+<div class="row">
+    <div class="col-md-9 col-md-push-3">
+        <div class="row hidden-xs">
+            <div class="col-md-12" id="mainSlideShow">
+                @Html.Partial(MVC.SlideShow.Widget.Views.SlideShowWidget, Model.SlideShows)
+            </div>
+        </div>
+        <div class="row" style="margin-top: 15px; margin-bottom: 10px;">
+            <div class="col-md-12">
+                @{Html.RenderPartial(MVC.Widgets.Views.ContainerSliderWidget, new ProductSliderWidgetViewModel
+                  {
+                      Title = "جدیدترین کالا‌ها",
+                      CarouselId = "newestProductsCarousel",
+                      LinkText = "ادامه کالا‌ها",
+                      Link = $"{Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new {area = MVC.Product.Name})}#/page/all/empty/1/PostedDate/desc",
+                      Products = Model.NewestProducts
+                  }
+                      ); }
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+            <div class="col-md-12">
+                @{Html.RenderPartial(MVC.Widgets.Views.ContainerSliderWidget, new ProductSliderWidgetViewModel
+                    {
+                        Title = "محبوب‌ترین کالا‌ها",
+                        CarouselId = "topProductsCarousel",
+                        LinkText = "ادامه کالا‌ها",
+                        Link = $"{Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new { area = MVC.Product.Name })}#/page/all/empty/1/AverageRating/desc",
+                        Products = Model.PopularProducts
+                    }
+                      ); }
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-md-12">
+                @{Html.RenderPartial(MVC.Widgets.Views.ContainerSliderWidget, new ProductSliderWidgetViewModel
+                    {
+                        Title = "پربازدیدترین کالا‌ها",
+                        CarouselId = "topViewProductsCarousel",
+                        LinkText = "ادامه کالا‌ها",
+                        Link = $"{Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new { area = MVC.Product.Name })}#/page/all/empty/1/ViewNumber/desc",
+                        Products = Model.MostViewedProducts
+                    }); }
+            </div>
+        </div>
+    </div>
+    <aside class="col-md-3 aside-panels col-md-pull-9">
+        @if (Model.Categories != null && Model.Categories.Any())
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading sidebar-header" style="padding-bottom: 0; padding-top: 0;">
+                    <span class="bdred">
+                        کالا‌ها
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <ul class="product-category-widget">
+                        @foreach (var category in Model.Categories)
+                        {
+                            <li>
+                                <a href="@Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new {area = MVC.Product.Name})#/page/@category.Id">@category.Name</a>
+                                <span class="badge pull-left" style="background-color: #ebebeb; color: #666">@category.ProductsCount</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <a href="@Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new {area = MVC.Product.Name})#/page">
+                        <i class="glyphicon glyphicon-th-list"></i>
+                        همه‌ی گروه‌ها
+                    </a>
+                </div>
+            </div>
+        }
+        @{
+            Html.RenderPartial(MVC.Home.Views._PostCategorySidebar, Model.PostCategories);
+        }
+
+
+    </aside>
+</div>

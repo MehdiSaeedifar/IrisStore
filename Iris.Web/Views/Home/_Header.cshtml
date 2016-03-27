@@ -1,0 +1,24 @@
+﻿<nav id="topNavBar" class="navbar navbar-default">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="row">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="@Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name, new {area=""})">
+                    <h1>@ViewBag.SiteName</h1>
+                    <h2>فروش قطعات الکترونیکی</h2>
+                </a>
+            </div>
+            <div id="frmSearch" class="col-lg-6 col-md-6 col-md-offset-1">
+                @using (Html.BeginForm(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new { area = MVC.Product.Name }, FormMethod.Post))
+                {
+                    <div class="input-group">
+                        <input id="searchInput" dir="rtl" type="search" class="form-control" placeholder="دنبال چیزی می گردید؟!" autocomplete="off">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</nav>

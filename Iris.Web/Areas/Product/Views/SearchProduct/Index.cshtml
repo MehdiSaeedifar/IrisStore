@@ -1,0 +1,104 @@
+﻿@using MvcCheckBoxList.Model
+@model Iris.ViewModels.SerachProductIndexViewModel
+@{
+    var availablePricesList = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Prices);
+}
+<div id="searchProductFrm" class="row page-wrapper">
+    <div class="col-md-3 col-sm-4 col-xs-6 hidden-xs">
+        <aside class="aside-panels">
+            <div class="panel panel-default">
+                <div class="panel-heading sidebar-header" style="padding-bottom: 0; padding-top: 0;">
+                    <span class="bdred" style="border-bottom: 2px solid red; display: inline-block; line-height: 40px; height: 35px; margin-bottom: 0;">
+                        کالا‌ها
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="clearfix">
+                        <p>
+                            <label for="amount">بر اساس قیمت:</label>
+                        </p>
+                        <div id="priceRange"></div>
+                        <div style="margin-top: 10px;">
+                            <p id="priceMinVal" class="price-number pull-right"></p>
+                            <span class="pull-right"> تومان </span>
+                            <span class="pull-left"> تومان </span>
+                            <p id="priceMaxVal" class="price-number pull-left"></p>
+                        </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="clearfix">
+                        <p>
+                            <label for="amount">بر اساس گروه:</label>
+                        </p>
+                        <div id="groupsList" class="groups-list checkbox checkbox-info">
+                            @Html.CheckBoxListFor(model => model.Categories.PostedGroups.GroupIDs,
+                                model => model.Categories.AvailableGroups,
+                                model => model.Id,
+                                model => model.Name,
+                                model => model.IsSelected,
+                                Position.Vertical
+                                )
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+    <div class="col-md-9 col-sm-8">
+        <div id="searchFiltersDiv">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="input-group input-group-sm">
+                        <input dir="rtl" type="search" id="searchTerm" class="form-control" placeholder="جستجو...">
+                        <span class="input-group-btn">
+                            <button id="btnSearchProdcut" class="btn btn-info" type="button"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-5 col-xs-12">
+                    <div class="checkbox checkbox-success">
+                        <input type="checkbox" id="AvailableProducts" name="AvailableProducts" value="1">
+                        <label for="AvailableProducts">
+                            فقط نمایش کالا‌های موجود
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div id="sortFilters" class="col-md-12 col-xs-12" style="margin-top: 25px;">
+                    <div class="form-group-sm">
+                        <label class="pull-right">مرتب سازی بر اساس</label>
+                        <select id="pagerSortBy" class="form-control col-md-2">
+                            <option value="ViewNumber">پر بازدیدترین</option>
+                            <option value="PostedDate">جدیدترین</option>
+                            <option value="AverageRating">محبوب‌ترین</option>
+                        </select>
+                        <select id="pagerSortOrder" class="form-control col-md-2">
+                            <option value="desc">نزولی</option>
+                            <option value="asc">صعودی</option>
+                        </select>
+                        <label class="pull-right">تعداد نمایش</label>
+                        <select id="pagerPageSize" class="form-control col-md-1">
+                            <option value="24">24</option>
+                            <option value="36">36</option>
+                            <option value="48">48</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div id="resultDiv" class="col-md-12 products-list" style="display: none;">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        var values = @availablePricesList;
+        var sourceUrl = '@Url.Action(MVC.Product.SearchProduct.ActionNames.GetProducts,MVC.Product.SearchProduct.Name,new {area=MVC.Product.Name})';
+    </script>
+    @Scripts.Render("~/bundles/search-product")
+}

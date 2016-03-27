@@ -1,0 +1,54 @@
+﻿@using Utilities
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@SeoHelpers.GeneratePageTitle(ViewBag.Title, ViewBag.SiteName)</title>
+    <link rel="canonical" href="@(Request.Url?.AbsoluteUri)" />
+    <meta http-equiv="Content-Language" content="fa" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="application-name" content="@ViewBag.SiteName" />
+
+    @if (!string.IsNullOrWhiteSpace(ViewBag.Keywords))
+    {
+        <meta name="keywords" content="@ViewBag.Keywords" />
+    }
+    @if (!string.IsNullOrWhiteSpace(ViewBag.MetaDescription))
+    {
+        <meta name="description" content="@ViewBag.MetaDescription" />
+    }
+    @if (!string.IsNullOrWhiteSpace(ViewBag.LastModified))
+    {
+        <meta http-equiv="last-modified" content="@ViewBag.LastModified" />
+    }
+    @if (!string.IsNullOrWhiteSpace(ViewBag.Author))
+    {
+        <meta name="author" content="@ViewBag.Author (@Request.Url)" />
+    }
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/themes/base/jqueryUi")
+    @Styles.Render("~/Content/css")
+    @RenderSection("styles", required: false)
+</head>
+<body>
+
+    @Html.Partial(MVC.Home.Views._Header)
+    @{
+        Html.RenderAction(MVC.Home.ActionNames.MenuBar, MVC.Home.Name, new { area = "" });
+    }
+    <main class="container mainWrapper">
+        @RenderBody()
+    </main>
+    @{
+        Html.RenderAction(MVC.Home.ActionNames.Footer, MVC.Home.Name, new { area = "" });
+    }
+    @Scripts.Render("~/bundles/common")
+    <script>
+        var autocompleteSource = "@Url.Action(MVC.Search.ActionNames.AutoCompleteSearch, MVC.Search.Name, new {area = ""})";
+    </script>
+    @Scripts.Render("~/bundles/layout")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

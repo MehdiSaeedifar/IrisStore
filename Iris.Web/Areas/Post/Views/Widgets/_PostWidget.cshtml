@@ -1,0 +1,14 @@
+﻿@using Iris.DomainClasses
+@model Iris.ViewModels.ProductWidgetViewModel
+<div class="product-widget">
+    <a href="@Url.Action(MVC.Post.Home.ActionNames.Index, MVC.Post.Home.Name, new { area = MVC.Post.Name, id=Model.Id, slugUrl = Model.SlugUrl})" data-toggle="tooltip" data-placement="top" title="@Model.Name">
+        <figure>
+            <div class="thumbnail">
+                <img src="@Model.Image" alt="@Model.Name">
+            </div>
+        </figure>
+        <span class="product-name">
+            @Model.Name
+        </span>
+    </a>
+</div>

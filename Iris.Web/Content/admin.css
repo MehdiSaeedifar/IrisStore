@@ -1,0 +1,231 @@
+﻿/* Admin LTE CSS overrides */
+section.content .box {
+    /*min-height: 75vh;*/
+}
+
+@font-face {
+    font-family: 'Vazir';
+    src: url('../fonts/Vazir-persian-digits-overwrite.eot');
+    src: url('../fonts/Vazir-persian-digits-overwrite.eot?#iefix') format('embedded-opentype'), url('../fonts/Vazir-persian-digits-overwrite.woff') format('woff'), url('../fonts/Vazir-persian-digits-overwrite.ttf') format('truetype');
+    font-weight: normal;
+}
+
+body {
+    font-family: 'Vazir',Tahoma,"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* End Admin LTE CSS overrides */
+
+/* Bootstrap css overrides */
+
+.breadcrumb {
+    margin-bottom: 0;
+}
+
+/* End Bootstrap css overrides */
+
+
+
+.fileinput-button {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+    .fileinput-button input {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        opacity: 0;
+        -ms-filter: 'alpha(opacity=0)';
+        font-size: 200px;
+        direction: ltr;
+        cursor: pointer;
+    }
+
+/* Fixes for IE < 8 */
+@media screen\9 {
+    .fileinput-button input {
+        filter: alpha(opacity=0);
+        font-size: 100%;
+        height: 100%;
+    }
+}
+
+
+.fileupload-buttonbar .btn,
+.fileupload-buttonbar .toggle {
+    margin-bottom: 5px;
+}
+
+.progress-animated .progress-bar,
+.progress-animated .bar {
+    background: url("../img/progressbar.gif") !important;
+    filter: none;
+}
+
+.fileupload-process {
+    float: right;
+    display: none;
+}
+
+.fileupload-processing .fileupload-process,
+.files .processing .preview {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: url("../img/loading.gif") center no-repeat;
+    background-size: contain;
+}
+
+.files audio,
+.files video {
+    max-width: 300px;
+}
+
+@media (max-width: 767px) {
+    .fileupload-buttonbar .toggle,
+    .files .toggle,
+    .files .btn span {
+        display: none;
+    }
+
+    .files .name {
+        width: 80px;
+        word-wrap: break-word;
+    }
+
+    .files audio,
+    .files video {
+        max-width: 80px;
+    }
+
+    .files img,
+    .files canvas {
+        max-width: 100%;
+    }
+}
+
+.files .preview img {
+    width: 100px;
+}
+
+.btn-app {
+    border-radius: 3px;
+    position: relative;
+    padding: 15px 5px;
+    margin: 0 0 10px 10px;
+    min-width: 80px;
+    height: 60px;
+    text-align: center;
+    color: #666;
+    border: 1px solid #ddd;
+    background-color: #f4f4f4;
+    font-size: 12px;
+}
+
+.btn-action {
+    border-radius: 3px;
+    position: relative;
+    padding: 15px 5px;
+    margin: 0 0 10px 10px;
+    min-width: 80px;
+    height: 60px;
+    text-align: center;
+    font-size: 12px;
+}
+
+    .btn-action i {
+        display: block;
+    }
+
+
+div.validation-summary-valid {
+    display: none;
+}
+
+.popover {
+    font-family: inherit !important;
+}
+
+span.select2-selection {
+    display: block !important;
+}
+
+.form-group.has-error span.input-validation-error {
+    border-color: #dd4b39;
+    box-shadow: none;
+}
+
+.form-group.has-success span.valid {
+    border-color: #00a65a;
+    box-shadow: none;
+}
+
+table thead th {
+    text-align: center;
+}
+
+table tbody td {
+    text-align: center;
+}
+
+
+
+
+.popover-content .btn {
+    margin-left: 10px;
+}
+
+
+/* jQueryUI oveerride */
+
+.ui-jqgrid .ui-jqgrid-htable th div {
+    height: 25px;
+}
+
+.ui-jqgrid .ui-jqgrid-hbox-rtl {
+    float: right;
+    padding-left: 0;
+}
+
+.ui-jqdialog {
+    display: none;
+    width: 300px;
+    position: absolute;
+    padding: .2em;
+    font-size: 11px;
+    overflow: visible;
+    left: 30% !important;
+    top: 40% !important;
+}
+
+.btn-grid-action {
+    padding: 3px;
+}
+
+
+/* End jQueryUI oveerride */
+
+
+/* Select2 oveerride */
+
+
+
+/* End Select2 oveerride */
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    color: #000;
+}
+
+/* CKEditor oveerride */
+
+
+.cke_reset_all, .cke_reset_all * {
+    font-family: 'Vazir', 'Helvetica Neue', Helvetica, Atahoma !important;
+}
+
+/* End CKEditor oveerride */

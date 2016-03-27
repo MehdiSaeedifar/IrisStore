@@ -1,0 +1,162 @@
+﻿@{
+    var userAvatar = File.Exists(Server.MapPath("~/Content/Avatars/" + User.Identity.Name + ".png")) ? "~/Content/Avatars/" + User.Identity.Name + ".png" :
+        "~/Content/avatar.png";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/themes/base/jqueryUi")
+    @Styles.Render("~/Content/AdminLTE/admintheme")
+    @Styles.Render("~/Content/admin")
+    @RenderSection("styles", false)
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="#" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>IRIS</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>IRIS</b> CMS</span>
+            </a>
+
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+
+                        <!-- User Account Menu -->
+                        <li class="dropdown user user-menu">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <!-- The user image in the navbar-->
+                                <img src="@Url.Content(userAvatar)" class="user-image" alt="User Image">
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                <span class="hidden-xs">@User.Identity.Name</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- The user image in the menu -->
+                                <li class="user-header">
+                                    <img src="@Url.Content(userAvatar)" class="img-circle" alt="User Image">
+
+                                    <p>
+                                        @User.Identity.Name
+                                    </p>
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="@Url.Action(MVC.Account.ActionNames.ChangePassword,MVC.Account.Name,new {area=""})" class="btn btn-default btn-flat">تغییر کلمه عبور</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        @using (Html.BeginForm(MVC.Account.ActionNames.LogOff, MVC.Account.Name, new { area = "" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <button class="btn btn-danger btn-flat">خروج</button>
+                                        }
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel">
+                    <div class="pull-right image">
+                        <img src="@Url.Content(userAvatar)" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-left info" style="padding-top: 15px;">
+                        <p>@User.Identity.Name</p>
+                    </div>
+                </div>
+
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="@Url.Action(MVC.AdminPanel.Dashboard.ActionNames.Index, MVC.AdminPanel.Dashboard.Name, new {area = MVC.AdminPanel.Name})">
+                            <i class="fa fa-dashboard"></i> <span>پیشخوان مدیریت</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action(MVC.Product.Admin.ActionNames.Index, MVC.Product.Admin.Name, new {area = MVC.Product.Name})">
+                            <i class="fa fa-barcode"></i> <span>کالاها</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action(MVC.SlideShow.Admin.ActionNames.Index, MVC.SlideShow.Admin.Name, new {area = MVC.SlideShow.Name})"><i class="fa fa-picture-o"></i> <span>اسلاید شو</span></a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action(MVC.Page.Admin.ActionNames.Index, MVC.Page.Admin.Name, new {area = MVC.Page.Name})">
+                            <i class="fa fa-file"></i> <span>برگه‌ها</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action(MVC.Post.Admin.ActionNames.Index, MVC.Post.Admin.Name, new {area = MVC.Post.Name})"><i class="fa fa-file-text"></i> <span>پست‌ها</span></a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action(MVC.ProductCategory.Admin.ActionNames.Index, MVC.ProductCategory.Admin.Name, new {area = MVC.ProductCategory.Name})">
+                            <i class="fa fa-tags"></i> <span>گروه‌های کالا</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action(MVC.PostCategory.Admin.ActionNames.Index, MVC.PostCategory.Admin.Name, new {area = MVC.PostCategory.Name})">
+                            <i class="fa fa-tag"></i> <span>گروه‌های پست</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action(MVC.User.Admin.ActionNames.Index, MVC.User.Admin.Name, new {area = MVC.User.Name})">
+                            <i class="fa fa-users"></i> <span>کاربران</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action(MVC.SiteSetting.Admin.ActionNames.Edit, MVC.SiteSetting.Admin.Name, new {area = MVC.SiteSetting.Name})">
+                            <i class="fa fa-cogs"></i> <span>تنظیمات سایت</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+
+        <footer class="main-footer">
+            <!-- To the right -->
+            <div class="pull-right hidden-xs">
+                منو در <a href="https://github.com/MehdiSaeedifar" target="_blank">GitHub</a> می تونید پیدا کنید.
+            </div>
+            <!-- Default to the left -->
+            <strong>Copyright &copy; 2016 .</strong>
+        </footer>
+
+        <input id="message" type="hidden" value="@TempData["message"]" />
+    </div>
+    @Scripts.Render("~/bundles/common")
+    @Scripts.Render("~/bundles/adminlayout")
+    <script>
+        (function (Iris) {
+            Iris.roxyFileManPath = '@Url.Content("~/Scripts/RoxyFileManager/index.html")';
+        })(Iris);
+    </script>
+    @RenderSection("scripts", false)
+</body>
+</html>

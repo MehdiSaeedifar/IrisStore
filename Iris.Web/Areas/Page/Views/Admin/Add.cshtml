@@ -1,0 +1,121 @@
+﻿@using Iris.Web
+@model Iris.ViewModels.AddPageViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var actionType = Model.Id.HasValue ? ActionType.Edit : ActionType.Add;
+
+    ViewBag.Title = actionType == ActionType.Add ? "افزودن برگه" : "ویرایش برگه";
+
+    const string tabsEffect = "fadeIn";
+}
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="@Url.Action(MVC.Page.Admin.ActionNames.Index, MVC.Page.Admin.Name, new {area = MVC.Page.Name})"><i class="fa fa-dashboard"></i> مدیریت برگه‌ها</a>
+                </li>
+                <li class="active">@ViewBag.Title</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+
+    <form id="frmAddPage" class="form-horizontal" action="@Url.Action(MVC.Page.Admin.ActionNames.Add, MVC.Page.Admin.Name, new {area = MVC.Page.Name})" method="POST">
+        @Html.HiddenFor(m => m.Id)
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <h3 class="box-title" style="margin-top: 10px;">@ViewBag.Title</h3>
+                    </div>
+                    <div class="text-left col-md-6 col-xs-6">
+                        <button class="btn btn-success"> <i class="fa fa-save fa-lg"></i> ذخیره</button>
+                        <a href="@Url.Action(MVC.Page.Admin.ActionNames.Index, MVC.Page.Admin.Name, new {area = MVC.Page.Name})" class="btn btn-default"> <i class="fa fa-list fa-lg"></i> فهرست برگه‌ها</a>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#pageInfoTab" data-toggle="tab"><i class="fa fa-list-alt fa-lg fa-fw"></i> مشخصات</a>
+                                </li>
+                                <li>
+                                    <a href="#metaTagsTab" data-toggle="tab"><i class="fa fa-google fa-lg fa-fw"></i> موتورهای جستجو</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active animated @tabsEffect" id="pageInfoTab">
+                                    @{
+                                        Html.RenderPartial(MVC.Page.Admin.Views.Partials._PageInfoTab, Model);
+                                    }
+                                </div>
+
+                                <div class="tab-pane animated @tabsEffect" id="metaTagsTab">
+                                    @{
+                                        Html.RenderPartial(MVC.Post.Widgets.Views._MetaTagsTab, Model);
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+@section scripts{
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script>
+
+        $("#pageTitles").sortable({
+            cancel: ".list-group-item-disabled",
+            revert: true,
+            forcePlaceholderSize: true,
+            placeholder: 'ui-state-highlight',
+            cursor: "move",
+            update: function (event, ui) {
+                $(this).children("li").each(function (index, item) {
+                    $(item).find("input.order-input").val(index);
+                });
+            }
+        });
+
+        $("input, select, textarea").on('mousedown.ui-disableSelection selectstart.ui-disableSelection', function (e) {
+
+            e.stopImmediatePropagation();
+
+        });
+
+        CKEDITOR.replace('Body', {
+            filebrowserBrowseUrl: Iris.roxyFileManPath,
+            filebrowserImageBrowseUrl: Iris.roxyFileManPath + '?type=image',
+            removeDialogTabs: 'link:upload;image:upload',
+            height: "270px"
+        });
+    </script>
+
+}
+
+@section styles{
+    <style>
+        .list-group-item-disabled {
+            opacity: .6;
+        }
+        .ui-state-highlight {
+            height: 60px;
+        }
+    </style>
+}

@@ -1,0 +1,66 @@
+﻿@using Utilities
+@model Iris.ViewModels.FooterViewModel
+<div id="push"></div>
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div style="">
+                    <h2 style="border-bottom:2px solid #3498DB;line-height:1.6em;font-size:22px">اطلاعات تماس</h2>
+                </div>
+                <div>
+                    <address style="font-size:15px;">
+                        @Html.Raw(ViewBag.ContactInfo)
+                    </address>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div>
+                    <h2 style="border-bottom:2px solid #3498DB;line-height:1.6em;font-size:22px">بخش‌های سایت</h2>
+                </div>
+                <div class="row" style="font-size:13px;">
+                    @for (int i = 0; i < Model.PageLinks.Count; i += 4)
+                    {
+                        <div class="col-md-6">
+                            <ul>
+                                @foreach (var pageLink in Model.PageLinks.Skip(i))
+                                {
+                                    <li><a href="@Url.Action(MVC.Post.Home.ActionNames.Index, MVC.Post.Home.Name, new { area = MVC.Post.Name, id = pageLink.Id, slugUrl = pageLink.SlugUrl })">@pageLink.Title</a></li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    <div class="col-md-6">
+                        <ul>
+                            <li><a href="@Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new {area = MVC.Product.Name})#/page">کالا‌ها</a></li>
+                            @foreach (var categoryLink in Model.PostCategoryLinks)
+                            {
+                                <li><a href="@Url.Action(MVC.Post.Home.ActionNames.List, MVC.Post.Home.Name, new { area = MVC.Post.Name, id = categoryLink.Id, slugUrl = SeoHelpers.GenerateSlug(categoryLink.Title) })">@categoryLink.Title</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div style="margin-top: 30px;">
+                    <ul class="social-icons text-left ">
+                        <li><a href="#" target="_blank" class="icon-linemessenger"></a></li>
+                        <li><a href="#" target="_blank" class="icon-instageram"></a></li>
+                        <li><a href="#" target="_blank" class="icon-telegram"></a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="border-top:1px solid #CCE5F6;">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 text-center">
+                <div class="copyright-text">تمامی حقوق متعلق به @ViewBag.SiteName می باشد</div>
+                <div>&copy; @ViewBag.SiteName 1395 - 1394</div>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,16 @@
+﻿@using Iris.DomainClasses
+@using Iris.DomainClasses
+@using Utilities
+@model Iris.DomainClasses.ProductStatus
+<div class="btn-group" data-toggle="buttons">
+    @foreach (ProductStatus value in Enum.GetValues(typeof(ProductStatus)))
+    {
+        <label class="btn btn-default @if (value == Model)
+                                      {
+                                          <text>active</text>}">
+            @(value == Model ? Html.RadioButtonFor(m => m, value, new {@checked = "checked"}) : Html.RadioButtonFor(m => m, value))
+            @(((ProductStatus)value).GetEnumDescription())
+        </label>
+    }
+
+</div>

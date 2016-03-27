@@ -1,0 +1,36 @@
+﻿@model Iris.Web.ViewModels.ProductSliderWidgetViewModel
+<section class="container-widget">
+    <div class="panel panel-default" style="margin-bottom: 0;">
+        <header class="panel-heading" style="padding-bottom: 0; padding-top: 0;">
+            <span class="panel-title">
+                @Model.Title
+            </span>
+        </header>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="@Model.CarouselId" class="carousel slide">
+                        <!-- Carousel items -->
+                        <div class="carousel-inner">
+                            @for (int i = 0; i < Model.Products.Count(); i += 4)
+                            {
+                                <div class="item @if (i < 4){ <text>active</text> }">
+                                    <div class="row">
+                                        @foreach (var product in Model.Products.Skip(i).Take(4))
+                                        {
+                                            <div class="col-md-3 col-sm-3 col-xs-6">
+                                                @Html.Partial(MVC.Post.Widgets.Views._PostWidget, product)
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <a class="right carousel-control" href="#@Model.CarouselId" data-slide="next">‹</a>
+                    <a class="left carousel-control" href="#@Model.CarouselId" data-slide="prev">›</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

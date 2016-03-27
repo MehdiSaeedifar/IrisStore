@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Iris.ViewModels.ProductWidgetViewModel>
+
+@using PagedList.Mvc; 
+@using PagedList; 
+
+<div id="paginationDiv" class="text-left">
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("GetProducts", "SearchProduct", new { page }),PagedListRenderOptions.OnlyShowFivePagesAtATime)
+</div>
+
+@for (int i = 0; i < Model.Count(); i += 4)
+{
+    <div class="row">
+        @foreach (var product in Model.Skip(i).Take(4))
+        {
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                @Html.Partial(MVC.Product.Widget.Views._ProductWidget, product)
+            </div>
+        }
+    </div>
+}
+
+<div id="paginationDiv" class="text-left">
+    @Html.PagedListPager((IPagedList) Model, page => Url.Action("GetProducts", "SearchProduct", new {page}), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+</div>

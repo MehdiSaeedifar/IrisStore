@@ -1,0 +1,118 @@
+﻿@model Iris.ViewModels.EditSettingViewModel
+@{
+    ViewBag.Title = "تنظیمات";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content">
+
+    <form id="frmEditSiteSettings" class="form-horizontal" action="@Url.Action(MVC.SiteSetting.Admin.ActionNames.Edit, MVC.SiteSetting.Admin.Name, new {area = MVC.SiteSetting.Name})" method="POST">
+
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <h3 class="box-title" style="margin-top: 10px;">@ViewBag.Title</h3>
+                    </div>
+                    <div class="text-left col-md-6 col-xs-6">
+                        <button class="btn btn-success"> <i class="fa fa-save fa-lg"></i> ذخیره</button>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset>
+                            <legend>اطلاعات سایت</legend>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SiteUrl, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.SiteUrl, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SiteName, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.SiteName, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SiteKeywords, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-6">
+                                    @Html.TextAreaFor(model => model.SiteKeywords, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SiteDescription, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-6">
+                                    @Html.TextAreaFor(model => model.SiteDescription, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>اطلاعات فروشگاه</legend>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ContactInfo, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-6">
+                                    @Html.TextAreaFor(model => model.ContactInfo, new { @class = "form-control", rows = 5 })
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>تنظیمات سرور ایمیل</legend>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MailServerUrl, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.MailServerUrl, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MailServerPort, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.MailServerPort, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MailServerUserName, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.MailServerUserName, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MailServerPassword, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.MailServerPassword, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+@section scripts
+{
+    <script>
+
+
+    </script>
+}
+
+@section styles{
+    <style>
+    </style>
+}
+
+
+
+
+

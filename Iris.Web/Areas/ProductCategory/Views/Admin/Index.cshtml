@@ -1,0 +1,350 @@
+﻿@using Iris.ViewModels
+@using Utilities
+@model Iris.ViewModels.CategoryDataGridViewModel
+@{
+    ViewBag.Title = "مدیریت گروه‌های کالا‌ها";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqGrid")
+    <script>
+
+        function showDeleteProductDialog(button, id, name) {
+            $(button).confirmation({
+                placement: "right",
+                title: 'آیا از حذف این پست اطمینان دارید؟',
+                btnCancelLabel: 'نه',
+                btnOkLabel: 'آره',
+                container: 'body',
+                onConfirm: function (event, element) {
+
+                    var deleteUrl = "@Url.Action(MVC.PostCategory.Admin.ActionNames.Delete,MVC.PostCategory.Admin.Name, new {area=MVC.PostCategory.Name})";
+
+                    $.ajax({
+                        method: "POST",
+                        url: deleteUrl,
+                        data: { id: id }
+                    }).done(function (msg) {
+                        element.confirmation('hide');
+                        $('#list').jqGrid('delRowData', id);
+                    });
+                }
+            }).confirmation('show');
+        }
+
+        function getHiddenColumnsList() {
+            var colModel = $("#list").jqGrid('getGridParam', 'colModel');
+            var hiddenColumns = new Array();
+
+            if (!colModel)
+                return hiddenColumns;
+
+            for (var i = 0; i < colModel.length; i++) {
+                if (colModel[i].hidden) {
+                    hiddenColumns.push(colModel[i].name);
+                }
+            }
+            return hiddenColumns;
+        }
+
+        $.jgrid.formatter.integer.thousandsSeparator = ',';
+        $.jgrid.formatter.number.thousandsSeparator = ',';
+        $.jgrid.formatter.currency.thousandsSeparator = ',';
+
+        $(document).ready(function () {
+        });
+
+        $(window, ".wrapper").resize(function () {
+            setTimeout(function () {
+                var outerwidth = $('#grid').width() - 10;
+                $('#list').setGridWidth(outerwidth, true); // setGridWidth method sets a new width to the grid dynamically
+            }, 500);
+        });
+        var searchOptions = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'in', 'ni', 'ew', 'en', 'cn', 'nc'];
+
+
+        function resizeGrid() {
+            var targetContainer = "#grid";
+            var targetGrid = "#list";
+
+            $(targetGrid).setGridWidth($(targetContainer).width() - 2, true);
+            //$(targetGrid).setGridHeight($(window).height() - 240);
+        }
+
+        function loadGrid() {
+            $('#list').jqGrid({
+                caption: "فهرست گروه‌ها",
+                //url from wich data should be requested
+                url: '@Url.Action(MVC.ProductCategory.Admin.ActionNames.GetDataGridData, MVC.ProductCategory.Admin.Name, new {area = MVC.ProductCategory.Name})',
+                //type of data
+                editurl: '@Url.Action(MVC.ProductCategory.Admin.ActionNames.Add, MVC.ProductCategory.Admin.Name, new {area = MVC.ProductCategory.Name})',
+                datatype: 'json',
+                jsonReader: {
+                    root: "rows",
+                    page: "page",
+                    total: "total",
+                    records: "records",
+                    repeatitems: true,
+                    userdata: "userData",
+                    id: "id",
+                    cell: "rowCells"
+                },
+                //url access method type
+                mtype: 'POST',
+                //columns names
+                colNames: ['شماره', 'نام', "تعداد کالا‌ها", ""],
+                //columns model
+                colModel: [
+                    {
+                        name: '@(StronglyTyped.PropertyName<CategoryDataGridViewModel>(x => x.Id))',
+                        index: '@(StronglyTyped.PropertyName<CategoryDataGridViewModel>(x => x.Id))',
+                        align: 'center',
+                        width: 20,
+                        sorttype: "number",
+                        hidden: true,
+                        key: true,
+                        editable: false
+                    },
+                    {
+                        name: '@(StronglyTyped.PropertyName<CategoryDataGridViewModel>(x => x.Name))',
+                        index: '@(StronglyTyped.PropertyName<CategoryDataGridViewModel>(x => x.Name))',
+                        align: 'center',
+                        width: 25,
+                        search: false,
+                        stype: 'text',
+                        editable: true, edittype: 'text',
+                        editoptions: {
+                            maxlength: 40
+                        },
+                        editrules: {
+                            required: true,
+                            custom: true,
+                            custom_func: function (value, colname) {
+                                if (!value)
+                                    return [false, "لطفا نامی را وارد کنید"];
+
+                                if (value.length < 2 || value.length > 40)
+                                    return [false, colname + " باید بین 2 تا 40 حرف باشد"];
+                                else
+                                    return [true, ""];
+                            }
+                        }
+                    },
+                    {
+                        name: '@(StronglyTyped.PropertyName<CategoryDataGridViewModel>(x => x.PostsCount))',
+                        index: '@(StronglyTyped.PropertyName<CategoryDataGridViewModel>(x => x.PostsCount))',
+                        align: 'center',
+                        search: true,
+                        width: 15,
+                        sorttype: "number",
+                        stype: 'number',
+                        editable: false
+                    },
+                    {
+                        name: 'myac',
+                        align: 'center',
+                        width: 80,
+                        fixed: true,
+                        sortable: false,
+                        resize: false,
+                        search: false,
+                        formatter: function (cellvalue, options, rowObject) {
+                            if (cellvalue === undefined && options.rowId === "_empty") {
+                                // در حالت نمایش ردیف توکار جدید دکمه‌های ویرایش و حذف معنی ندارند
+                                options.colModel.formatoptions.editbutton = false;
+                                options.colModel.formatoptions.delbutton = false;
+                            }
+                            return $.fn.fmatter.actions(cellvalue, options, rowObject);
+                        },
+                        formatoptions: {
+                            keys: true,
+                            afterSave: function (rowid, response) {
+                            },
+                            delbutton: true,
+                            delOptions: {
+                                url: "@Url.Action(MVC.ProductCategory.Admin.ActionNames.Delete,MVC.ProductCategory.Admin.Name, new {area=MVC.ProductCategory.Name})"
+                            }
+                        }
+
+                    }
+                ],
+                //pager for grid
+                pager: $('#pager'),
+                //number of rows per page
+                rowNum: 10,
+                rowList: [10, 20, 50, 100],
+                //initial sorting column
+                sortname: 'Id',
+                //initial sorting direction
+                sortorder: 'asc',
+                //we want to display total records count
+                viewrecords: true,
+                autowidth: true, // set 'true' here
+                shrinkToFit: true, // well, it's 'true' by default
+                height: 'auto',
+                hidegrid: false,
+                direction: "rtl",
+                gridview: true,
+                rownumbers: true,
+                footerrow: true,
+                userDataOnFooter: true,
+                loadComplete: function () {
+                    //change alternate rows color
+                    $("tr.jqgrow:odd").css("background", "#ebebeb");
+                    resizeGrid();
+                },
+                loadError: function (xhr, st, err) {
+                    jQuery("#rsperror").html("Type: " + st + "; Response: " + xhr.status + " " + xhr.statusText);
+                },
+                postData: { 'hiddenColumns': function () { return getHiddenColumnsList(); } }
+            })
+                .jqGrid('navGrid', "#pager",
+                { add: false, edit: false, del: false },
+                {}, // default settings for edit
+                {}, // default settings for add
+                {}, // delete instead that del:false we need this
+                {
+                    // search options
+                    multipleSearch: true,
+                    closeOnEscape: true,
+                    closeAfterSearch: true,
+                    ignoreCase: true,
+                    sopt: searchOptions
+                })
+                .jqGrid('filterToolbar', {
+                    stringResult: true,
+                    searchOnEnter: true,
+                    autosearch: true,
+                    searchOperators: true,
+                    groupOp: 'OR',
+                    defaultSearch: 'cn'
+                }).jqGrid('navButtonAdd', "#pager", {
+                    caption: "نوار ابزار جستجو",
+                    title: "Search Toolbar",
+                    buttonicon: 'ui-icon-search',
+                    onClickButton: function () {
+                        $("#list")[0].toggleToolbar();
+                    }
+                }).jqGrid('inlineNav', '#pager',
+                {
+                    edit: true, add: true, save: true, cancel: true,
+                    edittext: "ویرایش", addtext: "جدید", savetext: "ذخیره", canceltext: "لغو",
+                    addParams: {
+                        // اگر می‌خواهید ردیف‌های جدید در ابتدا ظاهر شوند، این سطر را حذف کنید
+                        position: "last", //ردیف‌های جدید در آخر ظاهر می‌شوند
+                        rowID: '_empty',
+                        useDefValues: true,
+                        addRowParams: getInlineNavParams(true)
+                    },
+                    editParams: getInlineNavParams(false)
+                });
+
+
+            $("#list")[0].toggleToolbar();
+        }
+
+        function toolbarSearching() {
+            $('#list').filterToolbar({
+                groupOp: 'OR',
+                defaultSearch: "cn",
+                autosearch: true,
+                searchOnEnter: true,
+                searchOperators: true, // فعال سازی منوی اپراتورها
+                stringResult: true // وجود این سطر سبب می‌شود تا اپراتورها به سرور ارسال شوند
+            });
+        };
+
+        function singleSearching() {
+            $('#list').searchGrid({
+                closeAfterSearch: true
+            });
+        };
+
+        function advancedSearching() {
+            $('#list').searchGrid({
+                multipleSearch: true,
+                closeAfterSearch: true
+            });
+        };
+
+        function getInlineNavParams(isAdd) {
+            return {
+                // استفاده از آدرس‌های مختلف برای حالات ویرایش و ثبت اطلاعات جدید
+                url: isAdd ? '@Url.Action("AddUser", "Home")' : '@Url.Action("EditUser","Home")',
+                key: true,
+                restoreAfterError: false, // این مورد سبب می‌شود تا اعتبارسنجی سمت سرور قابل اعمال شود
+                oneditfunc: function (rowId) {
+                    // نمایش دکمه‌های ذخیره و لغو داخل همان سطر
+                    $("#jSaveButton_" + rowId).show();
+                    $("#jCancelButton_" + rowId).show();
+                },
+                successfunc: function () {
+                    var $self = $(this);
+                    setTimeout(function () {
+                        $self.trigger("reloadGrid"); // دریافت کلید اصلی ردیف از سرور
+                    }, 50);
+                },
+                errorfunc: function (rowid, response, stat) {
+                    if (stat != 'error') // this.Response.StatusCode == 200
+                        return;
+
+                    var result = $.parseJSON(response.responseText);
+                    if (result.success === false) {
+                        //نمایش خطای اعتبار سنجی سمت سرور پس از ویرایش یا افزودن
+                        $.jgrid.info_dialog($.jgrid.errors.errcap,
+                            '<div class="ui-state-error">' + result.message + '</div>',
+                            $.jgrid.edit.bClose,
+                            { buttonalign: 'center' });
+                    }
+                }
+            };
+        }
+
+        function serverErrorTextFormat(response) {
+            // در حالتیکه وضعیت خروجی از سرور 200 نیست فراخوانی می‌شود
+            var result = $.parseJSON(response.responseText);
+            if (result.success === false) {
+                return result.message;
+            }
+            return "لطفا ورودی‌های وارد شده را بررسی کنید";
+        }
+
+        function showServerSideErrors(response, postdata) {
+            var result = $.parseJSON(response.responseText);
+            if (result.success === false) {
+                //نمایش خطای اعتبار سنجی سمت سرور پس از ویرایش یا افزودن
+                //و همچنین جلوگیری از ثبت نهایی فرم
+                return [false, result.message, result.id];
+            }
+
+            return [true, "", result.id];
+        }
+
+        loadGrid();
+    </script>
+}
+
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <div class="col-md-6">
+                <h3 class="box-title">مدیریت گروه‌های کالاها</h3>
+            </div>
+            <div class="text-left col-md-6">
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row" style="padding: 0 5px 0 5px; ">
+                <div class="col-md-12">
+                    <div id="grid" dir="rtl">
+                        <table id="list"></table>
+                        <div id="pager" style="text-align:center;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

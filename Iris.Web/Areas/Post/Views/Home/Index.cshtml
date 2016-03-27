@@ -1,0 +1,65 @@
+﻿@using Iris.ViewModels
+@using Iris.Web.ViewModels
+@using Utilities
+@model Iris.ViewModels.PostViewModel
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container post-wrapper" style="background-color: transparent;">
+    <div class="row post-content" style="background-color: #fff;">
+        <div class="col-md-12">
+            @if (Model.CategoryId.HasValue)
+            {
+                <div class="col-md-3 thumbnail">
+                    <img src="@Model.Image" alt="@Model.Title" title="@Model.Title">
+                </div>
+            }
+            <h2 style="line-height: 1.6em;">
+                <a href="@Url.Action(MVC.Post.Home.ActionNames.Index, MVC.Post.Home.Name, new {area = MVC.Post.Name, id = Model.Id, slugUrl = Model.SlugUrl})">@Model.Title</a>
+            </h2>
+            @if (Model.CategoryId.HasValue)
+            {
+                <div class="col-md-9" style="font-size: 13px;">
+                    <ul class="list-inline">
+                        <li><i class="fa fa-calendar"></i> تاریخ ارسال: @Model.PostedDate.ToPersianDate()</li>
+                        <li><i class="fa fa-refresh"></i> تعداد نمایش: @Model.ViewNumber</li>
+                        <li>
+                            <i class="fa fa-tag"></i> گروه:
+                            <ul class="tags" style="display: inline;">
+                                <li class="tag">
+                                    <a href="@Url.Action(MVC.Post.Home.ActionNames.List, MVC.Post.Home.Name, new {area = MVC.Post.Name, id = Model.CategoryId, slugUrl = SeoHelpers.GenerateSlug(Model.CategoryName)})">@Model.CategoryName</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            }
+            <div class="post-text">
+                @Html.Raw(Model.Body)
+            </div>
+        </div>
+    </div>
+    <div class="clearfix" style="margin-top: 5px;">
+        @if (Model.CategoryId.HasValue && ((IList<ProductWidgetViewModel>)ViewData["SimilarProducts"]).Any())
+            {
+            <div class="row product-section" style="margin-top: 15px;">
+                <div class="col-md-12" style="padding: 0;">
+                    <div>
+                        @{
+                            Html.RenderPartial(MVC.Widgets.Views.SimilarPostsWidget, new ProductSliderWidgetViewModel
+                            {
+                                Title = "مطالب مشابه",
+                                CarouselId = "similarProductCarousel",
+                                Products = ViewData["SimilarProducts"] as IList<ProductWidgetViewModel>
+                            });
+                        }
+                    </div>
+                </div>
+            </div>
+                            }
+    </div>
+</div>
+
+

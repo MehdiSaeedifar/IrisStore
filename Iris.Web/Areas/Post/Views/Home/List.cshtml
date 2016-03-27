@@ -1,0 +1,41 @@
+﻿@using Iris.ViewModels
+@using PagedList
+@using PagedList.Mvc
+@using Utilities
+@{
+    ViewBag.Title = $"فهرست {ViewBag.CategoryName}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container post-wrapper">
+    <div class="post-list">
+        <h2><a href="@Url.Action(MVC.Post.Home.ActionNames.List, MVC.Post.Home.Name, new { area = MVC.Post.Name, id = ViewContext.RouteData.Values["id"], slugUrl = SeoHelpers.GenerateSlug(ViewBag.CategoryName) })">فهرست @ViewBag.CategoryName</a></h2>
+        @foreach (PagedListPostViewModel post in ViewBag.OnePageOfList)
+        {
+            <div class="post-list-item">
+                <div class="row">
+                    <div class="col-md-2 col-xs-4 col-sm-3">
+                        <a href="@Url.Action(MVC.Post.Home.ActionNames.Index, MVC.Post.Home.Name, new {area = MVC.Post.Name, id = post.Id, slugUrl = post.SlugUrl})">
+                            <img class="img-responsive" src="@post.Image" alt="@post.Title" title="@post.Title">
+                        </a>
+                    </div>
+                    <div class="col-md-9">
+                        <h3 class="media-heading">
+                            <a href="@Url.Action(MVC.Post.Home.ActionNames.Index, MVC.Post.Home.Name, new {area = MVC.Post.Name, id = post.Id, slugUrl = post.SlugUrl})">@post.Title</a>
+                        </h3>
+                    </div>
+                    <div class="col-md-9" style="font-size: 13px;">
+                        <ul class="list-inline">
+                            <li><i class="fa fa-calendar"></i> تاریخ ارسال: @post.PostedDate.ToPersianDate()</li>
+                            <li><i class="fa fa-refresh"></i> تعداد نمایش: @post.ViewNumber</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="text-center" style="margin-top: 35px;">
+        @Html.PagedListPager((IPagedList)ViewBag.OnePageOfList, page => Url.Action("Index", new { page }))
+    </div>
+</div>

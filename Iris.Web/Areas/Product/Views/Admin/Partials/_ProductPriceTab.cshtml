@@ -1,0 +1,35 @@
+﻿@using Utilities
+@model Iris.ViewModels.AddProductViewModel
+<button id="btnAddPrice" type="button" class="btn btn-success btn-sm"><i class="fa fa-plus fa-w"></i> افزودن قیمت</button>
+<div class="clearfix table-responsive">
+    <table id="tblProductPrices" class="table table-condensed table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>قیمت</th>
+                <th>تاریخ</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var price in Model.Prices)
+            {
+                var priceDate = price.Date.ToPersianDate();
+                var guidId = Guid.NewGuid().ToString();
+                <tr>
+                    @Html.Hidden("Prices.Index", guidId)
+                    @Html.Hidden($"Prices[{guidId}].Id", price.Id)
+                    @Html.Hidden($"Prices[{guidId}].ProductId", price.ProductId)
+                    @Html.Hidden($"Prices[{guidId}].Price", price.Price, new { @class = "priceValHidden" })
+                    @Html.Hidden($"Prices[{guidId}].Date", priceDate, new { @class = "dateValHidden" })
+                    <td><a style="cursor: pointer" data-price>@Html.DisplayFor(x => price.Price)</a><span>تومان</span></td>
+                    <td><a style="cursor: pointer" href="#" data-date>@priceDate</a></td>
+                    <td>
+                        <button name="removeItem" type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+

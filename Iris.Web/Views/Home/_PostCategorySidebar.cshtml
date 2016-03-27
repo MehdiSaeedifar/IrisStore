@@ -1,0 +1,38 @@
+﻿@using Utilities
+@model IEnumerable<Iris.ViewModels.PostCategorySideBarViewModel>
+@foreach (var category in Model)
+{
+    <div class="panel panel-default post-category">
+        <div class="panel-heading sidebar-header" style="padding-bottom: 0; padding-top: 0;">
+            <span class="bdred">
+                @category.Name
+            </span>
+        </div>
+        <div class="panel-body">
+            @foreach (var post in category.Posts)
+                {
+                <div class="media">
+                    <div class="media-left">
+                        <a href="@Url.Action(MVC.Post.Home.ActionNames.Index, MVC.Post.Home.Name, new {area = MVC.Post.Name, id = post.Id, slugUrl = post.SlugUrl})">
+                            <img src="@post.Image" alt="@post.Title" title="@post.Title" class="img-circle" />
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="media-heading">
+                            <a href="@Url.Action(MVC.Post.Home.ActionNames.Index, MVC.Post.Home.Name, new {area = MVC.Post.Name, id = post.Id, slugUrl = post.SlugUrl})">
+                                @post.Title
+                            </a>
+                        </h3>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="panel-footer">
+            <a href="@Url.Action(MVC.Post.Home.ActionNames.List, MVC.Post.Home.Name, new { area = MVC.Post.Name, id = category.Id, slugUrl = SeoHelpers.GenerateSlug(category.Name) })">
+                <i class="glyphicon glyphicon-th-list"></i>
+                آرشیو @category.Name
+            </a>
+        </div>
+    </div>
+}
+

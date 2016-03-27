@@ -1,0 +1,43 @@
+﻿@model Iris.ViewModels.AddPostViewModel
+
+<div class="clearfix">
+    <div class="form-group">
+        @Html.LabelFor(m => m.Image, new { @class = "col-md-2 control-label" })
+        @Html.HiddenFor(model => model.Image)
+        <div class="col-md-6">
+            @if (!Model.Id.HasValue)
+            {
+                <a id="chooseImage" href="javascript:openCustomRoxy()">
+                    <img id="customRoxyImage">
+                    <span> انتخاب عکس</span>
+                </a>
+            }
+            else
+            {
+                <a id="chooseImage" href="javascript:openCustomRoxy()">
+                    <img id="customRoxyImage" src="@Model.Image">
+                    <span> انتخاب عکس</span>
+                </a>
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CategoryId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-6">
+            @Html.DropDownListFor(m => m.CategoryId, ViewData["CategoriesSelectList"] as SelectList, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Body, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.TextAreaFor(m => m.Body, new { @class = "form-control" })
+        </div>
+    </div>
+</div>

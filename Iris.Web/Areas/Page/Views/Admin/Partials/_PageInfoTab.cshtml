@@ -1,0 +1,44 @@
+﻿@model Iris.ViewModels.AddPageViewModel
+<div class="clearfix">
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
+        <div class="col-md-6">
+            <ul id="pageTitles" class="list-group">
+                @if (!Model.Id.HasValue)
+                {
+                    <li class="list-group-item">
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.Order, new { @class = "order-input" })
+                    </li>
+                }
+
+                @for (var i = 0; i < Model.Pages.Count; i++)
+                {
+                    if (Model.Pages[i].Id == Model.Id)
+                    {
+                        <li class="list-group-item">
+                            @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                            @Html.HiddenFor(model => model.Order, new { @class = "order-input" })
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="list-group-item list-group-item-disabled">
+                            <input type="hidden" name="Pages.Index" value="@i" />
+                            @Html.HiddenFor(x => Model.Pages[i].Id)
+                            <p>@Model.Pages[i].Title</p>
+                            @Html.HiddenFor(x => Model.Pages[i].Order, new { @class = "order-input" })
+                        </li>
+                    }
+                }
+            </ul>
+
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Body, new { @class = "col-md-2 control-label" })
+        <div class="col-md-9">
+            @Html.TextAreaFor(m => m.Body, new { @class = "form-control" })
+        </div>
+    </div>
+</div>
