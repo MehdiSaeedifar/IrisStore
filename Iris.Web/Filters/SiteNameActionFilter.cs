@@ -13,6 +13,7 @@ namespace Iris.Web.Filters
             var siteSettings = IoC.Container.GetInstance<ICacheService>().GetSiteSettings();
 
             filterContext.Controller.ViewBag.SiteName = siteSettings.SiteName;
+            filterContext.Controller.ViewBag.SiteDescription = siteSettings.SiteDescription;
             filterContext.Controller.ViewBag.ContactInfo = siteSettings.ContactInfo;
         }
 
