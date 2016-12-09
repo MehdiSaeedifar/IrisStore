@@ -211,7 +211,7 @@ namespace Iris.ServiceLayer
                 .ToListAsync();
         }
 
-        public async Task<IList<ProductWidgetViewModel>> SearchProduct(SearchProductViewModel searchModel)
+        public async Task<ProductSearchPagedList> SearchProduct(SearchProductViewModel searchModel)
         {
             var productsQuery = _products.AsQueryable();
 
@@ -243,9 +243,17 @@ namespace Iris.ServiceLayer
                 product.Prices.OrderByDescending(price => price.Date).Select(price => price.Price).FirstOrDefault() <= searchModel.MaxPrice);
             }
 
-            return await productsQuery.Skip((searchModel.PageNumber - 1) * searchModel.PageSize)
-                .Take(searchModel.PageSize)
-                .ProjectTo<ProductWidgetViewModel>(null, _mappingEngine).ToListAsync();
+            var result = new ProductSearchPagedList
+            {
+                Products = await productsQuery.Skip((searchModel.PageNumber - 1) * searchModel.PageSize)
+                    .Take(searchModel.PageSize)
+                    .ProjectTo<ProductWidgetViewModel>(null, _mappingEngine).ToListAsync(),
+                TotalCount = await productsQuery.CountAsync()
+            };
+
+
+
+            return result;
         }
 
         public async Task<ProductPageViewModel> GetProductPage(int productId)

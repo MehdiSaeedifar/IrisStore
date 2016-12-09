@@ -134,6 +134,12 @@
                     complete: function (xhr, status) {
                         hideProgress();
                         var data = xhr.responseText;
+
+                        if (options.completeHandler)
+                            options.completeHandler(appendEl, $boxes);
+
+
+
                         if (xhr.status == 403) {
                             window.location = options.loginUrl;
                         } else if (status === 'error' || !data) {
@@ -145,32 +151,25 @@
                                     options.noMoreInfoHandler(this);
                             } else {
                                 var $boxes = $(data);
-
+                                var appendEl;
                                 $(options.resultDiv).fadeOut(function () {
-                                    var appendEl = $(options.resultDiv).html(data);
+                                    appendEl = $(options.resultDiv).html(data);
                                     $(options.resultDiv).fadeIn();
+
+                                    $(options.paginationId + " a").on("click", function (event) {
+                                        event.preventDefault();
+                                        var $this = $(this);
+                                        var href = $this.attr("href");
+                                        if (href === null || href === undefined)
+                                            return;
+                                        var pageNumber = getParameterByName(href, "page");
+
+                                        $('html,body').animate({ scrollTop: 0 });
+
+                                        submitData(pageNumber);
+                                    });
+
                                 });
-
-
-
-
-                                if (options.completeHandler)
-                                    options.completeHandler(appendEl, $boxes);
-
-                                $(options.paginationId + " a").on("click", function (event) {
-                                    event.preventDefault();
-
-                                    var $this = $(this);
-                                    var href = $this.attr("href");
-                                    if (href === null || href === undefined)
-                                        return;
-                                    var pageNumber = getParameterByName(href, "page");
-
-                                    $('html,body').animate({ scrollTop: 0 });
-
-                                    submitData(pageNumber);
-                                });
-
                             }
                         }
                     }
@@ -180,7 +179,7 @@
             Path.map("#/page(/:groups)(/:searchTerm)(/:page)(/:sortby)(/:order)(/:pageSize)(/:showStockProductsOnly)(/:minPrice)(/:maxPrice)").to(function () {
                 var sortBy = this.params['sortby'] || 'ViewNumber';
                 var order = this.params['order'] || 'desc';
-                var pageSize = this.params['pageSize'] || 24;
+                var pageSize = this.params['pageSize'] || +$(options.pageSizeId).val();
                 var searchTerm = (this.params['searchTerm'] === "empty") ? "" : this.params['searchTerm'];
                 var minPrice = this.params['minPrice'];
                 var maxPrice = this.params['maxPrice'];

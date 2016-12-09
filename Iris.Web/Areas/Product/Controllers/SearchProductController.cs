@@ -43,10 +43,12 @@ namespace Iris.Web.Areas.Product.Controllers
         [OutputCache(Location = OutputCacheLocation.None, NoStore = true)]
         public virtual async Task<ActionResult> GetProducts(SearchProductViewModel model)
         {
-            var products = await _productService.SearchProduct(model);
+            var result = await _productService.SearchProduct(model);
+
+            var productsAsIPagedList = new StaticPagedList<ProductWidgetViewModel>(result.Products, model.PageNumber, model.PageSize, result.TotalCount);
 
             return PartialView(MVC.Product.SearchProduct.Views._GetProducts,
-                               products.ToPagedList(model.PageNumber, model.PageSize));
+                               productsAsIPagedList);
         }
     }
 }

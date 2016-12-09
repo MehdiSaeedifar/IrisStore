@@ -210,3 +210,8 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+/Iris.Web/App_Data/ErrorsLog/*
+/Iris.Web/App_Data/Lucene_Index/*
+/Iris.Web/Content/tmp/*
+/Iris.Web/UploadedFiles/ProductImages/*
+/Iris.Web/UploadedFiles/ProductImages/Thumbs/*
