@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Iris.ViewModels.ProductOrderViewModel>
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>
+            نام کالا
+        </th>
+        <th>
+            قیمت
+        </th>
+        <th>
+            تعداد
+        </th>
+        <th>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var orderItem in Model)
+    {
+        <tr data-product-id="@orderItem.Id">
+            <td>
+                @orderItem.Name
+            </td>
+            <td>
+                @orderItem.Price.ToString("#,##0")
+            </td>
+            <td>
+                @Html.TextBox("count", 1, new
+                {
+                    @class = "form-control col-md-4", type = "number", max = orderItem.Count,
+                    style="direction:ltr"
+                })
+            </td>
+            <td>
+                <button class="btn btn-sm btn-danger" id="btnRemoveProductOrder">
+                    <i class="fa fa-remove"></i>
+                </button>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,32 @@
+﻿@model Iris.Web.ViewModels.Identity.LoginViewModel
+@{
+    ViewBag.Title = "ورود به سیستم";
+}
+<div style="background: #fff; padding-bottom: 25px; min-height: 70vh;" class="container page-wrapper">
+    <div class="col-md-6 center-block" style="float: none;">
+        <div>
+            <h3>ورود به سیستم</h3>
+        </div>
+        @using (Html.BeginForm(MVC.Account.ActionNames.Login, MVC.Account.Name, new {area = "", ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {role = "form", id = "frmLogin"}))
+        {
+            @Html.ValidationSummary(false, "", new {@class = "text-danger"})
+            @Html.AntiForgeryToken()
+            <div class="form-group has-feedback">
+                @Html.TextBoxFor(m => m.Email, new {@class = "form-control", placeholder = "پست الکترونیکی", style = "direction:ltr", type = "email"})
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                @Html.PasswordFor(m => m.Password, new {@class = "form-control", placeholder = "کلمه عبور", style = "direction: ltr;"})
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            @Html.Hidden("returnUrl", ViewBag.ReturnUrl as string, null)
+            <div class="row">
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">ورود</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        }
+    </div>
+</div>

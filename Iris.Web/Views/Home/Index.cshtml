@@ -24,26 +24,26 @@
         <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
             <div class="col-md-12">
                 @{Html.RenderPartial(MVC.Widgets.Views.ContainerSliderWidget, new ProductSliderWidgetViewModel
-                    {
-                        Title = "محبوب‌ترین کالا‌ها",
-                        CarouselId = "topProductsCarousel",
-                        LinkText = "ادامه کالا‌ها",
-                        Link = $"{Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new { area = MVC.Product.Name })}#/page/all/empty/1/AverageRating/desc",
-                        Products = Model.PopularProducts
-                    }
+                  {
+                      Title = "محبوب‌ترین کالا‌ها",
+                      CarouselId = "topProductsCarousel",
+                      LinkText = "ادامه کالا‌ها",
+                      Link = $"{Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new { area = MVC.Product.Name })}#/page/all/empty/1/AverageRating/desc",
+                      Products = Model.PopularProducts
+                  }
                       ); }
             </div>
         </div>
         <div class="row" style="margin-bottom: 10px;">
             <div class="col-md-12">
                 @{Html.RenderPartial(MVC.Widgets.Views.ContainerSliderWidget, new ProductSliderWidgetViewModel
-                    {
-                        Title = "پربازدیدترین کالا‌ها",
-                        CarouselId = "topViewProductsCarousel",
-                        LinkText = "ادامه کالا‌ها",
-                        Link = $"{Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new { area = MVC.Product.Name })}#/page/all/empty/1/ViewNumber/desc",
-                        Products = Model.MostViewedProducts
-                    }); }
+                  {
+                      Title = "پربازدیدترین کالا‌ها",
+                      CarouselId = "topViewProductsCarousel",
+                      LinkText = "ادامه کالا‌ها",
+                      Link = $"{Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new { area = MVC.Product.Name })}#/page/all/empty/1/ViewNumber/desc",
+                      Products = Model.MostViewedProducts
+                  }); }
             </div>
         </div>
     </div>
@@ -82,3 +82,4 @@
 
     </aside>
 </div>
+

@@ -248,6 +248,8 @@
     <Compile Include="Areas\Product\Controllers\UploadController.cs" />
     <Compile Include="Areas\Product\Controllers\AdminController.cs" />
     <Compile Include="Areas\Product\Controllers\HomeController.cs" />
+    <Compile Include="Areas\ShoppingCart\Controllers\AdminController.cs" />
+    <Compile Include="Areas\ShoppingCart\Controllers\HomeController.cs" />
     <Compile Include="Areas\SiteSetting\Controllers\AdminController.cs" />
     <Compile Include="Areas\SlideShow\Controllers\AdminController.cs" />
     <Compile Include="Areas\User\Controllers\AdminController.cs" />
@@ -275,6 +277,9 @@
     </Compile>
     <Compile Include="Helpers\CookieHelper.cs" />
     <Compile Include="HomeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LuceneIndexingController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelBinders\DecmialModelBinder.cs" />
@@ -329,6 +334,15 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShoppingCart.AdminController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShoppingCart.HomeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShoppingCart.SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="SiteMapController.generated.cs">
@@ -457,6 +471,9 @@
     <Content Include="Content\AdminLTE\skins\_all-skins.css" />
     <Content Include="Content\AdminLTE\skins\_all-skins.min.css" />
     <Content Include="Content\animate.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="UploadedFiles\Avatars\tmp.txt" />
     <Content Include="Content\awesome-bootstrap-checkbox.css" />
     <Content Include="Content\bootstrap-editable\bootstrap-editable.css" />
@@ -469,8 +486,6 @@
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\font-awesome.css" />
-    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Icons\instagram.png" />
     <Content Include="Content\Icons\line.png" />
     <Content Include="Content\Icons\telegram.png" />
@@ -524,7 +539,6 @@
     <Content Include="Content\toastr.min.css" />
     <Content Include="Content\avatar.png" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\site.css" />
@@ -538,11 +552,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-rtl\bootstrap-flipped.css.map" />
     <Content Include="Content\bootstrap-rtl\bootstrap-rtl.css.map" />
-    <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="fonts\fontawesome-webfont.woff2" />
-    <Content Include="fonts\fontawesome-webfont.woff" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="Areas\Product\Views\web.config" />
     <Content Include="Areas\SlideShow\Views\web.config" />
     <Content Include="Areas\SlideShow\Views\_ViewStart.cshtml" />
@@ -1145,6 +1154,21 @@
     <Content Include="Areas\AdminPanel\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Post\Views\Admin\Partials\_PostImageTab.cshtml" />
     <Content Include="Areas\Post\Views\Widgets\_PostWidget.cshtml" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Areas\ShoppingCart\Views\web.config" />
+    <Content Include="Areas\ShoppingCart\Views\Home\Index.cshtml" />
+    <Content Include="Areas\ShoppingCart\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\ShoppingCart\Views\Home\GetOrdersList.cshtml" />
+    <Content Include="Areas\ShoppingCart\Views\Home\CreateFactor.cshtml" />
+    <Content Include="Areas\ShoppingCart\Views\Home\UserFactor.cshtml" />
+    <Content Include="Areas\ShoppingCart\Views\Admin\AddProduct.cshtml" />
+    <Content Include="Areas\ShoppingCart\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\ShoppingCart\Views\Admin\Edit.cshtml" />
+    <Content Include="Areas\ShoppingCart\Views\Shared\EditorTemplates\FactorStatus.cshtml" />
     <None Include="Properties\PublishProfiles\IrisStore.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ckeditor\styles.js" />
@@ -1503,6 +1527,9 @@
     <Content Include="Views\Home\_PostCategorySidebar.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Widgets\SimilarPostsWidget.cshtml" />
+    <Content Include="Views\Account\UserLogin.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ChangeUserPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\AdminPanel\Models\" />
@@ -1513,6 +1540,7 @@
     <Folder Include="Areas\ProductCategory\Models\" />
     <Folder Include="Areas\ProductCategory\Views\Shared\" />
     <Folder Include="Areas\Product\ViewModels\" />
+    <Folder Include="Areas\ShoppingCart\Models\" />
     <Folder Include="Areas\SiteSetting\Models\" />
     <Folder Include="Areas\SiteSetting\Views\Shared\" />
     <Folder Include="Areas\SlideShow\Models\" />

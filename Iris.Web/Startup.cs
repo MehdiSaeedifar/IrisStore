@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Data.Entity;
+using Iris.DataLayer;
+using Iris.DataLayer.Migrations;
 using Iris.ServiceLayer.Contracts;
 using Iris.Web.DependencyResolution;
 using Microsoft.AspNet.Identity;
@@ -19,6 +22,8 @@ namespace Iris.Web
 
         private static void configureAuth(IAppBuilder app)
         {
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+
             IoC.Container.Configure(config =>
             {
                 config.For<IDataProtectionProvider>()
@@ -26,7 +31,7 @@ namespace Iris.Web
                       .Use(() => app.GetDataProtectionProvider());
             });
 
-            IoC.Container.GetInstance<IApplicationUserManager>().SeedDatabase();
+            //IoC.Container.GetInstance<IApplicationUserManager>().SeedDatabase();
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider

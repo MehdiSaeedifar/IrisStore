@@ -39,6 +39,8 @@ public static partial class MVC
     public static ProductClass Product { get { return s_Product; } }
     static readonly ProductCategoryClass s_ProductCategory = new ProductCategoryClass();
     public static ProductCategoryClass ProductCategory { get { return s_ProductCategory; } }
+    static readonly ShoppingCartClass s_ShoppingCart = new ShoppingCartClass();
+    public static ShoppingCartClass ShoppingCart { get { return s_ShoppingCart; } }
     static readonly SiteSettingClass s_SiteSetting = new SiteSettingClass();
     public static SiteSettingClass SiteSetting { get { return s_SiteSetting; } }
     static readonly SlideShowClass s_SlideShow = new SlideShowClass();
@@ -47,6 +49,7 @@ public static partial class MVC
     public static UserClass User { get { return s_User; } }
     public static Iris.Web.Controllers.AccountController Account = new Iris.Web.Controllers.T4MVC_AccountController();
     public static Iris.Web.Controllers.HomeController Home = new Iris.Web.Controllers.T4MVC_HomeController();
+    public static Iris.Web.Controllers.LuceneIndexingController LuceneIndexing = new Iris.Web.Controllers.T4MVC_LuceneIndexingController();
     public static Iris.Web.Controllers.SearchController Search = new Iris.Web.Controllers.T4MVC_SearchController();
     public static Iris.Web.Controllers.SiteMapController SiteMap = new Iris.Web.Controllers.T4MVC_SiteMapController();
     public static Iris.Web.Controllers.TestController Test = new Iris.Web.Controllers.T4MVC_TestController();
@@ -102,6 +105,14 @@ namespace T4MVC
         public readonly string Name = "ProductCategory";
         public Iris.Web.Areas.ProductCategory.Controllers.AdminController Admin = new Iris.Web.Areas.ProductCategory.Controllers.T4MVC_AdminController();
         public T4MVC.ProductCategory.SharedController Shared = new T4MVC.ProductCategory.SharedController();
+    }
+    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    public class ShoppingCartClass
+    {
+        public readonly string Name = "ShoppingCart";
+        public Iris.Web.Areas.ShoppingCart.Controllers.AdminController Admin = new Iris.Web.Areas.ShoppingCart.Controllers.T4MVC_AdminController();
+        public Iris.Web.Areas.ShoppingCart.Controllers.HomeController Home = new Iris.Web.Areas.ShoppingCart.Controllers.T4MVC_HomeController();
+        public T4MVC.ShoppingCart.SharedController Shared = new T4MVC.ShoppingCart.SharedController();
     }
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public class SiteSettingClass

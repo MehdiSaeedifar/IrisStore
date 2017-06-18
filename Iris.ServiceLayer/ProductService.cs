@@ -322,6 +322,13 @@ namespace Iris.ServiceLayer
             return await _productImages.Where(pi => pi.ProductId == productId)
                 .Select(pi => pi.Name).ToListAsync();
         }
+
+        public async Task<IList<ProductOrderViewModel>> GetProductsOrders(int[] productIds)
+        {
+            return await _products.Where(p => productIds.Contains(p.Id))
+                                    .ProjectTo<ProductOrderViewModel>()
+                                    .ToListAsync();
+        }
     }
 
 }

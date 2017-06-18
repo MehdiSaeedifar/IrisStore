@@ -30,6 +30,7 @@ namespace Iris.ServiceLayer.Contracts
         Task SaveRating(int productId, double rating);
         Task<IList<LueneProduct>> GetAllForLuceneIndex();
         Task<IList<string>> GetProductImages(int productId);
+        Task<IList<ProductOrderViewModel>> GetProductsOrders(int[] productIds);
     }
 
     public class LueneProduct

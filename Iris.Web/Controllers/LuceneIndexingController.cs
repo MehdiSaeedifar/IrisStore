@@ -15,10 +15,10 @@ namespace Iris.Web.Controllers
 {
     [RoutePrefix("LuceneIndexing")]
     [Authorize(Roles = "Admin")]
-    public class LuceneIndexingController : Controller
+    public partial class LuceneIndexingController : Controller
     {
         [Route("ReIndex")]
-        public async Task<ActionResult> ReIndex()
+        public virtual async Task<ActionResult> ReIndex()
         {
             LuceneIndex.ClearLuceneIndex();
 

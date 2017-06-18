@@ -1,0 +1,16 @@
+﻿@using Iris.DomainClasses
+@using Iris.DomainClasses
+@using Utilities
+@model Iris.DomainClasses.FactorStatus
+<div class="btn-group" data-toggle="buttons" style="float: none;">
+    @foreach (FactorStatus value in Enum.GetValues(typeof(FactorStatus)))
+    {
+        <label class="btn btn-default @if (value == Model)
+                                      {
+                                          <text>active</text>}">
+            @(value == Model ? Html.RadioButtonFor(m => m, value, new {@checked = "checked"}) : Html.RadioButtonFor(m => m, value))
+            @(((FactorStatus)value).GetEnumDescription())
+        </label>
+    }
+
+</div>

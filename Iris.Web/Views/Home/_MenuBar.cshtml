@@ -23,11 +23,41 @@
                 <li>
                     <a href="@Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new {area = MVC.Product.Name})#/page">کالا‌ها</a>
                 </li>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        <a href="@Url.Action("Login", "Account", new { isUser = true, area = "", returnUrl = Request.Url?.AbsolutePath })">ورود</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Register", "Account", new { area = "", returnUrl = Request.Url?.AbsolutePath })">ثبت نام</a>
+                    </li>
+                }
+
                 @foreach (var pageLink in Model)
                 {
                     <li><a href="@Url.Action(MVC.Post.Home.ActionNames.Index, MVC.Post.Home.Name, new { area = MVC.Post.Name, id = pageLink.Id, slugUrl = pageLink.SlugUrl })">@pageLink.Title</a></li>
                 }
             </ul>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <ul class="nav navbar-nav navbar-right pull-left">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@User.Identity.Name <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("UserFactor","Home",new{area="ShoppingCart"})">سفارشات</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="@Url.Action("ChangeUserPassword", "Account", new { area = "" })">تغییر کلمه عبور</a></li>
+                            <li>
+                                @using (Html.BeginForm(MVC.Account.ActionNames.LogOff, MVC.Account.Name, new { area = "" }, FormMethod.Post, new { id = "logoutForm",style="width:auto;padding:0;" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a href="#" onclick="document.getElementById('logoutForm').submit()" style="display: block;padding: 3px 20px;">خروج</a>
+                                }
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            }
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>

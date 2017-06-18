@@ -1,0 +1,40 @@
+﻿@model Iris.Web.ViewModels.Identity.RegisterViewModel
+@{
+    ViewBag.Title = "ثبت نام";
+}
+<div style="background: #fff; padding-bottom: 25px; min-height: 70vh;" class="container page-wrapper">
+    <div class="col-md-6 center-block" style="float: none;">
+        <div>
+            <h3>ثبت نام</h3>
+        </div>
+        @using (Html.BeginForm(MVC.Account.ActionNames.Register, MVC.Account.Name, new { area = "", ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form", id = "frmLogin" }))
+        {
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            @Html.AntiForgeryToken()
+            <div class="form-group has-feedback">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "پست الکترونیکی", style = "direction:ltr", type = "email" })
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "نام کاربری", style = "direction:ltr", type = "text" })
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "کلمه عبور", style = "direction: ltr;" })
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "تکرار کلمه عبور", style = "direction: ltr;" })
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            @Html.Hidden("returnUrl", ViewBag.ReturnUrl as string, null)
+            <div class="row">
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">ثبت نام</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        }
+    </div>
+</div>

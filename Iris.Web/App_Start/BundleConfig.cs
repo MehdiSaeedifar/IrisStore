@@ -15,7 +15,8 @@ namespace Iris.Web
 
 
             bundles.Add(new ScriptBundle("~/bundles/layout").Include(
-                       "~/Scripts/layout.js"));
+                       "~/Scripts/layout.js",
+                       "~/Scripts/toastr.js"));
 
 
             bundles.Add(new ScriptBundle("~/bundles/adminlayout").Include(
@@ -70,7 +71,6 @@ namespace Iris.Web
                    "~/Scripts/jquery.magnific-popup.js",
                    "~/Scripts/star-rating.js",
                    "~/Scripts/starRating-plugin.js",
-                   "~/Scripts/toastr.js",
                    "~/Scripts/product-page.js"));
 
 
@@ -92,6 +92,7 @@ namespace Iris.Web
                       ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                  "~/Content/toastr.css",
                       "~/Content/site.css"));
 
 
@@ -124,7 +125,7 @@ namespace Iris.Web
 
 
             bundles.Add(new StyleBundle("~/Content/product-page").Include(
-                     "~/Content/toastr.css",
+                   
                      "~/Content/star-rating.css",
                      "~/Content/magnific-popup.css"));
         }

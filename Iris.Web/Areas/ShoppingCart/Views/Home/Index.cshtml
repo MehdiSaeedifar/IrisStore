@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "سبد خرید";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container page-wrapper" style="background-color: #fff;">
+
+    <div class="col-md-12">
+        <div class="row">
+            <h2>سبد خرید</h2>
+        </div>
+        <div class="row">
+            <div id="ordersListTable" class="col-md-12">
+
+            </div>
+            <div id="btnCreateForm" style="display: none;">
+                <a href="@Url.Action("CreateFactor","Home")" id="linkCreateFactor" class="btn btn-sm btn-primary" style="margin-bottom: 35px;">
+                    <i class="fa fa-check"></i> تایید و ایجاد فاکتور
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+
+        (function() {
+                function setCountMaxValue() {
+                    $('input#count').each(function() {
+                        $(this).on('keyup',
+                            function(data) {
+                                var max = parseInt($(this).attr('max'));
+                                var min = 1;
+
+                                if ($(this).val() > max) {
+                                    $(this).val(max);
+                                } else if ($(this).val() < min) {
+                                    $(this).val(min);
+                                }
+
+                            });
+                    });
+
+                    $('button#btnRemoveProductOrder').on('click',
+                        function(event) {
+
+                            var productId = $(this).closest('tr').attr('data-product-id');
+
+                            var productIds = JSON.parse(localStorage.getItem('shopping_carts'));
+
+                            for (var i = 0; i < productIds.length; i++) {
+
+                                if (productIds[i] == productId) {
+                                    productIds.splice(i, 1);
+                                    localStorage.setItem('shopping_carts', JSON.stringify(productIds));
+                                    $('#shoppingCartIcon').attr('data-count', +($('#shoppingCartIcon').attr('data-count')) - 1);
+                                }
+                            }
+
+                            $(this).closest('tr').remove();
+                        }
+                    );
+
+                    $('a#linkCreateFactor').on('click',
+                        function (event) {
+
+                            if ($('#ordersListTable tbody tr').length === 0) {
+                                toastr.warning('باید حداقل یک کالا در فاکتور موجود باشد');
+                                event.preventDefault();
+                                return;
+                            }
+
+                            if (!@User.Identity.IsAuthenticated.ToString().ToLower()) {
+                                $('#authenticationModal').modal();
+                                event.preventDefault();
+                                return;
+                            }
+                            var lst = [];
+                            $("#ordersListTable tbody tr").each(function () {
+                                var productId = $(this).attr('data-product-id');
+                                var count = $(this).find('input#count').val();
+                                lst.push({ productId: productId, count: count });
+                            });
+                            localStorage.setItem('order_list', JSON.stringify(lst));
+                        });
+
+
+                }
+
+
+                var productIds = JSON.parse(localStorage.getItem('shopping_carts'));
+
+                var getOrdersListUrl = '@Url.Action("GetOrdersList", "Home", new {area = "ShoppingCart"})';
+
+                $.post(getOrdersListUrl, { productIds: productIds }).done(function(data) {
+                        $("#ordersListTable").html(data);
+                        $('#btnCreateForm').fadeIn();
+                        setTimeout(function() {
+                                setCountMaxValue();
+                            },
+                            20);
+
+                    })
+                    .fail(function() {
+                    })
+                    .always(function() {
+                    });
+            })
+            ();
+
+
+    </script>
+}

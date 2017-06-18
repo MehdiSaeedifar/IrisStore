@@ -116,6 +116,7 @@ namespace Iris.Web.DependencyResolution
             For<ISiteSettingService>().Use<SiteSettingService>();
             For<IAdminPanelService>().Use<AdminPanelService>();
             For<ISiteMapService>().Use<SiteMapService>();
+            For<IShoppingCartService>().Use<ShoppingCartService>();
         }
 
         #endregion

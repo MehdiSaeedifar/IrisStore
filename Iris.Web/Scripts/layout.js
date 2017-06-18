@@ -51,6 +51,13 @@ $.widget("custom.catcomplete", $.ui.autocomplete, {
 
 $(function () {
 
+    toastr.options = {
+        "positionClass": "toast-top-center",
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "2500"
+    }
+
     $("#searchInput").catcomplete({
         delay: 300,
         source: autocompleteSource,
@@ -71,5 +78,41 @@ $(function () {
 
         $this[0].submit();
     });
+
+    if (JSON.parse(localStorage.getItem('shopping_carts')) !== null) {
+        $('#shoppingCartIcon').attr('data-count', JSON.parse(localStorage.getItem('shopping_carts')).length);
+    } else {
+        $('#shoppingCartIcon').attr('data-count', 0);
+    }
+
+
+
+    $('#btnAddToShoppingCart').on('click', function (event) {
+        event.preventDefault();
+        var $shoppingCartIcon = $('#shoppingCartIcon');
+        var productId = $(this).attr('data-product-id');
+
+        var shoppingCartsStorage = JSON.parse(localStorage.getItem('shopping_carts'));
+
+        if (shoppingCartsStorage == null) {
+            shoppingCartsStorage = [];
+
+        } else if (shoppingCartsStorage) {
+
+            for (var i = 0; i < shoppingCartsStorage.length; i++) {
+                if (shoppingCartsStorage[i] == productId) {
+                    toastr.error('این کالا در حال حاضر در سبد خرید موجود است');
+                    return;
+                }
+            }
+        }
+
+        $shoppingCartIcon.attr('data-count', +($shoppingCartIcon.attr('data-count')) + 1);
+        toastr.info('کالای مورد نظر با موفقیت به سبد خرید اضافه شد');
+        shoppingCartsStorage.push(productId);
+        localStorage.setItem('shopping_carts', JSON.stringify(shoppingCartsStorage));
+
+    });
+
 
 });

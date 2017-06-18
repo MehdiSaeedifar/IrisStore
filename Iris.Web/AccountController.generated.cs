@@ -68,6 +68,12 @@ namespace Iris.Web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetPassword);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult Register()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public AccountController Actions { get { return MVC.Account; } }
@@ -87,10 +93,12 @@ namespace Iris.Web.Controllers
             public readonly string Login = "Login";
             public readonly string LogOff = "LogOff";
             public readonly string ResetPassword = "ResetPassword";
+            public readonly string Register = "Register";
             public readonly string ResetPasswordConfirmation = "ResetPasswordConfirmation";
             public readonly string ForgotPassword = "ForgotPassword";
             public readonly string ForgotPasswordConfirmation = "ForgotPasswordConfirmation";
             public readonly string ChangePassword = "ChangePassword";
+            public readonly string ChangeUserPassword = "ChangeUserPassword";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -99,10 +107,12 @@ namespace Iris.Web.Controllers
             public const string Login = "Login";
             public const string LogOff = "LogOff";
             public const string ResetPassword = "ResetPassword";
+            public const string Register = "Register";
             public const string ResetPasswordConfirmation = "ResetPasswordConfirmation";
             public const string ForgotPassword = "ForgotPassword";
             public const string ForgotPasswordConfirmation = "ForgotPasswordConfirmation";
             public const string ChangePassword = "ChangePassword";
+            public const string ChangeUserPassword = "ChangeUserPassword";
         }
 
 
@@ -113,6 +123,7 @@ namespace Iris.Web.Controllers
         public class ActionParamsClass_Login
         {
             public readonly string returnUrl = "returnUrl";
+            public readonly string isUser = "isUser";
             public readonly string model = "model";
         }
         static readonly ActionParamsClass_ResetPassword s_params_ResetPassword = new ActionParamsClass_ResetPassword();
@@ -124,11 +135,28 @@ namespace Iris.Web.Controllers
             public readonly string code = "code";
             public readonly string model = "model";
         }
+        static readonly ActionParamsClass_Register s_params_Register = new ActionParamsClass_Register();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Register RegisterParams { get { return s_params_Register; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Register
+        {
+            public readonly string returnUrl = "returnUrl";
+            public readonly string userViewModel = "userViewModel";
+        }
         static readonly ActionParamsClass_ForgotPassword s_params_ForgotPassword = new ActionParamsClass_ForgotPassword();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_ForgotPassword ForgotPasswordParams { get { return s_params_ForgotPassword; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_ForgotPassword
+        {
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_ChangeUserPassword s_params_ChangeUserPassword = new ActionParamsClass_ChangeUserPassword();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ChangeUserPassword ChangeUserPasswordParams { get { return s_params_ChangeUserPassword; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ChangeUserPassword
         {
             public readonly string model = "model";
         }
@@ -151,18 +179,24 @@ namespace Iris.Web.Controllers
             public class _ViewNamesClass
             {
                 public readonly string ChangePassword = "ChangePassword";
+                public readonly string ChangeUserPassword = "ChangeUserPassword";
                 public readonly string ForgotPassword = "ForgotPassword";
                 public readonly string ForgotPasswordConfirmation = "ForgotPasswordConfirmation";
                 public readonly string Login = "Login";
+                public readonly string Register = "Register";
                 public readonly string ResetPassword = "ResetPassword";
                 public readonly string ResetPasswordConfirmation = "ResetPasswordConfirmation";
+                public readonly string UserLogin = "UserLogin";
             }
             public readonly string ChangePassword = "~/Views/Account/ChangePassword.cshtml";
+            public readonly string ChangeUserPassword = "~/Views/Account/ChangeUserPassword.cshtml";
             public readonly string ForgotPassword = "~/Views/Account/ForgotPassword.cshtml";
             public readonly string ForgotPasswordConfirmation = "~/Views/Account/ForgotPasswordConfirmation.cshtml";
             public readonly string Login = "~/Views/Account/Login.cshtml";
+            public readonly string Register = "~/Views/Account/Register.cshtml";
             public readonly string ResetPassword = "~/Views/Account/ResetPassword.cshtml";
             public readonly string ResetPasswordConfirmation = "~/Views/Account/ResetPasswordConfirmation.cshtml";
+            public readonly string UserLogin = "~/Views/Account/UserLogin.cshtml";
         }
     }
 
@@ -172,27 +206,29 @@ namespace Iris.Web.Controllers
         public T4MVC_AccountController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void LoginOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string returnUrl);
+        partial void LoginOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string returnUrl, bool isUser);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Login(string returnUrl)
+        public override System.Web.Mvc.ActionResult Login(string returnUrl, bool isUser)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Login);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
-            LoginOverride(callInfo, returnUrl);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "isUser", isUser);
+            LoginOverride(callInfo, returnUrl, isUser);
             return callInfo;
         }
 
         [NonAction]
-        partial void LoginOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Iris.Web.ViewModels.Identity.LoginViewModel model, string returnUrl);
+        partial void LoginOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Iris.Web.ViewModels.Identity.LoginViewModel model, string returnUrl, bool isUser);
 
         [NonAction]
-        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Login(Iris.Web.ViewModels.Identity.LoginViewModel model, string returnUrl)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Login(Iris.Web.ViewModels.Identity.LoginViewModel model, string returnUrl, bool isUser)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Login);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
-            LoginOverride(callInfo, model, returnUrl);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "isUser", isUser);
+            LoginOverride(callInfo, model, returnUrl, isUser);
             return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 
@@ -228,6 +264,31 @@ namespace Iris.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ResetPassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             ResetPasswordOverride(callInfo, model);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
+        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string returnUrl);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Register(string returnUrl)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
+            RegisterOverride(callInfo, returnUrl);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void RegisterOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Iris.Web.ViewModels.Identity.RegisterViewModel userViewModel, string returnUrl);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Register(Iris.Web.ViewModels.Identity.RegisterViewModel userViewModel, string returnUrl)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userViewModel", userViewModel);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
+            RegisterOverride(callInfo, userViewModel, returnUrl);
             return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 
@@ -285,6 +346,29 @@ namespace Iris.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangePassword);
             ChangePasswordOverride(callInfo);
             return callInfo;
+        }
+
+        [NonAction]
+        partial void ChangeUserPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ChangeUserPassword()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangeUserPassword);
+            ChangeUserPasswordOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ChangeUserPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, Iris.Web.ViewModels.Identity.ChangePasswordViewModel model);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> ChangeUserPassword(Iris.Web.ViewModels.Identity.ChangePasswordViewModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangeUserPassword);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            ChangeUserPasswordOverride(callInfo, model);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 
         [NonAction]

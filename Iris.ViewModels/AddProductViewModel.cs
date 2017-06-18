@@ -39,6 +39,10 @@ namespace Iris.ViewModels
         [Required(ErrorMessage = "لطفا حداقل یک گروه را انتخاب نمایید")]
         public List<string> Categories { get; set; }
 
+        [Display(Name = "تعداد")]
+        [Required(ErrorMessage = "لطفا تعداد را وارد کنید")]
+        public int Count { get; set; }
+
         [Display(Name = "توضیحات")]
         [AllowHtml]
         public string Description { get; set; }

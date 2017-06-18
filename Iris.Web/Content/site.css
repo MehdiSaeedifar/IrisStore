@@ -714,9 +714,9 @@ nav#topNavBar {
     }
 
     .container-widget .carousel img {
-        width: 100%;
-        height: 120px !important;
-        width: 120px;
+        /*width: 100%;*/
+        height: 130px !important;
+        /*width: 120px;*/
     }
 
 
@@ -744,7 +744,7 @@ nav#topNavBar {
     }
 
     .product-widget img {
-        width: 100%;
+        height: 130px !important;
     }
 
     .product-widget .product-price {
@@ -780,6 +780,8 @@ div.tooltip.product-widget {
 
 .page-wrapper {
     background-color: #fff;
+    min-height: 70vh;
+    padding-bottom: 25px;
 }
 
 .separator {
@@ -891,7 +893,7 @@ div.tooltip.product-widget {
 
     #productPage .product-images .product-thumbnail img {
         height: 300px;
-        width: 300px;
+        /*width: 300px;*/
     }
 
 #productPage .panel {
@@ -1035,7 +1037,7 @@ text {
 
     #productImages .carousel img {
         height: 120px !important;
-        width: 100%;
+        /*width: 100%;*/
     }
 
 
@@ -1316,3 +1318,23 @@ ul.ui-autocomplete {
         width: 100%;
         max-height: 150px;
     }
+
+.fa-stack[data-count]:after {
+    position: absolute;
+    right: -10%;
+    top: -5%;
+    content: attr(data-count);
+    font-size: 45% !important;
+    padding: .6em;
+    border-radius: 999px;
+    line-height: .75em;
+    color: white;
+    background: rgba(255,0,0,.85);
+    text-align: center;
+    min-width: 2em;
+    font-weight: bold;
+}
+
+.field-validation-error {
+    color: red;
+}

@@ -22,6 +22,7 @@ namespace Iris.ViewModels
         public string MetaDescription { get; set; }
         public double? AverageRating { get; set; }
         public int ViewNumber { get; set; }
+        public int Count { get; set; }
         public IList<CategoryViewModel> Categories { get; set; }
 
         public void CreateMappings(IConfiguration configuration)

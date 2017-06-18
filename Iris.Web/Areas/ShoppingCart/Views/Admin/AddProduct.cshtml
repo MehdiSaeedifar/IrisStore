@@ -1,0 +1,176 @@
+﻿@using Utilities
+@model Iris.ViewModels.AddProductViewModel
+@{
+    var actionType = !Model.Id.HasValue ? ActionType.Add : ActionType.Edit;
+
+    ViewBag.Title = actionType == ActionType.Add ? "افزودن کالای جدید" : $"ویرایش {Model.Name}";
+
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    const string tabsEffect = "fadeIn";
+}
+
+@section styles{
+    <link href="~/Content/select2.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-editable/bootstrap-editable.css" rel="stylesheet" />
+    <link href="~/Content/PersianDatePicker.css" rel="stylesheet" />
+    <style>
+        .ui-state-highlight {
+            height: 100px;
+            background-color: #ccc !important;
+        }
+
+        #tblProductImages td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        #tblProductImages .size {
+            direction: ltr;
+            unicode-bidi: bidi-override;
+            text-align: center;
+        }
+
+        #tblProductImages .name {
+            direction: ltr;
+            unicode-bidi: bidi-override;
+            text-align: center;
+        }
+
+        .ui-sortable-helper {
+            display: table !important;
+            background-color: white;
+        }
+
+        div.editable-input input {
+            direction: ltr;
+            text-align: center;
+        }
+    </style>
+}
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="@Url.Action(MVC.Product.Admin.ActionNames.Index, MVC.Product.Admin.Name, new { area = MVC.Product.Name })"><i class="fa fa-dashboard"></i> مدیریت کالاها</a></li>
+                <li class="active">@ViewBag.Title</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+
+    <form id="frmAddProduct" class="form-horizontal" action="@Url.Action(MVC.Product.Admin.ActionNames.AddProduct, MVC.Product.Admin.Name, new {area = MVC.Product.Name})" method="POST">
+
+        @Html.HiddenFor(m => m.Id)
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <h3 class="box-title" style="margin-top: 10px;">@ViewBag.Title</h3>
+                    </div>
+                    <div class="text-left col-md-6 col-xs-6">
+                        <button class="btn btn-success"> <i class="fa fa-save fa-lg"></i> ذخیره</button>
+                        <a href="@Url.Action(MVC.Product.Admin.ActionNames.Index, MVC.Product.Admin.Name, new {area = MVC.Product.Name})" class="btn btn-default"> <i class="fa fa-list fa-lg"></i> فهرست کالاها</a>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#productInfoTab" data-toggle="tab"><i class="fa fa-list-alt fa-lg fa-fw"></i> مشخصات</a>
+                                </li>
+                                @if (Model.Prices.Count > 0)
+                                {
+                                    <li>
+                                        <a href="#productPriceTab" data-toggle="tab"><i class="fa fa-dollar fa-lg fa-fw"></i> قیمت</a>
+                                    </li>
+                                }
+                                <li>
+                                    <a href="#productImageTab" data-toggle="tab"><i class="fa fa-picture-o fa-lg fa-fw"></i> تصاویر</a>
+                                </li>
+                                <li>
+                                    <a href="#metaTagsTab" data-toggle="tab"><i class="fa fa-google fa-lg fa-fw"></i> موتورهای جستجو</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active animated @tabsEffect" id="productInfoTab">
+                                    @{
+                                        Html.RenderPartial(MVC.Product.Admin.Views.Partials._ProductInfoTab, Model);
+                                    }
+                                </div>
+                                @if (Model.Prices.Count > 0)
+                                {
+                                    <div class="tab-pane animated @tabsEffect" id="productPriceTab">
+                                        @{
+                                            Html.RenderPartial(MVC.Product.Admin.Views.Partials._ProductPriceTab, Model);
+                                        }
+                                    </div>
+                                            }
+                                <div class="tab-pane animated @tabsEffect" id="productImageTab">
+                                    @{
+                                        Html.RenderPartial(MVC.Product.Admin.Views.Partials._ProductImageTab);
+                                    }
+                                </div>
+                                <div class="tab-pane animated @tabsEffect" id="metaTagsTab">
+                                    @{
+                                        Html.RenderPartial(MVC.Post.Widgets.Views._MetaTags, Model.SeoFields);
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</section>
+
+
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/jquerynumber")
+    @Scripts.Render("~/bundles/select2")
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/jQuery-File-Upload/js/vendor/tmpl.min.js"></script>
+    <script src="~/Scripts/jQuery-File-Upload/js/vendor/canvas-to-blob.min.js"></script>
+    <script src="~/Scripts/jQuery-File-Upload/js/vendor/load-image.all.min.js"></script>
+    @Scripts.Render("~/bundles/fileUpload")
+    @Scripts.Render("~/bundles/bootstrap-editable")
+    @Scripts.Render("~/bundles/PersianDatePicker")
+    @Scripts.Render("~/bundles/manage-product")
+
+    <script>
+
+        var productId = parseInt('@Model.Id');
+
+        $("#productInfoTab").productInfoTab();
+
+        $("#productPriceTab").priceTab({
+            addPriceBtn: "btnAddPrice",
+            tblPriceId: "tblProductPrices",
+            currentDate: '@DateTime.Now.ToPersianDate()',
+            productId: productId
+        });
+
+        $("#productImageTab").imageTab({
+            fileUploadId: "fileupload",
+            uploadUrl: "@Url.Action(MVC.Product.Upload.ActionNames.UploadImage, MVC.Product.Upload.Name, new {area = MVC.Product.Name})",
+            tblFilesId: "tblProductImages",
+            uploadedFilesId: "productImagesData"
+        });
+
+    </script>
+}

@@ -141,6 +141,10 @@ namespace Iris.ServiceLayer
             {
                 var result = this.AddToRole(user.Id, role.Name);
             }
+            this._roleManager.CreateRole(new CustomRole()
+            {
+                Name = "User"
+            });
         }
 
         private void createApplicationUserManager()

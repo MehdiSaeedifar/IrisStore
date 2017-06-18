@@ -44,6 +44,22 @@
     @{
         Html.RenderAction(MVC.Home.ActionNames.Footer, MVC.Home.Name, new { area = "" });
     }
+    <div id="authenticationModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div>
+                        <p>برای ثبت سفارش احتیاج است که وارد سیستم شوید.</p>
+                        <ul class="list-inline">
+                            <li><a href="@Url.Action("Login", "Account", new { isUser = true, area = "", returnUrl = Request.Url?.AbsolutePath })" class="btn btn-primary btn-block">ورود</a></li>
+                            <li><a class="btn btn-sm btn-success" href="@Url.Action("Register", "Account", new { area = "", returnUrl = Request.Url?.AbsolutePath })">ثبت نام</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     @Scripts.Render("~/bundles/common")
     <script>
         var autocompleteSource = "@Url.Action(MVC.Search.ActionNames.AutoCompleteSearch, MVC.Search.Name, new {area = ""})";

@@ -1,0 +1,215 @@
+﻿@using System.Web.Mvc.Html
+@model Iris.ViewModels.ListFactorViewModel
+@{
+    ViewBag.Title = "ویرایش سفارش";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content-header">
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="@Url.Action(MVC.ShoppingCart.Admin.ActionNames.Index, MVC.ShoppingCart.Admin.Name, new { area = MVC.ShoppingCart.Name })"><i class="fa fa-dashboard"></i> مدیریت سفارشات</a></li>
+                <li class="active">@ViewBag.Title</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+
+    <form id="frmEditFactor" class="form-horizontal" action="@Url.Action(MVC.ShoppingCart.Admin.ActionNames.EditFactor, MVC.ShoppingCart.Admin.Name, new {area = MVC.ShoppingCart.Name})" method="POST" novalidate>
+
+        @Html.HiddenFor(m => m.Id)
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <h3 class="box-title" style="margin-top: 10px;">@ViewBag.Title</h3>
+                    </div>
+                    <div class="text-left col-md-6 col-xs-6">
+                        <button class="btn btn-success"> <i class="fa fa-save fa-lg"></i> ذخیره</button>
+                        <a href="@Url.Action(MVC.ShoppingCart.Admin.ActionNames.Index, MVC.ShoppingCart.Admin.Name, new {area = MVC.ShoppingCart.Name})" class="btn btn-default"> <i class="fa fa-list fa-lg"></i> فهرست سفارشات</a>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="col-md-12">
+                    @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="Name">نام</label>
+                        @Html.TextBoxFor(m => Model.Name, new { @class = "form-control", style = "width:45%" })
+                    </div>
+                    <div class="form-group">
+                        <label for="LastName">نام خانوادگی</label>
+                        @Html.TextBoxFor(m => Model.LastName, new { @class = "form-control", style = "width:45%" })
+                    </div>
+                    <div class="form-group">
+                        <label for="PhoneNumber">شماره تلفن</label>
+                        @Html.TextBoxFor(m => Model.PhoneNumber, new { @class = "form-control", style = "width:45%" })
+                    </div>
+                    <div class="form-group">
+                        <label for="Address">آدرس</label>
+                        @Html.TextAreaFor(m => Model.Address, new { @class = "form-control", style = "width:45%", rows = 5 })
+                    </div>
+                    <div class="form-group">
+                        <label for="Address">وضعیت</label>
+                        <div class="">
+                            @Html.EditorFor(m => m.Status)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <table id="ordersListTable" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    نام کالا
+                                </th>
+                                <th>
+                                    قیمت
+                                </th>
+                                <th>
+                                    تعداد
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var orderItem in Model.Products)
+                            {
+                                <tr data-product-id="@orderItem.ProductId">
+                                    <td>
+                                        @orderItem.ProductName
+                                    </td>
+                                    <td>
+                                        @orderItem.Price.ToString("#,##0")
+                                    </td>
+                                    <td class="center-block">
+                                        @Html.TextBox("count", orderItem.Count, new
+                                   {
+                                       @class = "form-control center-block",
+                                       type = "number",
+                                       max = orderItem.MaxCount,
+                                       style = "direction:ltr;width:20%;"
+                                   })
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" id="btnRemoveProductOrder">
+                                            <i class="fa fa-remove"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</section>
+
+@section scripts
+{
+    <script>
+
+        (function() {
+
+                    $('input#count').each(function() {
+                        $(this).on('keyup',
+                            function(data) {
+                                var max = parseInt($(this).attr('max'));
+                                var min = 1;
+
+                                if ($(this).val() > max) {
+                                    $(this).val(max);
+                                } else if ($(this).val() < min) {
+                                    $(this).val(min);
+                                }
+
+                            });
+                    });
+
+                    $('button#btnRemoveProductOrder').on('click',
+                        function (event) {
+
+                            if ($('#ordersListTable tbody tr').length == 1) {
+                                event.preventDefault();
+                                toastr.warning('حداقل یک کالا باید در فاکتور باشد.');
+                                return;
+                            }
+
+                            var productId = $(this).closest('tr').attr('data-product-id');
+
+                            //for (var i = 0; i < productIds.length; i++) {
+
+                            //    if (productIds[i] == productId) {
+                            //        productIds.splice(i, 1);
+                            //        localStorage.setItem('shopping_carts', JSON.stringify(productIds));
+                            //        $('#shoppingCartIcon').attr('data-count', +($('#shoppingCartIcon').attr('data-count')) - 1);
+                            //    }
+                            //}
+
+                            $(this).closest('tr').remove();
+                        }
+                    );
+
+
+
+                    $('form#frmEditFactor').on('submit',
+                        function (event) {
+                            event.preventDefault();
+                            if(!$(this).valid()){
+                                event.preventDefault(); //prevent the default action
+                                return false;
+                            }
+
+                            var data = JSON.parse(JSON.stringify($(this).serializeArray()));
+
+                            var factor = {
+                                id: data[0].value,
+                                Name: data[1].value,
+                                lastName: data[2].value,
+                                phoneNumber: data[3].value,
+                                address: data[4].value,
+                                status: data[5].value
+                            }
+
+                            factor.products = [];
+                            $("#ordersListTable tbody tr").each(function () {
+                                var productId = $(this).attr('data-product-id');
+                                var count = $(this).find('input#count').val();
+                                factor.products.push({productId:productId,count:count});
+                            });
+
+
+                            var userFactorUrl = '@Url.Action("Edit","Admin",new{area="ShoppingCart"})';
+                            $.ajax({
+                                url: userFactorUrl,
+                                type: 'post',
+                                //dataType: 'json',
+                                data: JSON.stringify(factor),
+                                contentType: "application/json; charset=utf-8",
+                                //traditional: true
+                            }).done(function () {
+                                
+                                window.location = '/shoppingcart-admin/list';
+                            });
+
+                            return false;
+                        });
+
+
+
+
+
+            })
+            ();
+
+
+    </script>
+}

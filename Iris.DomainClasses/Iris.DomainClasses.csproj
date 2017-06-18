@@ -58,11 +58,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationUser.cs" />
+    <Compile Include="Configurations\FactorConfig.cs" />
     <Compile Include="Configurations\SlideShowConfig.cs" />
     <Compile Include="Configurations\SiteOptionConfig.cs" />
     <Compile Include="Configurations\PostCategoryConfig.cs" />
     <Compile Include="Configurations\CategoryConfig.cs" />
     <Compile Include="Configurations\PoductImageConfig.cs" />
+    <Compile Include="Factor.cs" />
+    <Compile Include="FactorProduct.cs" />
     <Compile Include="PostCategory.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Category.cs" />

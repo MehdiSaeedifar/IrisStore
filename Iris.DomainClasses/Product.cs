@@ -33,7 +33,7 @@ namespace Iris.DomainClasses
         public string MetaDescription { get; set; }
         public string SlugUrl { get; set; }
         public int ViewNumber { get; set; }
-
+        public int Count { get; set; }
 
         public double? TotalRating { get; set; }
         public int? TotalRaters { get; set; }

@@ -5,7 +5,7 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="@Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name, new {area=""})">
                     <h1>@ViewBag.SiteName</h1>
-                    <h2>فروش قطعات الکترونیکی</h2>
+                    <h2>@*فروش قطعات الکترونیکی*@</h2>
                 </a>
             </div>
             <div id="frmSearch" class="col-lg-6 col-md-6 col-md-offset-1">
@@ -18,6 +18,13 @@
                         </span>
                     </div>
                 }
+            </div>
+            <div class="col-lg-2 col-md-2 col-md-offset-1 pull-left text-left">
+                <a href="@Url.Action("Index", "Home", new { area = "ShoppingCart" })" style="display: inline-block;">
+                <span id="shoppingCartIcon" class="fa-stack fa-2x" data-count="0" style="margin-top: 30px; font-size: 1.5em">
+                <i class="fa fa-shopping-cart fa-stack-2x"></i>
+                </span>
+                </a>
             </div>
         </div>
     </div>

@@ -105,6 +105,12 @@ namespace Iris.Web.Areas.Product.Controllers
                 return View(productModel);
             }
 
+            if (productModel.Count <= 0)
+            {
+                productModel.Count = 0;
+                productModel.ProductStatus = ProductStatus.NotAvailable;;
+            }
+
             var addedProductImages = productModel.Images
                                     .Where(image => image.Id == null)
                                     .Select(image => new { image.Url, image.Name, image.ThumbnailUrl })

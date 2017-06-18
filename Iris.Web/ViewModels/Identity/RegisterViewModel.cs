@@ -25,5 +25,7 @@ namespace Iris.Web.ViewModels.Identity
         [Display(Name = "تکرار کلمه عبور")]
         [Compare("Password", ErrorMessage = "تکرار کلمه عبور، با کلمه عبور یکسان نیست")]
         public string ConfirmPassword { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }

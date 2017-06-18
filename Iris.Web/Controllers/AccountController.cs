@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Helpers;
 using System.Web.Mvc;
+using Iris.DataLayer;
 using Iris.DomainClasses;
 using Iris.ServiceLayer.Contracts;
 using Iris.Web.ViewModels.Identity;
@@ -12,13 +15,15 @@ namespace Iris.Web.Controllers
     [RoutePrefix("Account")]
     public partial class AccountController : Controller
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IApplicationUserManager _userManager;
         private readonly IApplicationSignInManager _signInManager;
         private readonly IAuthenticationManager _authenticationManager;
 
-        public AccountController(IApplicationUserManager userManager, IApplicationSignInManager applicationSignInManager,
+        public AccountController(IUnitOfWork unitOfWork, IApplicationUserManager userManager, IApplicationSignInManager applicationSignInManager,
             IAuthenticationManager authenticationManager)
         {
+            _unitOfWork = unitOfWork;
             _userManager = userManager;
             _signInManager = applicationSignInManager;
             _authenticationManager = authenticationManager;
@@ -26,17 +31,20 @@ namespace Iris.Web.Controllers
 
         [Route("Login")]
         [AllowAnonymous]
-        public virtual ActionResult Login(string returnUrl)
+        public virtual ActionResult Login(string returnUrl, bool isUser = false)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            if (!isUser)
+                return View();
+
+            return View("UserLogin");
         }
 
         [Route("Login")]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public virtual async Task<ActionResult> Login(LoginViewModel model, string returnUrl, bool isUser = false)
         {
             if (!ModelState.IsValid)
             {
@@ -60,8 +68,12 @@ namespace Iris.Web.Controllers
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
                 default:
-                    ModelState.AddModelError("", "ورود به سیستم موفقیت آمیز نبود");
-                    return View(model);
+
+                    ModelState.AddModelError("", "نام کاربری یا کلمه عبور اشتباه است");
+                    if (!isUser)
+                        return View(model);
+                    else
+                        return View("UserLogin", model);
             }
         }
 
@@ -74,7 +86,7 @@ namespace Iris.Web.Controllers
             _authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             await _userManager.UpdateSecurityStampAsync(userId);
 
-            return RedirectToAction((string) MVC.Account.ActionNames.Login, (string) MVC.Account.Name);
+            return RedirectToAction((string)MVC.Account.ActionNames.Login, (string)MVC.Account.Name);
         }
 
         [Route("ResetPassword")]
@@ -107,6 +119,57 @@ namespace Iris.Web.Controllers
             }
             addErrors(result);
             return View();
+        }
+
+        [Route("Register")]
+        [AllowAnonymous]
+        public virtual ActionResult Register(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+
+            return View();
+        }
+
+        [Route("Register")]
+        [HttpPost]
+        public virtual async Task<ActionResult> Register(RegisterViewModel userViewModel, string returnUrl)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View(userViewModel);
+            }
+
+
+            var user = new ApplicationUser
+            {
+                UserName = userViewModel.UserName,
+                Email = userViewModel.Email,
+                EmailConfirmed = true
+            };
+
+            var adminresult = await _userManager.CreateAsync(user, userViewModel.Password);
+
+            if (adminresult.Succeeded)
+            {
+                var result = await _userManager.AddToRolesAsync(user.Id, "User");
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError("", result.Errors.First());
+                    return View();
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", adminresult.Errors.First());
+
+                return View();
+            }
+
+            await _signInManager.PasswordSignInAsync(userViewModel.UserName, userViewModel.Password, false, shouldLockout: false);
+
+
+            return redirectToLocal(returnUrl);
         }
 
         //
@@ -165,6 +228,35 @@ namespace Iris.Web.Controllers
         public virtual ActionResult ChangePassword()
         {
             return View();
+        }
+
+        [Route("ChangeUserPassword")]
+        public virtual ActionResult ChangeUserPassword()
+        {
+            return View("ChangeUserPassword");
+        }
+
+        [Route("ChangeUserPassword")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual async Task<ActionResult> ChangeUserPassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("ChangeUserPassword", model);
+            }
+            var result = await _userManager.ChangePasswordAsync(_userManager.GetCurrentUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await _userManager.GetCurrentUserAsync();
+                if (user != null)
+                {
+                    await signInAsync(user, isPersistent: false);
+                }
+                ModelState.AddModelError("کلمه عبور با موفقیت ویرایش شد", "");
+            }
+            addErrors(result);
+            return View("ChangeUserPassword", model);
         }
 
         [Route("ChangePassword")]

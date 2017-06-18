@@ -112,13 +112,17 @@
     <Compile Include="AddProductViewModel.cs" />
     <Compile Include="AdminDashboardViewModel.cs" />
     <Compile Include="CategoryViewModel.cs" />
+    <Compile Include="CreateFactorViewModel.cs" />
     <Compile Include="DataGridViewModel.cs" />
     <Compile Include="EditSettingViewModel.cs" />
+    <Compile Include="FactorDataGridViewModel.cs" />
     <Compile Include="FooterViewModel.cs" />
     <Compile Include="GroupViewModel.cs" />
     <Compile Include="HomePageViewModel.cs" />
     <Compile Include="LinkViewModel.cs" />
+    <Compile Include="ListFactorViewModel.cs" />
     <Compile Include="LuceneSearchModel.cs" />
+    <Compile Include="ProductOrderViewModel.cs" />
     <Compile Include="PageDataGridViewModel.cs" />
     <Compile Include="PagedListPostViewModel.cs" />
     <Compile Include="PagedListViewModel.cs" />

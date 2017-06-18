@@ -22,6 +22,8 @@ namespace Iris.DataLayer
         public DbSet<Tag> Tags { get; set; }
         public DbSet<SlideShowImage> SlideShowImages { get; set; }
         public DbSet<SiteOption> SiteOptions { get; set; }
+        public DbSet<Factor> Factors { get; set; }
+        public DbSet<FactorProduct> FactorProducts { get; set; }
 
 
         /// <summary>
@@ -51,9 +53,10 @@ namespace Iris.DataLayer
             builder.Configurations.Add(new PostCategoryConfig());
             builder.Configurations.Add(new PoductImageConfig());
             builder.Configurations.Add(new SiteOptionConfig());
-
-
             builder.Configurations.Add(new SlideShowConfig());
+            builder.Configurations.Add(new FactorConfig());
+
+
             base.OnModelCreating(builder);
 
             builder.Entity<ApplicationUser>().ToTable("Users");

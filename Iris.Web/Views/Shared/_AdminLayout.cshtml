@@ -100,6 +100,11 @@
                         </a>
                     </li>
                     <li>
+                        <a href="@Url.Action(MVC.ShoppingCart.Admin.ActionNames.Index, MVC.ShoppingCart.Admin.Name, new {area = MVC.ShoppingCart.Name})">
+                            <i class="fa fa-barcode"></i> <span>سفارشات</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="@Url.Action(MVC.SlideShow.Admin.ActionNames.Index, MVC.SlideShow.Admin.Name, new {area = MVC.SlideShow.Name})"><i class="fa fa-picture-o"></i> <span>اسلاید شو</span></a>
                     </li>
                     <li>
@@ -141,11 +146,11 @@
 
         <footer class="main-footer">
             <!-- To the right -->
-            <div class="pull-right hidden-xs">
+            @*<div class="pull-right hidden-xs">
                 منو در <a href="https://github.com/MehdiSaeedifar" target="_blank">GitHub</a> می تونید پیدا کنید.
-            </div>
+            </div>*@
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2016 .</strong>
+            <strong>Copyright &copy; 2017 .</strong>
         </footer>
 
         <input id="message" type="hidden" value="@TempData["message"]" />
