@@ -215,3 +215,4 @@ ModelManifest.xml
 /Iris.Web/Content/tmp/*
 /Iris.Web/UploadedFiles/ProductImages/*
 /Iris.Web/UploadedFiles/ProductImages/Thumbs/*
+/Iris.Web/UploadedFiles/*
