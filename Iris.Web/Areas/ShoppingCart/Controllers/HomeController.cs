@@ -8,6 +8,7 @@ using Iris.DataLayer;
 using Iris.ServiceLayer.Contracts;
 using Iris.ViewModels;
 using Microsoft.AspNet.Identity;
+using Iris.Web.ViewModels.Identity;
 
 namespace Iris.Web.Areas.ShoppingCart.Controllers
 {
@@ -17,13 +18,16 @@ namespace Iris.Web.Areas.ShoppingCart.Controllers
         private readonly IProductService _productService;
         private readonly IShoppingCartService _shoppingCartService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IApplicationUserManager _userManager;
 
-        public HomeController(IProductService productService, IShoppingCartService shoppingCartService,
+
+        public HomeController(IProductService productService, IApplicationUserManager userManager, IShoppingCartService shoppingCartService,
             IUnitOfWork unitOfWork)
         {
             _productService = productService;
             _shoppingCartService = shoppingCartService;
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
         }
 
         [Route]
@@ -40,8 +44,16 @@ namespace Iris.Web.Areas.ShoppingCart.Controllers
 
         [Route("CreateFactor")]
         [HttpGet]
-        public virtual ActionResult CreateFactor()
+        public virtual async Task<ActionResult> CreateFactor()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                ViewBag.FirstName = user.FirstName;
+                ViewBag.LastName = user.LastName;
+                ViewBag.Mobile = user.Mobile;
+                ViewBag.Address = user.Address;
+            }
             return View();
         }
 
@@ -49,9 +61,25 @@ namespace Iris.Web.Areas.ShoppingCart.Controllers
         [HttpPost]
         public virtual async Task<ActionResult> CreateFactor(CreateFactorViewModel factorViewModel)
         {
-            await _shoppingCartService.CreateFactor(factorViewModel);
-            await _unitOfWork.SaveAllChangesAsync();
-            return Content(Url.Action("UserFactor", "Home", new { area = "ShoppingCart" }));
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return View();
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(user.FirstName) && string.IsNullOrEmpty(user.LastName) && string.IsNullOrEmpty(user.Mobile) && string.IsNullOrEmpty(user.Address))
+                {
+                    user.FirstName = factorViewModel.Name;
+                    user.LastName = factorViewModel.LastName;
+                    user.Mobile = factorViewModel.PhoneNumber;
+                    user.Address = factorViewModel.Address;
+                }
+
+                await _shoppingCartService.CreateFactor(factorViewModel);
+                await _unitOfWork.SaveAllChangesAsync();
+                return Content(Url.Action("UserFactor", "Home", new { area = "ShoppingCart" }));
+            }
         }
 
 

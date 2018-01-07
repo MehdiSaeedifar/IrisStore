@@ -253,7 +253,8 @@ namespace Iris.Web.Controllers
                 {
                     await signInAsync(user, isPersistent: false);
                 }
-                ModelState.AddModelError("کلمه عبور با موفقیت ویرایش شد", "");
+                TempData["message"] = "کلمه عبور با موفقیت ویرایش شد!";
+                return RedirectToAction("Index", "Home", routeValues: new { Area = "User" });
             }
             addErrors(result);
             return View("ChangeUserPassword", model);

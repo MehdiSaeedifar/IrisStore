@@ -8,6 +8,7 @@
         SetPasswordSuccess,
         RemoveLoginSuccess,
         RemovePhoneSuccess,
-        Error
+        Error,
+        UserProfileSuccessfully
     }
 }

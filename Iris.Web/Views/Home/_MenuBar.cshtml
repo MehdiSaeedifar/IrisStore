@@ -44,11 +44,18 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@User.Identity.Name <span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            @{ if (User.IsInRole("Admin"))
+                                {
+                                    <li>@Html.ActionLink("پیشخوان مدیریت", "Index", "Dashboard", routeValues: new { Area = "AdminPanel" }, htmlAttributes: null)</li>
+                                }
+                            }
+                            <li role="separator" class="divider"></li>
+                            <li><a href="@Url.Action("Index", "Home", new { area = "User" })">حساب کاربری</a></li>
+                            <li role="separator" class="divider"></li>
                             <li><a href="@Url.Action("UserFactor","Home",new{area="ShoppingCart"})">سفارشات</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="@Url.Action("ChangeUserPassword", "Account", new { area = "" })">تغییر کلمه عبور</a></li>
                             <li>
-                                @using (Html.BeginForm(MVC.Account.ActionNames.LogOff, MVC.Account.Name, new { area = "" }, FormMethod.Post, new { id = "logoutForm",style="width:auto;padding:0;" }))
+                                @using (Html.BeginForm(MVC.Account.ActionNames.LogOff, MVC.Account.Name, new { area = "" }, FormMethod.Post, new { id = "logoutForm", style = "width:auto;padding:0;" }))
                                 {
                                     @Html.AntiForgeryToken()
                                     <a href="#" onclick="document.getElementById('logoutForm').submit()" style="display: block;padding: 3px 20px;">خروج</a>

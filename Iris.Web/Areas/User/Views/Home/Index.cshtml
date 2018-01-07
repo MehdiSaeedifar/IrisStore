@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNet.Identity
+@model Iris.Web.ViewModels.Identity.ProfileViewmodel
+
+
+<br />
+@{
+    ViewBag.Title = "حساب کاربری";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div>
+        <h3 color:blue">@ViewBag.Title</h3>
+        <p class="text-success" >@ViewBag.StatusMessage</p>
+        <p class="text-success" >@TempData["Message"]</p>
+        <hr />
+        <div class="row">
+            <div class="col-md-8 ">
+                <p class="btn btn-effect" style="color:black;border:solid 1px red">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @Html.ActionLink("تغییر گذرواژه", "ChangeUserPassword", "Account",routeValues: new { Area = "" }, htmlAttributes: new { title = "" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("بازنشانی گذرواژه", "ResetPassword", "Account" , routeValues: new { Area = "" }, htmlAttributes: new { title = "" })
+                    }
+                </p>
+                <hr />
+                <p class="btn btn-effect" style="color:black;border:solid 1px green">
+                    @Html.ActionLink("درج اطلاعات حساب کاربری", "UserProfile")
+                </p>
+                <hr />
+            </div>
+        </div>
+    </div>
+</div>

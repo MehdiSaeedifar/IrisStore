@@ -253,6 +253,7 @@
     <Compile Include="Areas\SiteSetting\Controllers\AdminController.cs" />
     <Compile Include="Areas\SlideShow\Controllers\AdminController.cs" />
     <Compile Include="Areas\User\Controllers\AdminController.cs" />
+    <Compile Include="Areas\User\Controllers\HomeController.cs" />
     <Compile Include="AutoMapperConvertor\ProductStatusToStringConvertor.cs" />
     <Compile Include="Caching\CacheService.cs" />
     <Compile Include="Caching\ICacheService.cs" />
@@ -394,6 +395,7 @@
     <Compile Include="ViewModels\Identity\LoginViewModel.cs" />
     <Compile Include="ViewModels\Identity\ManageLoginsViewModel.cs" />
     <Compile Include="ViewModels\Identity\ManageMessageId.cs" />
+    <Compile Include="ViewModels\Identity\ProfileViewModel.cs" />
     <Compile Include="ViewModels\Identity\RegisterViewModel.cs" />
     <Compile Include="ViewModels\Identity\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\Identity\RoleViewModel.cs" />
@@ -411,7 +413,6 @@
   <ItemGroup>
     <Content Include="404.html" />
     <Content Include="500.html" />
-    <Content Include="App_Data\db.sdf" />
     <Content Include="App_Data\ErrorsLog\tmp.txt" />
     <Content Include="App_Data\Lucene_Index\tmp.txt" />
     <Content Include="Content\admin.css" />
@@ -1163,12 +1164,14 @@
     <Content Include="Areas\ShoppingCart\Views\Home\Index.cshtml" />
     <Content Include="Areas\ShoppingCart\Views\_ViewStart.cshtml" />
     <Content Include="Areas\ShoppingCart\Views\Home\GetOrdersList.cshtml" />
-    <Content Include="Areas\ShoppingCart\Views\Home\CreateFactor.cshtml" />
     <Content Include="Areas\ShoppingCart\Views\Home\UserFactor.cshtml" />
     <Content Include="Areas\ShoppingCart\Views\Admin\AddProduct.cshtml" />
     <Content Include="Areas\ShoppingCart\Views\Admin\Index.cshtml" />
     <Content Include="Areas\ShoppingCart\Views\Admin\Edit.cshtml" />
     <Content Include="Areas\ShoppingCart\Views\Shared\EditorTemplates\FactorStatus.cshtml" />
+    <Content Include="Areas\ShoppingCart\Views\Home\CreateFactor.cshtml" />
+    <Content Include="Areas\User\Views\Home\Index.cshtml" />
+    <Content Include="Areas\User\Views\Home\UserProfile.cshtml" />
     <None Include="Properties\PublishProfiles\IrisStore.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ckeditor\styles.js" />
