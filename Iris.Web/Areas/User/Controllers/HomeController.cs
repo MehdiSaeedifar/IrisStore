@@ -48,8 +48,16 @@ namespace Iris.Web.Areas.User.Controllers
 
         [Route("UserProfile")]
         [HttpGet]
-        public virtual ActionResult UserProfile()
+        public virtual async Task<ActionResult> UserProfile()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                ViewBag.FirstName = user.FirstName;
+                ViewBag.LastName = user.LastName;
+                ViewBag.Mobile = user.Mobile;
+                ViewBag.Address = user.Address;
+            }
             return View();
         }
 
