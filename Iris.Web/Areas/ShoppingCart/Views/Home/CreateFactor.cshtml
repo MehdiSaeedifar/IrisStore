@@ -10,48 +10,88 @@
         <div class="row">
             <h2>صدور فاکتور</h2>
         </div>
-        @using (Html.BeginForm("CreateFactor", "Home", new { area = "ShoppingCart" }, FormMethod.Post, new { id = "frmSubmitFactor" }))
-        {
-            <div class="row">
 
+        @{if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(ViewBag.FirstName) && !string.IsNullOrEmpty(ViewBag.LastName) && !string.IsNullOrEmpty(ViewBag.Mobile) && !string.IsNullOrEmpty(ViewBag.Address))
+        {
+            using (Html.BeginForm("CreateFactor", "Home", new { area = "ShoppingCart" }, FormMethod.Post, new { id = "frmSubmitFactor" }))
+            {
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="Name">نام</label>
-                        @Html.TextBoxFor(m => Model.Name, new { @class = "form-control", style = "width:45%" })
+                        @Html.TextBoxFor(m => Model.Name, htmlAttributes: new { @Value = ViewBag.FirstName , @class = "form-control", style = "width:45%" })
                         @Html.ValidationMessageFor(x => x.Name)
                     </div>
                     <div class="form-group">
                         <label for="LastName">نام خانوادگی</label>
-                        @Html.TextBoxFor(m => Model.LastName, new { @class = "form-control", style = "width:45%" })
+                        @Html.TextBoxFor(m => Model.LastName, htmlAttributes: new { @Value = ViewBag.LastName, @class = "form-control", style = "width:45%" })
                         @Html.ValidationMessageFor(x => x.LastName)
                     </div>
                     <div class="form-group">
                         <label for="PhoneNumber">شماره تلفن</label>
-                        @Html.TextBoxFor(m => Model.PhoneNumber, new { @class = "form-control", style = "width:45%" })
+                        @Html.TextBoxFor(m => Model.PhoneNumber, htmlAttributes: new { @Value = ViewBag.Mobile, @class = "form-control", style = "width:45%" })
                         @Html.ValidationMessageFor(x => x.PhoneNumber)
                     </div>
                     <div class="form-group">
                         <label for="Address">آدرس</label>
-                        @Html.TextAreaFor(m => Model.Address, new { @class = "form-control", style = "width:45%", rows = 5 })
+                        @Html.TextBoxFor(m => Model.Address, htmlAttributes: new { @Value = ViewBag.Address, @class = "form-control", style = "width:45%" })
                         @Html.ValidationMessageFor(x => x.Address)
                     </div>
                 </div>
 
-            </div>
-            <div class="row" style="padding-bottom: 25px;">
-                <div class="col-md-4">
-                    <button id="btnSumbit" type="submit" style="width: 35%" class="btn btn-sm btn-success">
-                        <i class="fa fa-money"></i> پرداخت
-                    </button>
+                    <div class="row" style="padding-bottom: 25px;">
+                        <div class="col-md-4">
+                            <button id="btnSumbit" type="submit" style="width: 35%" class="btn btn-sm btn-success">
+                                <i class="fa fa-money"></i> پرداخت
+                            </button>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                using (Html.BeginForm("CreateFactor", "Home", new { area = "ShoppingCart" }, FormMethod.Post, new { id = "frmSubmitFactor" }))
+                {
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Name">نام</label>
+                                @Html.TextBoxFor(m => Model.Name, new { @class = "form-control", style = "width:45%" })
+                                @Html.ValidationMessageFor(x => x.Name)
+                            </div>
+                            <div class="form-group">
+                                <label for="LastName">نام خانوادگی</label>
+                                @Html.TextBoxFor(m => Model.LastName, new { @class = "form-control", style = "width:45%" })
+                                @Html.ValidationMessageFor(x => x.LastName)
+                            </div>
+                            <div class="form-group">
+                                <label for="PhoneNumber">شماره تلفن</label>
+                                @Html.TextBoxFor(m => Model.PhoneNumber, new { @class = "form-control", style = "width:45%" })
+                                @Html.ValidationMessageFor(x => x.PhoneNumber)
+                            </div>
+                            <div class="form-group">
+                                <label for="Address">آدرس</label>
+                                @Html.TextAreaFor(m => Model.Address, new { @class = "form-control", style = "width:45%", rows = 5 })
+                                @Html.ValidationMessageFor(x => x.Address)
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row" style="padding-bottom: 25px;">
+                        <div class="col-md-4">
+                            <button id="btnSumbit2" type="submit" style="width: 35%" class="btn btn-sm btn-success">
+                                <i class="fa fa-money"></i> پرداخت
+                            </button>
+                        </div>
+                    </div>
+                }
+            }
+            <div class="row">
+                <div id="ordersListTable" class="col-md-12">
+
                 </div>
             </div>
         }
-        <div class="row">
-            <div id="ordersListTable" class="col-md-12">
-
-            </div>
-        </div>
-
     </div>
 </div>
 
@@ -60,81 +100,80 @@
     <script>
 
         (function() {
-                function setCountMaxValue() {
-                    $('input#count').each(function() {
-                        $(this).on('keyup',
-                            function(data) {
-                                var max = parseInt($(this).attr('max'));
-                                var min = 1;
+            function setCountMaxValue() {
+                $('input#count').each(function () {
+                    $(this).on('keyup',
+                        function (data) {
+                            var max = parseInt($(this).attr('max'));
+                            var min = 1;
 
-                                if ($(this).val() > max) {
-                                    $(this).val(max);
-                                } else if ($(this).val() < min) {
-                                    $(this).val(min);
-                                }
-
-                            });
-                    });
-
-                    $('button#btnRemoveProductOrder').on('click',
-                        function() {
-
-                            var productId = $(this).closest('tr').attr('data-product-id');
-
-                            var productIds = JSON.parse(localStorage.getItem('shopping_carts'));
-
-                            if (productIds.length == 1) {
-                                toastr.warning('باید حداقل یک کالا در فاکتور موجود بماند.');
-                                return;
+                            if ($(this).val() > max) {
+                                $(this).val(max);
+                            } else if ($(this).val() < min) {
+                                $(this).val(min);
                             }
-
-                            for (var i = 0; i < productIds.length; i++) {
-
-                                if (productIds[i] == productId) {
-                                    productIds.splice(i, 1);
-                                    localStorage.setItem('shopping_carts', JSON.stringify(productIds));
-                                    $('#shoppingCartIcon').attr('data-count', +($('#shoppingCartIcon').attr('data-count')) - 1);
-                                }
-                            }
-
-                            $(this).closest('tr').remove();
-                        }
-                    );
-
-                    $('a#linkCreateFactor').on('click',
-                        function (event) {
-                            if (!@User.Identity.IsAuthenticated.ToString().ToLower()) {
-                                $('#authenticationModal').modal();
-                                event.preventDefault();
-                                return;
-                            }
-
 
                         });
+                });
 
-                    $('form#frmSubmitFactor').on('submit',
-                        function (event) {
+                $('button#btnRemoveProductOrder').on('click',
+                    function () {
+
+                        var productId = $(this).closest('tr').attr('data-product-id');
+
+                        var productIds = JSON.parse(localStorage.getItem('shopping_carts'));
+
+                        if (productIds.length == 1) {
+                            toastr.warning('باید حداقل یک کالا در فاکتور موجود بماند.');
+                            return;
+                        }
+
+                        for (var i = 0; i < productIds.length; i++) {
+
+                            if (productIds[i] == productId) {
+                                productIds.splice(i, 1);
+                                localStorage.setItem('shopping_carts', JSON.stringify(productIds));
+                                $('#shoppingCartIcon').attr('data-count', +($('#shoppingCartIcon').attr('data-count')) - 1);
+                            }
+                        }
+
+                        $(this).closest('tr').remove();
+                    }
+                );
+
+                $('a#linkCreateFactor').on('click',
+                    function (event) {
+                        if (!@User.Identity.IsAuthenticated.ToString().ToLower()) {
+                            $('#authenticationModal').modal();
                             event.preventDefault();
-                            if(!$(this).valid()){
-                                event.preventDefault(); //prevent the default action
-                                return false;
-                            }
+                            return;
+                        }
 
-                            var data = JSON.parse(JSON.stringify($(this).serializeArray()));
 
-                            var factor = {
-                                Name: data[0].value,
-                                lastName: data[1].value,
-                                phoneNumber: data[2].value,
-                                address: data[3].value
-                            }
+                    });
 
-                            factor.products = [];
-                            $("#ordersListTable tbody tr").each(function () {
-                                var productId = $(this).attr('data-product-id');
-                                var count = $(this).find('input#count').val();
-                                factor.products.push({productId:productId,count:count});
-                            });
+                $('form#frmSubmitFactor').on('submit',
+                    function (event) {
+                        event.preventDefault();
+                        if (!$(this).valid()) {
+                            event.preventDefault(); //prevent the default action
+                            return false;
+                        }
+                        var data = JSON.parse(JSON.stringify($(this).serializeArray()));
+
+                        var factor = {
+                            Name: data[0].value,
+                            lastName: data[1].value,
+                            phoneNumber: data[2].value,
+                            address: data[3].value
+                        }
+                        factor.products = [];
+                        $("#ordersListTable tbody tr").each(function () {
+                            var productId = $(this).attr('data-product-id');
+                            var count = $(this).find('input#count').val();
+                            factor.products.push({ productId: productId, count: count });
+                        }
+                           );
 
 
                             var userFactorUrl = '@Url.Action("CreateFactor","Home",new{area="ShoppingCart"})';
@@ -155,6 +194,7 @@
                             return false;
                         });
 
+
                     $("#ordersListTable tr").each(function () {
                         var productId = $(this).attr('data-product-id');
                         var count = $(this).find('input#count').val();
@@ -165,9 +205,7 @@
                             }
                         }
                     });
-
-
-                }
+            }
 
 
                 var productIds = JSON.parse(localStorage.getItem('shopping_carts'));
@@ -184,7 +222,6 @@
                     });
             })
             ();
-
 
     </script>
 }

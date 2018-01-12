@@ -1,0 +1,104 @@
+﻿@model Iris.Web.ViewModels.Identity.ProfileViewmodel
+@{
+    ViewBag.Title = "پروفایل";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container page-wrapper" style="background-color: #fff;">
+    <div class="col-md-12">
+        <div class="row">
+            <h2>پروفایل</h2>
+        </div>
+        @{if (User.Identity.IsAuthenticated && !string.IsNullOrEmpty(ViewBag.FirstName) && !string.IsNullOrEmpty(ViewBag.LastName) && !string.IsNullOrEmpty(ViewBag.Mobile) && !string.IsNullOrEmpty(ViewBag.Address))
+            {
+                using (Html.BeginForm("UserProfile", "Home", new { area = "User" }, FormMethod.Post, new { id = "frmSubmitProfile" }))
+                {
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Name">نام</label>
+                                @Html.TextBoxFor(m => Model.FirstName, htmlAttributes: new { @Value = ViewBag.FirstName, @class = "form-control", style = "width:45%" })
+                                @Html.ValidationMessageFor(x => x.FirstName)
+                            </div>
+                            <div class="form-group">
+                                <label for="LastName">نام خانوادگی</label>
+                                @Html.TextBoxFor(m => Model.LastName, htmlAttributes: new { @Value = ViewBag.LastName, @class = "form-control", style = "width:45%" })
+                                @Html.ValidationMessageFor(x => x.LastName)
+                            </div>
+                            <div class="form-group">
+                                <label for="PhoneNumber">شماره تلفن</label>
+                                @Html.TextBoxFor(m => Model.Mobile, htmlAttributes: new { @Value = ViewBag.Mobile, @class = "form-control", style = "width:45%" })
+                                @Html.ValidationMessageFor(x => x.Mobile)
+                            </div>
+                            <div class="form-group">
+                                <label for="Address">آدرس</label>
+                                @Html.TextBoxFor(m => Model.Address, htmlAttributes: new { @Value = ViewBag.Address, @class = "form-control", style = "width:45%" })
+                                @Html.ValidationMessageFor(x => x.Address)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-bottom: 25px;">
+                        <div class="col-md-4">
+                            <button id="btnSumbit" type="submit" style="width: 35%" class="btn btn-sm btn-success">
+                                <i class="fa fa-money"></i> ثبت اطلاعات
+                            </button>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                using (Html.BeginForm("UserProfile", "Home", new { area = "User" }, FormMethod.Post, new { id = "frmSubmitProfile" }))
+                {
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Name">نام</label>
+                                @Html.TextBoxFor(m => Model.FirstName, new { @class = "form-control", style = "width:45%" })
+                                @Html.ValidationMessageFor(x => x.FirstName)
+                            </div>
+                            <div class="form-group">
+                                <label for="LastName">نام خانوادگی</label>
+                                @Html.TextBoxFor(m => Model.LastName, new { @class = "form-control", style = "width:45%" })
+                                @Html.ValidationMessageFor(x => x.LastName)
+                            </div>
+                            <div class="form-group">
+                                <label for="PhoneNumber">شماره تلفن</label>
+                                @Html.TextBoxFor(m => Model.Mobile, new { @class = "form-control", style = "width:45%" })
+                                @Html.ValidationMessageFor(x => x.Mobile)
+                            </div>
+                            <div class="form-group">
+                                <label for="Address">آدرس</label>
+                                @Html.TextAreaFor(m => Model.Address, new { @class = "form-control", style = "width:45%", rows = 5 })
+                                @Html.ValidationMessageFor(x => x.Address)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-bottom: 25px;">
+                        <div class="col-md-4">
+                            <button id="btnSumbit" type="submit" style="width: 35%" class="btn btn-sm btn-success">
+                                <i class="fa fa-money"></i> ثبت اطلاعات
+                            </button>
+                        </div>
+                    </div>
+                }
+            }
+
+        }
+
+        <div class="row">
+            <div id="ordersListTable" class="col-md-12">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

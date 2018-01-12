@@ -20,9 +20,9 @@
             <!-- Logo -->
             <a href="#" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>IRIS</b></span>
+                <span class="logo-mini"><b>IR</b></span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>IRIS</b> CMS</span>
+                <span class="logo-lg"><b>IRAN</b>CMS</span>
             </a>
 
             <!-- Header Navbar -->
@@ -34,7 +34,6 @@
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-
                         <!-- User Account Menu -->
                         <li class="dropdown user user-menu">
                             <!-- Menu Toggle Button -->
@@ -135,6 +134,13 @@
                             <i class="fa fa-cogs"></i> <span>تنظیمات سایت</span>
                         </a>
                     </li>
+
+                    <li>
+                        <a href="https://github.com/MehdiSaeedifar/IrisStore">
+                            <i class="fa fa-github"></i> <span>گیت هاب</span>
+                        </a>
+                    </li>
+
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -145,12 +151,7 @@
         </div>
 
         <footer class="main-footer">
-            <!-- To the right -->
-            @*<div class="pull-right hidden-xs">
-                منو در <a href="https://github.com/MehdiSaeedifar" target="_blank">GitHub</a> می تونید پیدا کنید.
-            </div>*@
-            <!-- Default to the left -->
-            <strong>Copyright &copy; 2017 .</strong>
+            @Html.ActionLink("پیشخوان عمومی", "Index", "Home", routeValues: new { Area = "" }, htmlAttributes: new { @target="blank" })
         </footer>
 
         <input id="message" type="hidden" value="@TempData["message"]" />
