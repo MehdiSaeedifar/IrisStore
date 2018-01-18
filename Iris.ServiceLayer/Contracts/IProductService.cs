@@ -24,6 +24,7 @@ namespace Iris.ServiceLayer.Contracts
         Task<IList<ProductWidgetViewModel>> GetMostViewedProducts(int count);
         Task<IList<ProductWidgetViewModel>> GetPopularProducts(int count);
         Task<IList<decimal>> GetAvailableProductPrices();
+        Task<IList<decimal>> GetAvailableProductDiscounts();
         Task<ProductSearchPagedList> SearchProduct(SearchProductViewModel searchModel);
         Task<ProductPageViewModel> GetProductPage(int productId);
         Task UpdateViewNumber(int productId);
@@ -40,6 +41,7 @@ namespace Iris.ServiceLayer.Contracts
         public string Description { get; set; }
         public string Image { get; set; }
         public decimal Price { get; set; }
+        public decimal Discount { get; set; }
         public ProductStatus ProductStatus { get; set; }
         public string SlugUrl { get; set; }
         public string Category { get; set; }

@@ -56,6 +56,7 @@ namespace Iris.Web
             bundles.Add(new ScriptBundle("~/bundles/manage-product").Include(
                 "~/Scripts/Admin/Product/info-tab.js",
                         "~/Scripts/Admin/Product/price-tab.js",
+                        "~/Scripts/Admin/Product/discount-tab.js",
                         "~/Scripts/Admin/Product/image-tab.js"));
 
 

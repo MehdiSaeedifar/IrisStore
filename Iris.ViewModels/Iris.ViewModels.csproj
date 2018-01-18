@@ -122,6 +122,7 @@
     <Compile Include="LinkViewModel.cs" />
     <Compile Include="ListFactorViewModel.cs" />
     <Compile Include="LuceneSearchModel.cs" />
+    <Compile Include="ProductDataGridViewModel.cs" />
     <Compile Include="ProductOrderViewModel.cs" />
     <Compile Include="PageDataGridViewModel.cs" />
     <Compile Include="PagedListPostViewModel.cs" />
@@ -134,7 +135,6 @@
     <Compile Include="PostViewModel.cs" />
     <Compile Include="SiteMapLinkViewModel.cs" />
     <Compile Include="SlideShowDataGridViewModel.cs" />
-    <Compile Include="ProductDataGridViewModel.cs" />
     <Compile Include="ProductPageViewModel.cs" />
     <Compile Include="ProductWidgetViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

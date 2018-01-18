@@ -33,7 +33,9 @@ namespace Iris.Web.Areas.Product.Controllers
                     SelectedGroups = new List<GroupViewModel>(),
                     AvailableGroups = _mappingEngine.Map<IList<CategoryViewModel>, IList<GroupViewModel>>((await _categoryService.GetSearchProductsCategories())),
                 },
-                Prices = await _productService.GetAvailableProductPrices()
+                Prices = await _productService.GetAvailableProductPrices(),
+                Discounts = await _productService.GetAvailableProductPrices()
+
             };
 
             return View(model);

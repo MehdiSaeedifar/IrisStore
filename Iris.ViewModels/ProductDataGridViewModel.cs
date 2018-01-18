@@ -11,15 +11,21 @@ namespace Iris.ViewModels
         public string Title { get; set; }
         public ProductStatus ProductStatus { get; set; }
         public decimal Price { get; set; }
+        public decimal Discount { get; set; }
+
         //public int ViewNumber { get; set; }
 
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Product, ProductDataGridViewModel>()
-                .ForMember(pModel => pModel.Price,
+                 .ForMember(pModel => pModel.Price,
                     opt =>
                         opt.MapFrom(
-                            price => price.Prices.OrderByDescending(p => p.Date).Select(p => p.Price).FirstOrDefault()));
+                            price => price.Prices.OrderByDescending(p => p.Date).Select(p => p.Price).FirstOrDefault()))
+                .ForMember(pModel => pModel.Discount,
+                    opt =>
+                        opt.MapFrom(
+                            discount => discount.Discounts.OrderByDescending(p => p.StartDate).Select(p => p.Discount).FirstOrDefault()));
 
 
             //.ForMember(pModel => pModel.ProductStatus, opt =>

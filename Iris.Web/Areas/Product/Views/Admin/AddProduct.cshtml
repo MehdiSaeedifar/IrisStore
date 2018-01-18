@@ -9,12 +9,12 @@
 
     const string tabsEffect = "fadeIn";
 }
-
 @section styles{
     <link href="~/Content/select2.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-editable/bootstrap-editable.css" rel="stylesheet" />
     <link href="~/Content/PersianDatePicker.css" rel="stylesheet" />
     <style>
+
         .ui-state-highlight {
             height: 100px;
             background-color: #ccc !important;
@@ -48,7 +48,6 @@
         }
     </style>
 }
-
 <section class="content-header">
     <div class="row">
         <div class="col-md-12">
@@ -59,11 +58,8 @@
         </div>
     </div>
 </section>
-
 <section class="content">
-
     <form id="frmAddProduct" class="form-horizontal" action="@Url.Action(MVC.Product.Admin.ActionNames.AddProduct, MVC.Product.Admin.Name, new {area = MVC.Product.Name})" method="POST">
-
         @Html.HiddenFor(m => m.Id)
         <div class="box box-info">
             <div class="box-header with-border">
@@ -96,6 +92,12 @@
                                         <a href="#productPriceTab" data-toggle="tab"><i class="fa fa-dollar fa-lg fa-fw"></i> قیمت</a>
                                     </li>
                                 }
+                                @if (Model.Discounts.Count > 0)
+                                {
+                                    <li>
+                                        <a href="#productDiscountTab" data-toggle="tab"><i class="fa fa-dollar fa-lg fa-fw"></i> تخفیفات</a>
+                                    </li>
+                                }
                                 <li>
                                     <a href="#productImageTab" data-toggle="tab"><i class="fa fa-picture-o fa-lg fa-fw"></i> تصاویر</a>
                                 </li>
@@ -116,7 +118,15 @@
                                             Html.RenderPartial(MVC.Product.Admin.Views.Partials._ProductPriceTab, Model);
                                         }
                                     </div>
-                                            }
+                                }
+                                @if (Model.Discounts.Count > 0)
+                                {
+                                    <div class="tab-pane animated @tabsEffect" id="productDiscountTab">
+                                        @{
+                                            Html.RenderPartial(MVC.Product.Admin.Views.Partials._ProductDiscountTab, Model);
+                                        }
+                                    </div>
+                                }
                                 <div class="tab-pane animated @tabsEffect" id="productImageTab">
                                     @{
                                         Html.RenderPartial(MVC.Product.Admin.Views.Partials._ProductImageTab);
@@ -133,14 +143,10 @@
                 </div>
             </div>
         </div>
-
     </form>
 </section>
 
-
-
 @section scripts{
-
     @Scripts.Render("~/bundles/jquerynumber")
     @Scripts.Render("~/bundles/select2")
     <script src="~/Scripts/ckeditor/ckeditor.js"></script>
@@ -151,7 +157,6 @@
     @Scripts.Render("~/bundles/bootstrap-editable")
     @Scripts.Render("~/bundles/PersianDatePicker")
     @Scripts.Render("~/bundles/manage-product")
-
     <script>
 
         var productId = parseInt('@Model.Id');
@@ -162,6 +167,14 @@
             addPriceBtn: "btnAddPrice",
             tblPriceId: "tblProductPrices",
             currentDate: '@DateTime.Now.ToPersianDate()',
+            productId: productId
+        });
+
+         $("#productDiscountTab").discountTab({
+            addPriceBtn: "btnAddDiscount",
+            tblPriceId: "tblProductDiscounts",
+            startDate: '@DateTime.Now.ToPersianDate()',
+            endDate: '@DateTime.Now.AddDays(1).ToPersianDate()',
             productId: productId
         });
 

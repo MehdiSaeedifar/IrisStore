@@ -1172,6 +1172,7 @@
     <Content Include="Areas\ShoppingCart\Views\Home\CreateFactor.cshtml" />
     <Content Include="Areas\User\Views\Home\Index.cshtml" />
     <Content Include="Areas\User\Views\Home\UserProfile.cshtml" />
+    <Content Include="Areas\Product\Views\Admin\Partials\_ProductDiscountTab.cshtml" />
     <None Include="Properties\PublishProfiles\IrisStore.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ckeditor\styles.js" />

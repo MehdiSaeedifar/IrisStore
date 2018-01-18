@@ -56,6 +56,7 @@ namespace Iris.ServiceLayer
                 {
                     Count = factorProduct.Count,
                     Price =selectedProduct.Prices.OrderByDescending(x=>x.Date).FirstOrDefault().Price,
+                    Discount = selectedProduct.Discounts.OrderByDescending(x => x.StartDate).FirstOrDefault().Discount,
                     ProductId = selectedProduct.Id
                 });
             }
@@ -81,6 +82,7 @@ namespace Iris.ServiceLayer
                     {
                         Id = p.Id,
                         Price = p.Price,
+                        Discount = p.Discount,
                         Count = p.Count,
                         ProductId = p.ProductId,
                         ProductName = p.Product.Title
@@ -128,6 +130,7 @@ namespace Iris.ServiceLayer
                     {
                         Id = p.Id,
                         Price = p.Price,
+                        Discount = p.Discount,
                         Count = p.Count,
                         ProductId = p.ProductId,
                         ProductName = p.Product.Title,

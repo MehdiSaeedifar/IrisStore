@@ -70,6 +70,7 @@ namespace Iris.ServiceLayer
                 .Include(p => p.Categories)
                 .Include(p => p.Images)
                 .Include(p => p.Prices)
+                .Include(p => p.Discounts)
                 .Where(p => p.Id == editedProduct.Id).SingleOrDefaultAsync();
 
             //_products.Attach(editedProduct);
@@ -90,6 +91,8 @@ namespace Iris.ServiceLayer
             var existingPrices = selectedProduct.Prices.ToList();
             UpdateOneToManyRelation(editedProduct.Prices.ToList(), existingPrices);
 
+            var existingDiscounts = selectedProduct.Discounts.ToList();
+            UpdateOneToManyRelation(editedProduct.Discounts.ToList(), existingDiscounts);
 
             //ابتدا کلیه گروه‌های موجود را حذف خواهیم کرد
             if (selectedProduct.Categories != null && selectedProduct.Categories.Any())
@@ -211,6 +214,16 @@ namespace Iris.ServiceLayer
                 .ToListAsync();
         }
 
+        public async Task<IList<decimal>> GetAvailableProductDiscounts()
+        {
+            return await _products.Where(product => product.ProductStatus == ProductStatus.Available)
+                .Select(product => product.Discounts
+                        .OrderByDescending(discount => discount.StartDate).Select(discount => discount.Discount)
+                        .FirstOrDefault())
+                .OrderBy(discount => discount)
+                .ToListAsync();
+        }
+
         public async Task<ProductSearchPagedList> SearchProduct(SearchProductViewModel searchModel)
         {
             var productsQuery = _products.AsQueryable();
@@ -241,6 +254,13 @@ namespace Iris.ServiceLayer
                 productsQuery = productsQuery
                 .Where(product => product.Prices.OrderByDescending(price => price.Date).Select(price => price.Price).FirstOrDefault() >= searchModel.MinPrice &&
                 product.Prices.OrderByDescending(price => price.Date).Select(price => price.Price).FirstOrDefault() <= searchModel.MaxPrice);
+            }
+
+            if (searchModel.MinDiscount.HasValue || searchModel.MaxDiscount.HasValue)
+            {
+                productsQuery = productsQuery
+                .Where(product => product.Discounts.OrderByDescending(discount => discount.StartDate).Select(discount => discount.Discount).FirstOrDefault() >= searchModel.MinDiscount &&
+                product.Discounts.OrderByDescending(discount => discount.StartDate).Select(discount => discount.Discount).FirstOrDefault() <= searchModel.MaxDiscount);
             }
 
             var result = new ProductSearchPagedList
@@ -310,6 +330,7 @@ namespace Iris.ServiceLayer
                 Id = p.Id,
                 ProductStatus = p.ProductStatus,
                 Price = p.Prices.OrderByDescending(price => price.Date).Select(price => price.Price).FirstOrDefault(),
+                Discount = p.Discounts.OrderByDescending(discount => discount.StartDate).Select(discount => discount.Discount).FirstOrDefault(),
                 Title = p.Title,
                 Image = p.Images.OrderBy(image => image.Order).Select(image => image.ThumbnailUrl).FirstOrDefault(),
                 Description = p.Body,

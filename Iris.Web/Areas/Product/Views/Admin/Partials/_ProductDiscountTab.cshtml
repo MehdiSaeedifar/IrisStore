@@ -1,0 +1,41 @@
+﻿@using Utilities
+@model Iris.ViewModels.AddProductViewModel
+<button id="btnAddDiscount" type="button" class="btn btn-success btn-sm"><i class="fa fa-plus fa-w"></i> افزودن تخفیف</button>
+<div class="clearfix table-responsive">
+    <table id="tblProductDiscounts" class="table table-condensed table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>تخفیف</th>
+                <th>تاریخ شروع</th>
+                <th>تاریخ پایان</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var discount in Model.Discounts)
+            {
+                var startDate = discount.StartDate.ToPersianDate();
+                var endDate = discount.EndDate.ToPersianDate();
+
+                var guidId = Guid.NewGuid().ToString();
+            <tr>
+                @Html.Hidden("Discounts.Index", guidId)
+                @Html.Hidden($"Discounts[{guidId}].Id", discount.Id)
+                @Html.Hidden($"Discounts[{guidId}].ProductId", discount.ProductId)
+                @Html.Hidden($"Discounts[{guidId}].Discount", discount.Discount, new { @class = "discountValHidden" })
+                @Html.Hidden($"Discounts[{guidId}].StartDate", startDate, new { @class = "startdateValHidden" })
+                @Html.Hidden($"Discounts[{guidId}].EndDate", endDate, new { @class = "enddateValHidden" })
+                <td><a style="cursor: pointer" data-discount>@Html.DisplayFor(x => discount.Discount)</a><span>درصد</span></td>
+                <td><a style="cursor: pointer" href="#" data-startdate>@startDate</a></td>
+                <td><a style="cursor: pointer" href="#" data-enddate>@endDate</a></td>
+
+                <td>
+                    <button name="removeItem" type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i></button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+

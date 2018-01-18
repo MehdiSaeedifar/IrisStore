@@ -12,13 +12,13 @@ namespace Iris.ViewModels
 {
     public class AddProductViewModel : IHaveCustomMappings
     {
-
         public AddProductViewModel()
         {
             Categories = new List<string>();
             Images = new List<AddProductImageViewModel>();
             SeoFields = new MetaTagsViewModel();
             Prices = new List<AddProductPriceViewModel>();
+            Discounts = new List<AddProductDiscountViewModel>();
         }
 
         public int? Id { get; set; }
@@ -35,6 +35,9 @@ namespace Iris.ViewModels
         [Display(Name = "قیمت")]
         public decimal? Price { get; set; }
 
+        [Display(Name = "درصد")]
+        public decimal? Discount { get; set; }
+
         [Display(Name = "گروه‌ها")]
         [Required(ErrorMessage = "لطفا حداقل یک گروه را انتخاب نمایید")]
         public List<string> Categories { get; set; }
@@ -49,6 +52,7 @@ namespace Iris.ViewModels
 
         public List<AddProductImageViewModel> Images { get; set; }
         public List<AddProductPriceViewModel> Prices { get; set; }
+        public List<AddProductDiscountViewModel> Discounts { get; set; }
 
         public MetaTagsViewModel SeoFields { get; set; }
         public void CreateMappings(IConfiguration configuration)
@@ -66,7 +70,13 @@ namespace Iris.ViewModels
                 .ForMember(productModel => productModel.Images, opt => opt.MapFrom(product => product.Images.OrderBy(image => image.Order)))
 
             .ForMember(productModel => productModel.Prices,
-            opt => opt.MapFrom(product => product.Prices.OrderByDescending(price => price.Date)));
+            opt => opt.MapFrom(product => product.Prices.OrderByDescending(price => price.Date)))
+
+             .ForMember(productModel => productModel.Discounts,
+            opt => opt.MapFrom(product => product.Discounts.OrderByDescending(Discount => Discount.EndDate)))
+
+            .ForMember(productModel => productModel.Discounts,
+            opt => opt.MapFrom(product => product.Discounts.OrderByDescending(Discount => Discount.StartDate)));
 
 
 
@@ -119,6 +129,21 @@ namespace Iris.ViewModels
                      return productModel.Prices;
                  }))
 
+                   .ForMember(product => product.Discounts, opt => opt.ResolveUsing(productModel =>
+                   {
+                       if (productModel.Discount.HasValue)
+                       {
+                           productModel.Discounts.Add(new AddProductDiscountViewModel
+                           {
+                               Discount = productModel.Discount.Value,
+                               StartDate = DateTime.Now,
+                               EndDate = DateTime.Now.AddDays(1),
+
+                           });
+                       }
+                       return productModel.Discounts;
+                   }))
+
 
                 .ForMember(product => product.Tags, opt => opt.Ignore());
 
@@ -157,7 +182,7 @@ namespace Iris.ViewModels
         public string MetaDescription { get; set; }
         public virtual void CreateMappings(IConfiguration configuration)
         {
-            configuration.CreateMap<MetaTagsViewModel, Post>().ForMember(x=>x.Tags,opt=>opt.Ignore());
+            configuration.CreateMap<MetaTagsViewModel, Post>().ForMember(x => x.Tags, opt => opt.Ignore());
         }
     }
 
@@ -165,16 +190,34 @@ namespace Iris.ViewModels
     {
 
         public int? Id { get; set; }
-        [DisplayFormat(DataFormatString = "{0:###,###.####}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
         public decimal Price { get; set; }
         public DateTime Date { get; set; }
         public int? ProductId { get; set; }
-        public  void CreateMappings(IConfiguration configuration)
+        public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<ProductPrice, AddProductPriceViewModel>();
 
             configuration.CreateMap<AddProductPriceViewModel, ProductPrice>()
                 .ForMember(price => price.Product, opt => opt.Ignore());
+        }
+    }
+
+    public class AddProductDiscountViewModel : IHaveCustomMappings
+    {
+
+        public int? Id { get; set; }
+        [DisplayFormat(DataFormatString = "{0:0}", ApplyFormatInEditMode = true)]
+        public decimal Discount { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public int? ProductId { get; set; }
+        public void CreateMappings(IConfiguration configuration)
+        {
+            configuration.CreateMap<ProductDiscount, AddProductDiscountViewModel>();
+
+            configuration.CreateMap<AddProductDiscountViewModel, ProductDiscount>()
+                .ForMember(discount => discount.Product, opt => opt.Ignore());
         }
     }
 
