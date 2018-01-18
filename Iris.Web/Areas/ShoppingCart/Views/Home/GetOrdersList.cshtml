@@ -21,9 +21,10 @@
     <tbody>
         @foreach (var orderItem in Model)
         {
-            foreach (var item in orderItem.Discounts)
+
+            foreach (var item in orderItem.Discounts.OrderByDescending(d=>d.EndDate))
             {
-                if (orderItem.Discount > 0)
+                if (orderItem.Discount > 0 && item.EndDate>=DateTime.Now)
                 {
                     <tr data-product-id="@orderItem.Id">
                         <td>
@@ -50,6 +51,7 @@
                             </button>
                         </td>
                     </tr>
+                    break;
                 }
                 else
                 {
@@ -78,6 +80,7 @@
                             </button>
                         </td>
                     </tr>
+                    break;
                 }
             }
         }
