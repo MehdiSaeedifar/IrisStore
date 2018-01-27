@@ -35,7 +35,7 @@
 
     @Scripts.Render("~/bundles/jqGrid")
 
-    <script>
+<script>
 
         function showDeleteProductDialog(button, id, name) {
             $(button).confirmation({
@@ -111,7 +111,7 @@
                 //url access method type
                 mtype: 'POST',
                 //columns names
-                colNames: ['شماره', 'نام کالا', 'وضعیت', 'قیمت', ""],
+                colNames: ['شماره', 'نام کالا', 'وضعیت', 'قیمت', "تخفیف",""],
                 //columns model
                 colModel: [
                     {
@@ -163,6 +163,20 @@
                             thousandsSeparator: ',',
                             decimalPlaces: 0,
                             suffix: ' تومان '
+                        }
+                    },
+                     {
+                        name: '@(StronglyTyped.PropertyName<ProductDataGridViewModel>(x => x.Discount))',
+                        index: '@(StronglyTyped.PropertyName<ProductDataGridViewModel>(x => x.Discount))',
+                        align: 'center',
+                        width: 20,
+                        formatter: 'currency',
+                        formatoptions:
+                        {
+                            decimalSeparator: '.',
+                            thousandsSeparator: ',',
+                            decimalPlaces: 1,
+                            suffix: ' درصد '
                         }
                     },
                     {
@@ -264,5 +278,5 @@
         };
 
         loadGrid();
-    </script>
+</script>
 }

@@ -73,7 +73,8 @@ namespace Iris.Web.Areas.Product.Controllers
                                                         product.Id.ToString(CultureInfo.InvariantCulture),
                                                         product.Title,
                                                         product.ProductStatus,
-                                                        product.Price
+                                                        product.Price,
+                                                        product.Discount
                                                     }
                 })).ToList()
             };
@@ -108,7 +109,7 @@ namespace Iris.Web.Areas.Product.Controllers
             if (productModel.Count <= 0)
             {
                 productModel.Count = 0;
-                productModel.ProductStatus = ProductStatus.NotAvailable;;
+                productModel.ProductStatus = ProductStatus.NotAvailable; ;
             }
 
             var addedProductImages = productModel.Images
@@ -128,7 +129,7 @@ namespace Iris.Web.Areas.Product.Controllers
             }
 
             _mappingEngine.Map(productModel, product);
-
+            
             if (productModel.Id.HasValue)
             {
                 deletedProductImages = (await _productService.EditProduct(product)).ToList();
@@ -178,6 +179,11 @@ namespace Iris.Web.Areas.Product.Controllers
                 Price = product.Prices
                                 .OrderByDescending(productPrice => productPrice.Date)
                                 .Select(productPrice => productPrice.Price).
+                                FirstOrDefault().
+                                ToString(CultureInfo.InvariantCulture),
+                Discount = product.Discounts
+                                .OrderByDescending(productDiscount => productDiscount.StartDate)
+                                .Select(productDiscount => productDiscount.Discount).
                                 FirstOrDefault().
                                 ToString(CultureInfo.InvariantCulture),
                 Image = product.Images.OrderBy(image => image.Order)

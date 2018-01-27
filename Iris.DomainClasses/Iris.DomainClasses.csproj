@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationUser.cs" />
+    <Compile Include="Configurations\DiscountConfig.cs" />
     <Compile Include="Configurations\FactorConfig.cs" />
     <Compile Include="Configurations\SlideShowConfig.cs" />
     <Compile Include="Configurations\SiteOptionConfig.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Page.cs" />
     <Compile Include="Post.cs" />
     <Compile Include="Product.cs" />
+    <Compile Include="ProductDiscount.cs" />
     <Compile Include="ProductImage.cs" />
     <Compile Include="ProductPrice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

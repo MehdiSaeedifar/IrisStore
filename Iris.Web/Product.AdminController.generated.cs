@@ -171,10 +171,13 @@ namespace Iris.Web.Areas.Product.Controllers
                     public readonly string _ProductImageTab = "_ProductImageTab";
                     public readonly string _ProductInfoTab = "_ProductInfoTab";
                     public readonly string _ProductPriceTab = "_ProductPriceTab";
+                    public readonly string _ProductDiscountTab = "_ProductDiscountTab";
+
                 }
                 public readonly string _ProductImageTab = "~/Areas/Product/Views/Admin/Partials/_ProductImageTab.cshtml";
                 public readonly string _ProductInfoTab = "~/Areas/Product/Views/Admin/Partials/_ProductInfoTab.cshtml";
                 public readonly string _ProductPriceTab = "~/Areas/Product/Views/Admin/Partials/_ProductPriceTab.cshtml";
+                public readonly string _ProductDiscountTab = "~/Areas/Product/Views/Admin/Partials/_ProductDiscountTab.cshtml";
             }
         }
     }

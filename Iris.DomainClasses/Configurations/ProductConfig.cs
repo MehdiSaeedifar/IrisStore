@@ -6,12 +6,15 @@ namespace Iris.DomainClasses.Configurations
     {
         public ProductConfig()
         {
-            // ToTable("Products");
-
             //HasMany(product => product.Prices)
             //    .WithRequired(price => price.Product)
             //    .HasForeignKey(price => price.ProductId)
             //    .WillCascadeOnDelete(true);
+
+            //HasMany(product => product.Discounts)
+            //  .WithRequired(discount => discount.Product)
+            //  .HasForeignKey(discount => discount.ProductId)
+            //  .WillCascadeOnDelete(true);
 
             HasMany(product => product.Images)
                 .WithRequired(image => image.Product)
@@ -25,8 +28,6 @@ namespace Iris.DomainClasses.Configurations
             Property(entity => entity.MetaDescription).HasMaxLength(400);
 
             Property(entity => entity.SlugUrl).HasMaxLength(300);
-
-
         }
     }
 }

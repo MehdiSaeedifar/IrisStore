@@ -4,9 +4,7 @@
     ViewBag.Title = "فهرست سفارشات";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="container page-wrapper" style="background-color: #fff;">
-
     <div class="row">
         <div class="col-md-12">
             <h2>فهرست سفارشات</h2>
@@ -16,60 +14,59 @@
         <div class="col-md-12">
             @foreach (var item in Model)
             {
-                <div style="border: 1px solid #666; margin-top: 25px;">
-                    <table class="table table-bordered table-hover" style="margin-bottom: 25px;">
-                        <thead>
-                            <tr class="info">
-                                <td>کد سفارش</td>
-                                <td>نام</td>
-                                <td>خانوادگی</td>
-                                <td>تاریخ صدور</td>
-                                <td>وضعیت</td>
-                                <td>مبلغ کل</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr>
-                                <td>@item.Id</td>
-                                <td>@item.Name</td>
-                                <td>@item.LastName</td>
-                                <td>@item.IssueDate.ToPersianDate()</td>
-                                <td>@item.Status.GetEnumDescription()</td>
-                                <td> @item.Products.Sum(x=>x.Count*x.Price).ToString("#,##0")</td>
-                            </tr>
-                            <tr></tr>
-
-                        </tbody>
-                    </table>
-                    <table class="table table-bordered table-hover" style="padding-right: 20px;">
-                        <thead>
-                            <tr class="success">
-                                <td>کد کالا</td>
-                                <td>نام کالا</td>
-                                <td>تعداد</td>
-                                <td>قیمت</td>
-                                <td>قیمت کل</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var product in item.Products)
-                            {
-                                <tr>
-
-                                    <td>@product.Id</td>
-                                    <td>@product.ProductName</td>
-                                    <td>@product.Count</td>
-                                    <td>@product.Price.ToString("#,##0")</td>
-                                    <td>@((product.Price * product.Count).ToString("#,##0"))</td>
+                    <div style="border: 1px solid #666; margin-top: 25px;">
+                        <table class="table table-bordered table-hover" style="margin-bottom: 25px;">
+                            <thead>
+                                <tr class="info">
+                                    <td>کد سفارش</td>
+                                    <td>نام</td>
+                                    <td>خانوادگی</td>
+                                    <td>تاریخ صدور</td>
+                                    <td>وضعیت</td>
+                                    <td>مبلغ تخفیف</td>
+                                    <td>مبلغ کل</td>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.LastName</td>
+                                        <td>@item.IssueDate.ToPersianDate()</td>
+                                        <td>@item.Status.GetEnumDescription()</td>
+                                        <td>@item.Products.Sum(x => x.Count * (x.CalcDiscountFee)).ToString("#,##0")</td>
+                                        <td>@item.Products.Sum(x => x.Count * (x.CalcDiscount)).ToString("#,##0")</td>
+                                    </tr>
+                                    <tr></tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered table-hover" style="padding-right: 20px;">
+                            <thead>
+                                <tr class="success">
+                                    <td>کد کالا</td>
+                                    <td>نام کالا</td>
+                                    <td>تعداد</td>
+                                    <td>قیمت</td>
+                                    <td>مبلغ تخفیف</td>
+                                    <td>قیمت کل</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var product in item.Products)
+                                {
+                                        <tr>
+                                            <td>@product.Id</td>
+                                            <td>@product.ProductName</td>
+                                            <td>@product.Count</td>
+                                            <td>@product.Price.ToString("#,##0")</td>
+                                            <td>@((product.CalcDiscountFee * product.Count).ToString("#,##0"))</td>
+                                            <td>@((product.CalcDiscount * product.Count).ToString("#,##0"))</td>
+                                        </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
             }
-
-
         </div>
     </div>
 </div>

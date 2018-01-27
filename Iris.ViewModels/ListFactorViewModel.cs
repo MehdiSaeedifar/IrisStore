@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Iris.DomainClasses;
+using AutoMapper;
+using AutoMapperContracts;
 
 namespace Iris.ViewModels
 {
-    public class ListFactorViewModel
+    public class ListFactorViewModel 
     {
         public int Id { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "لطفا نام را وارد کنید")]
@@ -25,14 +27,24 @@ namespace Iris.ViewModels
         public IList<ListFactorProductViewModel> Products { get; set; }
     }
 
-    public class ListFactorProductViewModel
+    public class ListFactorProductViewModel 
     {
         public int Id { get; set; }
         public decimal Price { get; set; }
+        public decimal Discount { get; set; }
         public int Count { get; set; }
         public int MaxCount { get; set; } = 0;
         public int ProductId { get; set; }
         public string ProductName { get; set; }
+        
+        #region Calculator Properties
+        /// <summary>
+        /// Calculator Discounts
+        /// </summary>
+        [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
+        public decimal CalcDiscount { get { return (Price - ((Price * Discount) / 100)); } }
+        [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
+        public decimal CalcDiscountFee { get { return (((Price * Discount) / 100)); } }
+        #endregion
     }
-
 }

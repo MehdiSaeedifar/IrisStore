@@ -1,4 +1,5 @@
 ﻿@using Iris.DomainClasses
+@using Utilities
 @using Iris.DomainClasses
 @model Iris.ViewModels.ProductWidgetViewModel
 <div class="product-widget">
@@ -11,19 +12,76 @@
         </span>
         <div class="price">
             <span>
-                @switch (Model.ProductStatus)
+                @if (Model.Discount > 0)
                 {
-                    case ProductStatus.Available:
-                        <strong>
-                            <span class="price-number">@Html.DisplayFor(m => m.Price)</span> تومان
-                        </strong>
-                        break;
-                    case ProductStatus.NotAvailable:
-                        <label class="label label-danger product-status">نا موجود</label>
-                        break;
-                    case ProductStatus.ComingSoon:
-                        <label class="label label-info product-status">به زودی</label>
-                        break;
+                    foreach (var discount in Model.Discounts)
+                    {
+                        var discountEndDate = discount.EndDate;
+
+                        if (Model.ProductStatus == ProductStatus.Available)
+                        {
+                            if (Model.Discount > 0 && discount.EndDate >= DateTime.Now)
+                            {
+                                <strong style="color:red">
+                                    <strong class="price-number">@Html.DisplayFor(m => m.CalcDiscount)</strong> تومان
+                                </strong>
+                                <br />
+                                <strike style="color:gray">
+                                    <strong class="price-number">@Html.DisplayFor(m => m.Price)</strong> تومان
+                                </strike>
+                                <br />
+                                <small style="color:red">
+                                    <span class="discount-number">@Html.DisplayFor(m => m.Discount)</span> % تخفیف
+                                </small>
+                                break;
+                            }
+
+                            else if (discount.EndDate < DateTime.Now && Model.Discount <= 0)
+                            {
+                                if (Model.Price > 0)
+                                {
+                                    <span class="product-price-name">
+                                        قـیمـت:
+                                    </span>
+                                    <span class="product-price">@Html.DisplayFor(model => model.Price)</span>
+                                    <span class="product-price-currency">تومان</span>
+                                }
+                                break;
+                            }
+                        }
+
+                        else if (Model.ProductStatus == ProductStatus.NotAvailable)
+                        {
+                            <label class="label label-danger product-status">نا موجود</label>
+                            break;
+                        }
+
+                        else if (Model.ProductStatus == ProductStatus.ComingSoon)
+                        {
+                            <label class="label label-danger product-status">نا موجود</label>
+                            break;
+                        }
+                    }
+                }
+
+                else
+                {
+                    switch (Model.ProductStatus)
+                    {
+                        case ProductStatus.Available:
+                            <span class="product-price-name">
+                                قـیمـت:
+                            </span>
+                            <span class="product-price">@Html.DisplayFor(model => model.Price)</span>
+                            <span class="product-price-currency">تومان</span>
+                            break;
+                        case ProductStatus.NotAvailable:
+                            <label class="label label-danger" style="font-size: 26px;">نا‌موجود</label>
+                            break;
+                        case ProductStatus.ComingSoon:
+                            <label class="label label-info" style="font-size: 26px;">به زودی</label>
+                            break;
+                    }
                 }
             </span>
         </div>

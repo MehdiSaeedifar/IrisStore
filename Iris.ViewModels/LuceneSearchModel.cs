@@ -11,5 +11,7 @@
         public string Category { get; set; }
         public string ProductStatus { get; set; }
         public string Price { get; set; }
+        public string Discount { get; set; }
+
     }
 }

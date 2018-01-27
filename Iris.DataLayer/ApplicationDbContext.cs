@@ -18,6 +18,7 @@ namespace Iris.DataLayer
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductPrice> ProductPrices { get; set; }
+        public DbSet<ProductDiscount> ProductDiscounts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<SlideShowImage> SlideShowImages { get; set; }
@@ -48,6 +49,7 @@ namespace Iris.DataLayer
         {
             builder.Configurations.Add(new ProductConfig());
             builder.Configurations.Add(new ProductPriceConfig());
+            builder.Configurations.Add(new ProductDiscountConfig());
             builder.Configurations.Add(new PostConfig());
             builder.Configurations.Add(new CategoryConfig());
             builder.Configurations.Add(new PostCategoryConfig());

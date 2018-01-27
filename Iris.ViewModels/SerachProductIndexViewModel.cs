@@ -6,5 +6,7 @@ namespace Iris.ViewModels
     {
         public GroupsViewModel Categories { get; set; }
         public IList<decimal> Prices { get; set; }
+        public IList<decimal> Discounts { get; set; }
+
     }
 }

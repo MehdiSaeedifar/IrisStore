@@ -113,6 +113,11 @@ namespace Iris.LuceneSearch
                 document.Add(new Field(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Price), modelData.Price, Field.Store.YES, Field.Index.NOT_ANALYZED));
             }
 
+            if (modelData.Discount != null)
+            {
+                document.Add(new Field(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Discount), modelData.Discount, Field.Store.YES, Field.Index.NOT_ANALYZED));
+            }
+
             if (modelData.ProductStatus != null)
             {
                 document.Add(new Field(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.ProductStatus), modelData.ProductStatus, Field.Store.YES, Field.Index.NOT_ANALYZED));
@@ -226,7 +231,8 @@ namespace Iris.LuceneSearch
                 Category = doc.Get(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Category)),
                 SlugUrl = doc.Get(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.SlugUrl)),
                 ProductStatus = doc.Get(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.ProductStatus)),
-                Price = doc.Get(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Price))
+                Price = doc.Get(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Price)),
+                Discount = doc.Get(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Discount))
             };
         }
 
@@ -423,7 +429,9 @@ namespace Iris.LuceneSearch
                             SlugUrl = doc.Get(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.SlugUrl)),
                             ProductStatus = (ProductStatus)Enum.Parse(typeof(ProductStatus), doc.Get(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.ProductStatus)), true),
                             Category = doc.Get(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Category)),
-                            Price = decimal.Parse(doc.Get(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Price)))
+                            Price = decimal.Parse(doc.Get(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Price))),
+                            Discount = decimal.Parse(doc.Get(StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Discount)))
+
                         }).ToList();
             }
         }
@@ -444,6 +452,7 @@ namespace Iris.LuceneSearch
                     StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Title),
                     StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Description),
                     StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Price),
+                    StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Discount),
                     StronglyTyped.PropertyName<LuceneSearchModel>(x => x.ProductStatus),
                     StronglyTyped.PropertyName<LuceneSearchModel>(x => x.Category)
                 });

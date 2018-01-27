@@ -11,7 +11,7 @@ namespace Iris.DomainClasses
         [Description("ناموجود")]
         NotAvailable,
         [Description("به زودی")]
-        ComingSoon
+        ComingSoon,
     }
 
     public class Product : BaseEntity
@@ -19,6 +19,7 @@ namespace Iris.DomainClasses
         public Product()
         {
             Prices = new HashSet<ProductPrice>();
+            Discounts = new HashSet<ProductDiscount>();
             Categories = new HashSet<Category>();
             Images = new HashSet<ProductImage>();
         }
@@ -42,6 +43,7 @@ namespace Iris.DomainClasses
         public ProductStatus ProductStatus { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<ProductPrice> Prices { get; set; }
+        public virtual ICollection<ProductDiscount> Discounts { get; set; }
         public virtual ICollection<ProductImage> Images { get; set; }
     }
 }
