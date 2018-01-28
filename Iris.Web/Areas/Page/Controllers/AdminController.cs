@@ -14,28 +14,35 @@ using Microsoft.AspNet.Identity;
 
 namespace Iris.Web.Areas.Page.Controllers
 {
+    #region AdminPageController
     [Authorize(Roles = "Admin")]
     [RouteArea("Page", AreaPrefix = "Page-Admin")]
     public partial class AdminController : Controller
     {
+        #region Fields
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPageService _pageService;
         private readonly IMappingEngine _mappingEngine;
+        #endregion
 
+        #region Constructors
         public AdminController(IUnitOfWork unitOfWork, IPageService pageService, IMappingEngine mappingEngine)
         {
             _unitOfWork = unitOfWork;
             _pageService = pageService;
             _mappingEngine = mappingEngine;
         }
+        #endregion
 
+        #region Index
         [Route("List")]
         public virtual ActionResult Index()
         {
             return View();
         }
+        #endregion
 
-
+        #region GetDataGridData
         [Route("GetDataGridData")]
         public virtual async Task<ActionResult> GetDataGridData(JqGridRequest request)
         {
@@ -74,8 +81,9 @@ namespace Iris.Web.Areas.Page.Controllers
             };
             return Json(jqGridData, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
-
+        #region Add
         [Route("Add")]
         public virtual async Task<ActionResult> Add()
         {
@@ -128,7 +136,9 @@ namespace Iris.Web.Areas.Page.Controllers
 
             return RedirectToAction(MVC.Page.Admin.ActionNames.Index);
         }
+        #endregion
 
+        #region Edit
         [Route("Edit/{id:int?}")]
         public virtual async Task<ActionResult> Edit(int id)
         {
@@ -138,7 +148,9 @@ namespace Iris.Web.Areas.Page.Controllers
 
             return View(MVC.Page.Admin.Views.Add, model);
         }
+        #endregion
 
+        #region Delete
         [Route("Delete")]
         [HttpPost]
         public virtual async Task<ActionResult> Delete(int id)
@@ -149,6 +161,7 @@ namespace Iris.Web.Areas.Page.Controllers
 
             return Json("ok");
         }
-
+        #endregion
     }
+    #endregion
 }

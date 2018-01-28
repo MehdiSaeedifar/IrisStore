@@ -18,17 +18,22 @@ namespace Iris.ServiceLayer
 {
     public class PageService : IPageService
     {
+        #region Fields
         private readonly IMappingEngine _mappingEngine;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IDbSet<Page> _pages;
+        #endregion
 
+        #region Constractors
         public PageService(IUnitOfWork unitOfWork, IMappingEngine mappingEngine)
         {
             _unitOfWork = unitOfWork;
             _pages = unitOfWork.Set<Page>();
             _mappingEngine = mappingEngine;
         }
+        #endregion
 
+        #region GetDataGridSource
         public async Task<DataGridViewModel<PageDataGridViewModel>> GetDataGridSource(string orderBy, JqGridRequest request, NameValueCollection form, DateTimeType dateTimeType,
             int page, int pageSize)
         {
@@ -47,7 +52,9 @@ namespace Iris.ServiceLayer
 
             return dataGridModel;
         }
+        #endregion
 
+        #region FixOrder
         private void FixOrder(IList<Page> otherPages)
         {
             foreach (var page in otherPages)
@@ -56,21 +63,27 @@ namespace Iris.ServiceLayer
                 _unitOfWork.Entry(page).Property(p => p.Order).IsModified = true;
             }
         }
+        #endregion
 
+        #region AddPage
         public void AddPage(Page page, IList<Page> otherPages)
         {
             _pages.Add(page);
 
             FixOrder(otherPages);
         }
+        #endregion
 
+        #region DeletePage
         public void DeletePage(int pageId)
         {
             var entity = new Page() { Id = pageId };
 
             _unitOfWork.Entry(entity).State = EntityState.Deleted;
         }
+        #endregion
 
+        #region EditPage
         public void EditPage(Page page, IList<Page> otherPages)
         {
             _pages.Attach(page);
@@ -79,7 +92,9 @@ namespace Iris.ServiceLayer
 
             FixOrder(otherPages);
         }
+        #endregion
 
+        #region GetAllPagesForAdd
         public async Task<IList<AddPageViewModel>> GetAllPagesForAdd()
         {
             return await _pages
@@ -91,20 +106,26 @@ namespace Iris.ServiceLayer
                                  Order = page.Order
                              }).ToListAsync();
         }
+        #endregion
 
+        #region GetPage
         public async Task<AddPageViewModel> GetPage(int pageId)
         {
             return await _pages.Where(page => page.Id == pageId)
                .ProjectTo<AddPageViewModel>().FirstOrDefaultAsync();
         }
+        #endregion
 
+        #region GetPageLinks
         public async Task<IList<LinkViewModel>> GetPageLinks()
         {
             return await _pages.OfType<Page>().AsNoTracking().OrderBy(p => p.Order).ProjectTo<LinkViewModel>(null, _mappingEngine)
                 .Cacheable()
                 .ToListAsync();
         }
+        #endregion
 
+        #region GetResumePage
         public async Task<PostViewModel> GetResumePage(string title)
         {
             var selectedPage = await _pages.Where(post => post.Title == title)
@@ -121,5 +142,6 @@ namespace Iris.ServiceLayer
 
             return selectedPage;
         }
+        #endregion
     }
 }

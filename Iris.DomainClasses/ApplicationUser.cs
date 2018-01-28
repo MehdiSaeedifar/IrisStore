@@ -5,6 +5,7 @@ namespace Iris.DomainClasses
 {
     public class ApplicationUser : IdentityUser<int, CustomUserLogin, CustomUserRole, CustomUserClaim>
     {
+        #region Properties
         public virtual ICollection<Factor> Factors { get; set; }
 
         public virtual string FirstName { get; set; }
@@ -14,5 +15,6 @@ namespace Iris.DomainClasses
         public virtual string Mobile { get; set; }
 
         public virtual string Address { get; set; }
+        #endregion
     }
 }

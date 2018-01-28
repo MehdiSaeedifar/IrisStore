@@ -19,12 +19,15 @@ namespace Iris.ServiceLayer
 {
     public class ProductService : IProductService
     {
+        #region Fields
         private readonly IDbSet<Product> _products;
         private readonly IDbSet<Category> _categories;
         private readonly IDbSet<ProductImage> _productImages;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMappingEngine _mappingEngine;
+        #endregion
 
+        #region Constractors
         public ProductService(IUnitOfWork unitOfWork, IMappingEngine mappingEngine)
         {
             _unitOfWork = unitOfWork;
@@ -33,12 +36,12 @@ namespace Iris.ServiceLayer
             _productImages = unitOfWork.Set<ProductImage>();
             _mappingEngine = mappingEngine;
         }
+        #endregion
 
+        #region AddProduct
         public async Task AddProduct(Product product)
         {
-
             var selectedCategoryNamesList = product.Categories.Select(c => c.Name).ToList();
-
 
             product.Categories.Clear();
 
@@ -63,7 +66,9 @@ namespace Iris.ServiceLayer
 
             _products.Add(product);
         }
+        #endregion
 
+        #region EditProduct
         public async Task<IList<ProductImage>> EditProduct(Product editedProduct)
         {
             var selectedProduct = await _products
@@ -122,9 +127,9 @@ namespace Iris.ServiceLayer
 
             return deletedImages;
         }
+        #endregion
 
-
-
+        #region UpdateOneToManyRelation
         private IList<T> UpdateOneToManyRelation<T>(List<T> updatedList, List<T> existingList) where T : BaseEntity
         {
             var addedEntities = updatedList.Where(x => existingList.All(item => item.Id != x.Id)).ToList();
@@ -150,13 +155,17 @@ namespace Iris.ServiceLayer
             }
             return deletedEntities;
         }
+        #endregion
 
+        #region GetProductForEdit
         public async Task<AddProductViewModel> GetProductForEdit(int productId)
         {
             return await _products.Where(p => p.Id == productId)
                 .ProjectTo<AddProductViewModel>(parameters: null, mappingEngine: _mappingEngine).SingleOrDefaultAsync();
         }
+        #endregion
 
+        #region GetDataGridSource
         public async Task<DataGridViewModel<ProductDataGridViewModel>> GetDataGridSource(string orderBy, JqGridRequest request, NameValueCollection form, DateTimeType dateTimeType, int page, int pageSize)
         {
             var usersQuery = _products.AsQueryable();
@@ -173,13 +182,17 @@ namespace Iris.ServiceLayer
             };
             return dataGridModel;
         }
+        #endregion
 
+        #region DeleteProduct
         public void DeleteProduct(int productId)
         {
             var entity = new Product() { Id = productId };
             _unitOfWork.Entry(entity).State = EntityState.Deleted;
         }
+        #endregion
 
+        #region GetNewestProducts
         public async Task<IList<ProductWidgetViewModel>> GetNewestProducts(int count)
         {
             return await _products.AsNoTracking().OrderBy(product => product.ProductStatus).ThenByDescending(product => product.PostedDate)
@@ -187,7 +200,9 @@ namespace Iris.ServiceLayer
                              .ProjectTo<ProductWidgetViewModel>(parameters: null, mappingEngine: _mappingEngine)
                                 .Cacheable().ToListAsync();
         }
+        #endregion
 
+        #region GetMostViewedProducts
         public async Task<IList<ProductWidgetViewModel>> GetMostViewedProducts(int count)
         {
             return await _products.AsNoTracking().OrderBy(product => product.ProductStatus).ThenByDescending(product => product.ViewNumber)
@@ -195,7 +210,9 @@ namespace Iris.ServiceLayer
                            .ProjectTo<ProductWidgetViewModel>(parameters: null, mappingEngine: _mappingEngine)
                               .Cacheable().ToListAsync();
         }
+        #endregion
 
+        #region GetPopularProducts
         public async Task<IList<ProductWidgetViewModel>> GetPopularProducts(int count)
         {
             return await _products.AsNoTracking().OrderByDescending(product => product.AverageRating)
@@ -203,7 +220,9 @@ namespace Iris.ServiceLayer
                           .ProjectTo<ProductWidgetViewModel>(parameters: null, mappingEngine: _mappingEngine)
                              .Cacheable().ToListAsync();
         }
+        #endregion
 
+        #region GetAvailableProductPrices
         public async Task<IList<decimal>> GetAvailableProductPrices()
         {
             return await _products.Where(product => product.ProductStatus == ProductStatus.Available)
@@ -213,7 +232,9 @@ namespace Iris.ServiceLayer
                 .OrderBy(price => price)
                 .ToListAsync();
         }
+        #endregion
 
+        #region GetAvailableProductDiscounts
         public async Task<IList<decimal>> GetAvailableProductDiscounts()
         {
             return await _products.Where(product => product.ProductStatus == ProductStatus.Available)
@@ -223,7 +244,9 @@ namespace Iris.ServiceLayer
                 .OrderBy(discount => discount)
                 .ToListAsync();
         }
+        #endregion
 
+        #region SearchProduct
         public async Task<ProductSearchPagedList> SearchProduct(SearchProductViewModel searchModel)
         {
             var productsQuery = _products.AsQueryable();
@@ -275,7 +298,9 @@ namespace Iris.ServiceLayer
 
             return result;
         }
+        #endregion
 
+        #region GetProductPage
         public async Task<ProductPageViewModel> GetProductPage(int productId)
         {
             var selectedProduct = await _products.Where(product => product.Id == productId)
@@ -286,14 +311,18 @@ namespace Iris.ServiceLayer
 
             return selectedProduct;
         }
+        #endregion
 
+        #region UpdateViewNumber
         public async Task UpdateViewNumber(int productId)
         {
             //await _unitOfWork.Database.ExecuteSqlCommandAsync("UPDATE Products SET ViewNumber = ViewNumber + 1 WHERE Id = @productId ", new SqlParameter("@productId", productId));
             var product = await _products.FindAsync(productId);
             product.ViewNumber++;
         }
+        #endregion
 
+        #region UpdateViewNumber
         private void UpdateViewNumber(ProductPageViewModel product)
         {
             var postEntity = new Product
@@ -305,7 +334,9 @@ namespace Iris.ServiceLayer
             _products.Attach(postEntity);
             _unitOfWork.Entry(postEntity).Property(p => p.ViewNumber).IsModified = true;
         }
+        #endregion
 
+        #region SaveRating
         public async Task SaveRating(int productId, double rating)
         {
             var selectedProduct = await _products.FindAsync(productId);
@@ -322,7 +353,9 @@ namespace Iris.ServiceLayer
             selectedProduct.AverageRating = selectedProduct.TotalRating / selectedProduct.TotalRaters;
 
         }
+        #endregion
 
+        #region GetAllForLuceneIndex
         public async Task<IList<LueneProduct>> GetAllForLuceneIndex()
         {
             return await _products.AsNoTracking().Select(p => new LueneProduct
@@ -337,19 +370,23 @@ namespace Iris.ServiceLayer
                 SlugUrl = p.SlugUrl
             }).ToListAsync();
         }
+        #endregion
 
+        #region GetProductImages
         public async Task<IList<string>> GetProductImages(int productId)
         {
             return await _productImages.Where(pi => pi.ProductId == productId)
                 .Select(pi => pi.Name).ToListAsync();
         }
+        #endregion
 
+        #region GetProductsOrders
         public async Task<IList<ProductOrderViewModel>> GetProductsOrders(int[] productIds)
         {
             return await _products.Where(p => productIds.Contains(p.Id))
                                     .ProjectTo<ProductOrderViewModel>()
                                     .ToListAsync();
         }
+        #endregion
     }
-
 }

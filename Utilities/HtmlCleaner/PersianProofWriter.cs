@@ -4,7 +4,7 @@ namespace Utilities.HtmlCleaner
 {
     public static class PersianProofWriter
     {
-        #region Fields (4)
+        #region Fieldss (4)
 
         public const char ArabicKeChar = (char)1603;
         public const char ArabicYeChar = (char)1610;

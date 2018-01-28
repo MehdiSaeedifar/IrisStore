@@ -5,16 +5,19 @@ using Iris.DomainClasses;
 
 namespace Iris.ViewModels
 {
+    #region ProductDataGridViewModel
     public class ProductDataGridViewModel : IHaveCustomMappings
     {
+        #region Properties
         public int Id { get; set; }
         public string Title { get; set; }
         public ProductStatus ProductStatus { get; set; }
         public decimal Price { get; set; }
         public decimal Discount { get; set; }
-
         //public int ViewNumber { get; set; }
+        #endregion
 
+        #region CreateMappings
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Product, ProductDataGridViewModel>()
@@ -32,5 +35,7 @@ namespace Iris.ViewModels
             //    opt.ResolveUsing(price => price.ProductStatus.GetEnumDescription()));
 
         }
+        #endregion
     }
+    #endregion
 }

@@ -14,14 +14,18 @@ using JqGridHelper.Models;
 
 namespace Iris.Web.Areas.SlideShow.Controllers
 {
+    #region AdminSlideShowController
     [Authorize(Roles = "Admin")]
     [RouteArea("SlideShow", AreaPrefix = "SlideShow-Admin")]
     public partial class AdminController : Controller
     {
+        #region Feilds
         private readonly IUnitOfWork _unitOfWork;
         private readonly ISlideShowImageService _slideShowService;
         private readonly IMappingEngine _mappingEngine;
+        #endregion
 
+        #region Constructors
         public AdminController(IUnitOfWork unitOfWork, ISlideShowImageService slideShowService,
             IMappingEngine mappingEngine)
         {
@@ -29,14 +33,17 @@ namespace Iris.Web.Areas.SlideShow.Controllers
             _slideShowService = slideShowService;
             _mappingEngine = mappingEngine;
         }
+        #endregion
 
+        #region Index
         [Route("List")]
         public virtual ActionResult Index()
         {
-
             return View();
         }
+        #endregion
 
+        #region GetSlideShows
         [Route("GetSlideShows")]
         public virtual async Task<ActionResult> GetSlideShows(JqGridRequest request)
         {
@@ -77,7 +84,9 @@ namespace Iris.Web.Areas.SlideShow.Controllers
             };
             return Json(jqGridData, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region AddSlideShow
         [Route("Add")]
         public virtual async Task<ActionResult> AddSlideShow()
         {
@@ -87,8 +96,7 @@ namespace Iris.Web.Areas.SlideShow.Controllers
                 SlideShowImages = await _slideShowService.GetSlideShowImages()
             });
         }
-
-
+        
         [Route("Add")]
         [HttpPost]
         public virtual async Task<ActionResult> AddSlideShow(SlideShowViewModel slideShowModel)
@@ -126,7 +134,9 @@ namespace Iris.Web.Areas.SlideShow.Controllers
 
             return RedirectToAction(MVC.SlideShow.Admin.ActionNames.Index);
         }
+        #endregion
 
+        #region EditSlideShow
         [Route("EditSlideShow/{id:int?}")]
         public virtual async Task<ActionResult> EditSlideShow(int id)
         {
@@ -136,7 +146,9 @@ namespace Iris.Web.Areas.SlideShow.Controllers
 
             return View((string)MVC.SlideShow.Admin.Views.AddSlideShow, selectedSlideShow);
         }
+        #endregion
 
+        #region DeleteSlideShow
         [Route("DeleteSlideShow")]
         public virtual async Task<ActionResult> DeleteSlideShow(int id)
         {
@@ -146,5 +158,7 @@ namespace Iris.Web.Areas.SlideShow.Controllers
 
             return Json("ok");
         }
+        #endregion
     }
+    #endregion
 }

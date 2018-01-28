@@ -4,8 +4,10 @@ using System.Web.Mvc;
 
 namespace Iris.Web.ViewModels.Identity
 {
+    #region EditUserViewModel
     public class EditUserViewModel
     {
+        #region Properties
         public int Id { get; set; }
 
         [Required(AllowEmptyStrings = false)]
@@ -14,5 +16,7 @@ namespace Iris.Web.ViewModels.Identity
         public string Email { get; set; }
 
         public IEnumerable<SelectListItem> RolesList { get; set; }
+        #endregion
     }
+    #endregion
 }

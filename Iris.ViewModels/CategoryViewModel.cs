@@ -4,8 +4,10 @@ using Iris.DomainClasses;
 
 namespace Iris.ViewModels
 {
+    #region CategoryViewModel
     public class CategoryViewModel : IHaveCustomMappings
     {
+        #region Properties
         public int Id { get; set; }
         public string Name { get; set; }
         public void CreateMappings(IConfiguration configuration)
@@ -14,5 +16,7 @@ namespace Iris.ViewModels
             configuration.CreateMap<PostCategory, CategoryViewModel>();
             configuration.CreateMap<CategoryViewModel, GroupViewModel>();
         }
+        #endregion
     }
+    #endregion
 }

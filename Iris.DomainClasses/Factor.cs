@@ -9,6 +9,7 @@ namespace Iris.DomainClasses
 {
     public class Factor
     {
+        #region Properties
         public int Id { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
@@ -22,8 +23,10 @@ namespace Iris.DomainClasses
         public int UserId { get; set; }
 
         public virtual ICollection<FactorProduct> Products { get; set; }
+        #endregion
     }
 
+    #region enum FactorStatus
     public enum FactorStatus
     {
         [Description("پرداخت شده")]
@@ -35,4 +38,5 @@ namespace Iris.DomainClasses
         [Description("تحویل شده")]
         Delivered
     }
+    #endregion
 }

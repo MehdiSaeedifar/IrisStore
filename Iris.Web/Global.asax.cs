@@ -10,6 +10,7 @@ using Iris.DataLayer;
 using Iris.Web.ModelBinders;
 using Iris.Web.WebTasks;
 using StructureMap.Web.Pipeline;
+using Infrastructure;
 
 namespace Iris.Web
 {
@@ -52,6 +53,18 @@ namespace Iris.Web
             }
         }
 
+        public void Application_Error(object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError();
+            System.Collections.Hashtable oHashtable =
+                    new System.Collections.Hashtable();
+            oHashtable.Add("Username", User.Identity.Name);
+            LogHandler.Report(this.GetType(), oHashtable, ex, LogHandler.LogTypes.Both);
+            Server.ClearError();
+            Response.Clear();
+            HttpContext.Current.Response.Redirect("~/Shared/Error");
+        }
+
         protected void Application_PreSendRequestHeaders(object sender, EventArgs e)
         {
             var app = sender as HttpApplication;
@@ -70,7 +83,6 @@ namespace Iris.Web
             //نکته مهم این روش نیاز به سرویس پینگ سایت برای زنده نگه داشتن آن است
             ScheduledTasksRegistry.WakeUp(IrisApp.GetSiteRootUrl());
         }
-
     }
 
     public static class IrisApp

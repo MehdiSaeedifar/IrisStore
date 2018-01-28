@@ -13,10 +13,12 @@ using Utilities;
 
 namespace Iris.Web.Controllers
 {
+    #region LuceneIndexingController
     [RoutePrefix("LuceneIndexing")]
     [Authorize(Roles = "Admin")]
     public partial class LuceneIndexingController : Controller
     {
+        #region ReIndex
         [Route("ReIndex")]
         public virtual async Task<ActionResult> ReIndex()
         {
@@ -56,5 +58,7 @@ namespace Iris.Web.Controllers
             }
             return Content("ReIndexing Complete.");
         }
+        #endregion
     }
+    #endregion
 }

@@ -7,18 +7,23 @@ using System.Web.Mvc;
 
 namespace Iris.Web.Areas.Product.Controllers
 {
+    #region UploadController
     [Authorize(Roles = "Admin")]
     [RouteArea("Product", AreaPrefix = "product-upload")]
     public partial class UploadController : Controller
     {
+        #region Fields
         private const string TmpPath = "~/Content/tmp/";
+        #endregion
 
-        // GET: File/Home
+        #region Index
         public virtual ActionResult Index()
         {
             return View();
         }
+        #endregion
 
+        #region UploadImage
         [Route("UploadImage")]
         public virtual ActionResult UploadImage(IList<HttpPostedFileBase> files)
         {
@@ -55,7 +60,9 @@ namespace Iris.Web.Areas.Product.Controllers
 
             return Json(new { Files = lstUploadReults });
         }
+        #endregion
 
+        #region DeleteFile
         [Route("DeleteFile")]
         public virtual ActionResult DeleteFile(string fileName)
         {
@@ -69,8 +76,9 @@ namespace Iris.Web.Areas.Product.Controllers
             }
             return Json("ok");
         }
+        #endregion
 
-
+        #region GetFilePath
         private string getFilePath(string fileName, string path)
         {
             int count = 1;
@@ -87,7 +95,9 @@ namespace Iris.Web.Areas.Product.Controllers
 
             return newFullPath;
         }
+        #endregion
 
+        #region GenerateProductThumbnailImage
         private void GenerateProductThumbnailImage(Stream inputStream, string savePath)
         {
             var img = new WebImage(inputStream);
@@ -95,7 +105,9 @@ namespace Iris.Web.Areas.Product.Controllers
 
             img.Save(savePath);
         }
+        #endregion
 
+        #region UploadFileResult
         public class UploadFileResult
         {
             public string Name { get; set; }
@@ -106,5 +118,7 @@ namespace Iris.Web.Areas.Product.Controllers
             public string ThumbnailUrl { get; set; }
             public string DeleteType { get; set; }
         }
+        #endregion
     }
+    #endregion
 }

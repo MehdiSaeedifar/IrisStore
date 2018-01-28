@@ -17,30 +17,35 @@ using JqGridHelper.Models;
 
 namespace Iris.Web.Areas.User.Controllers
 {
+    #region AdminUserController
     [Authorize(Roles = "Admin")]
     [RouteArea("User", AreaPrefix = "User-Admin")]
     public partial class AdminController : Controller
     {
-        // GET: User/Admin
-
+        #region Feilds
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMappingEngine _mappingEngine;
         private readonly IApplicationUserManager _userManager;
+        #endregion
 
+        #region Constructors
         public AdminController(IUnitOfWork unitOfWork, IMappingEngine mappingEngine, IApplicationUserManager userManager)
         {
             _unitOfWork = unitOfWork;
             _mappingEngine = mappingEngine;
             _userManager = userManager;
         }
+        #endregion
 
+        #region Index
         [Route("List")]
         public virtual ActionResult Index()
         {
             return View();
         }
+        #endregion
 
-
+        #region GetDataGridData
         [Route("GetDataGridData")]
         public virtual async Task<ActionResult> GetDataGridData(JqGridRequest request)
         {
@@ -78,13 +83,14 @@ namespace Iris.Web.Areas.User.Controllers
             };
             return Json(jqGridData, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region Add
         [Route("Add")]
         public virtual ActionResult Add()
         {
             return View(new RegisterViewModel());
         }
-
 
         [Route("Add")]
         [HttpPost]
@@ -160,9 +166,9 @@ namespace Iris.Web.Areas.User.Controllers
 
             return RedirectToAction(MVC.User.Admin.ActionNames.Index);
         }
+        #endregion
 
-
-
+        #region Edit
         [Route("Edit/{id:int?}")]
         public virtual async Task<ActionResult> Edit(int? id)
         {
@@ -184,7 +190,9 @@ namespace Iris.Web.Areas.User.Controllers
                 Email = user.Email,
             });
         }
+        #endregion
 
+        #region Delete
         [Route("Delete")]
         [HttpPost]
         public virtual async Task<ActionResult> Delete(int id)
@@ -205,5 +213,7 @@ namespace Iris.Web.Areas.User.Controllers
 
             return Json("ok");
         }
+        #endregion
     }
+    #endregion
 }

@@ -21,18 +21,23 @@ namespace Iris.ServiceLayer
 {
     public class ShoppingCartService : IShoppingCartService
     {
+        #region Fields
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMappingEngine _mappingEngine;
         private readonly IDbSet<Factor> _factors;
         private IShoppingCartService _shoppingCartServiceImplementation;
+        #endregion
 
+        #region Constractors
         public ShoppingCartService(IUnitOfWork unitOfWork, IMappingEngine mappingEngine)
         {
             _unitOfWork = unitOfWork;
             _mappingEngine = mappingEngine;
             _factors = unitOfWork.Set<Factor>();
         }
+        #endregion
 
+        #region CreateFactor
         public async Task CreateFactor(CreateFactorViewModel factorViewModel)
         {
             var factor = new Factor
@@ -64,7 +69,9 @@ namespace Iris.ServiceLayer
             factor.Products = factorProducts;
             _factors.Add(factor);
         }
+        #endregion
 
+        #region GetUserFactor
         public async Task<IList<ListFactorViewModel>> GetUserFactor(int userId)
         {
             return await _factors.Where(f => f.UserId == userId)
@@ -89,7 +96,9 @@ namespace Iris.ServiceLayer
                     }).ToList()
                 }).ToListAsync();
         }
+        #endregion
 
+        #region GetDataGridSource
         public async Task<DataGridViewModel<FactorDataGridViewModel>> GetDataGridSource(string orderBy, JqGridRequest request, NameValueCollection form, DateTimeType dateTimeType,
             int page, int pageSize)
         {
@@ -107,12 +116,16 @@ namespace Iris.ServiceLayer
             };
             return dataGridModel;
         }
+        #endregion
 
+        #region Delete
         public void Delete(int id)
         {
             _factors.Remove(_factors.Find(id));
         }
+        #endregion
 
+        #region GetForEdit
         public async Task<ListFactorViewModel> GetForEdit(int id)
         {
             return await _factors.Where(f => f.Id == id)
@@ -138,7 +151,9 @@ namespace Iris.ServiceLayer
                     }).ToList()
                 }).FirstOrDefaultAsync();
         }
+        #endregion
 
+        #region Edit
         public async Task Edit(ListFactorViewModel factorViewModel)
         {
             var selectedFactor = await _factors.Where(f => f.Id == factorViewModel.Id).Include(f => f.Products)
@@ -165,7 +180,9 @@ namespace Iris.ServiceLayer
 
             _unitOfWork.MarkAsChanged(selectedFactor);
         }
+        #endregion
 
+        #region UpdateOneToManyRelation
         private IList<T> UpdateOneToManyRelation<T>(List<T> updatedList, List<T> existingList) where T : BaseEntity
         {
             var addedEntities = updatedList.Where(x => existingList.All(item => item.Id != x.Id)).ToList();
@@ -191,5 +208,6 @@ namespace Iris.ServiceLayer
             }
             return deletedEntities;
         }
+        #endregion
     }
 }

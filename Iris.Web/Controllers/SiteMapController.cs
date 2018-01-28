@@ -5,16 +5,22 @@ using Iris.Web.SiteMap;
 
 namespace Iris.Web.Controllers
 {
+    #region SiteMapController
     [RoutePrefix("")]
     public partial class SiteMapController : Controller
     {
+        #region Feilds
         private readonly ISiteMapService _siteMapService;
+        #endregion
 
+        #region Constractors
         public SiteMapController(ISiteMapService siteMapService)
         {
             _siteMapService = siteMapService;
         }
+        #endregion
 
+        #region Index
         [Route("~/sitemap.xml")]
         public virtual async Task<ActionResult> Index()
         {
@@ -35,5 +41,7 @@ namespace Iris.Web.Controllers
 
             return new SiteMapResult(sm);
         }
+        #endregion
     }
+    #endregion
 }

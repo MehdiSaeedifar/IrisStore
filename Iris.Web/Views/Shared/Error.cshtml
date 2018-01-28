@@ -1,13 +1,39 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+<!doctype html>
+<html lang="fa">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
+    <!-- Basic -->
+    <title>
+        خطا در پردازش اطلاعات
+    </title>
+    <!-- Define Charset -->
+    <meta charset="utf-8">
+    <!-- Responsive Metatag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Page Description and Author -->
+    <meta name="description" content="">
+    <meta name="author" content="">
 </head>
 <body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
+    <!-- Full Body Container -->
+    <div id="container">
+        <!-- Start Content Section -->
+        <section id="content" class="error-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="error-page">
+                            <img src="~/Content/Icons/500.png" alt="500" />
+                            <h3>خطایی در پردازش درخواست شما صورت گرفته است!</h3>
+                            <h4>لطفا اندکی بعد دوباره سعی نمائید.</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Content Section  -->
+    </div>
 </body>
 </html>
+

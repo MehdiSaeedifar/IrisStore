@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapperContracts;
 using Iris.DomainClasses;
 
 namespace Iris.ViewModels
 {
+    #region ProductOrderViewModel
     public class ProductOrderViewModel : IHaveCustomMappings
     {
+        #region Properties
         public int Id { get; set; }
         public string Name { get; set; }
         [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
@@ -21,6 +21,19 @@ namespace Iris.ViewModels
         public int Count { get; set; }
         public IList<ProductDiscountViewModel> Discounts { get; set; }
 
+        #region Calculator Properties
+        /// <summary>
+        /// Calculator Discounts
+        /// </summary>
+        [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
+        public decimal CalcDiscount { get { return (Price - ((Price * Discount) / 100)); } }
+        [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
+        public decimal CalcDiscountFee { get { return (((Price * Discount) / 100)); } }
+        #endregion
+
+        #endregion
+
+        #region CreateMappings
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Product, ProductOrderViewModel>()
@@ -36,25 +49,20 @@ namespace Iris.ViewModels
                                     .Select(discount => discount.Discount)
                                     .FirstOrDefault()));
         }
-
-        #region Calculator Properties
-        /// <summary>
-        /// Calculator Discounts
-        /// </summary>
-        [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
-        public decimal CalcDiscount { get { return (Price - ((Price * Discount) / 100)); } }
-        [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
-        public decimal CalcDiscountFee { get { return (((Price * Discount) / 100)); } }
         #endregion
-
     }
+    #endregion
 
+    #region ProductDiscountViewModel
     public class ProductDiscountViewModel : IHaveCustomMappings
     {
+        #region Properties
         public decimal Discount { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        #endregion
 
+        #region CreateMappings
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<ProductDiscount, ProductDiscountViewModel>()
@@ -64,6 +72,7 @@ namespace Iris.ViewModels
             configuration.CreateMap<ProductDiscountViewModel, ProductDiscount>()
                 .ForMember(discount => discount.Product, opt => opt.Ignore());
         }
-
+        #endregion
     }
+    #endregion
 }

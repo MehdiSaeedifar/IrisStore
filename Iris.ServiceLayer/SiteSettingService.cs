@@ -11,27 +11,24 @@ using Iris.ViewModels;
 
 namespace Iris.ServiceLayer
 {
-    public enum SettingsName
-    {
-        SiteName,
-        ContactInfo,
-        SiteKeywords,
-        SiteDescription
-    }
-
     public class SiteSettingService : ISiteSettingService
     {
+        #region Fields
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IMappingEngine _mappingEngine;
         private readonly IDbSet<SiteOption> _SiteOptions;
+        #endregion
 
+        #region Constractors
         public SiteSettingService(IUnitOfWork unitOfWork, IMappingEngine mappingEngine)
         {
             _UnitOfWork = unitOfWork;
             _mappingEngine = mappingEngine;
             _SiteOptions = unitOfWork.Set<SiteOption>();
         }
+        #endregion
 
+        #region UpdateSettings
         public async Task UpdateSettings(EditSettingViewModel settingsModel)
         {
             var currentSettings = await _SiteOptions.ToListAsync();
@@ -51,7 +48,9 @@ namespace Iris.ServiceLayer
             }
 
         }
+        #endregion
 
+        #region GetSettingsForEdit
         public async Task<EditSettingViewModel> GetSettingsForEdit()
         {
             var settings = await _SiteOptions.AsNoTracking().ToListAsync();
@@ -71,17 +70,23 @@ namespace Iris.ServiceLayer
 
             return settingsViewModel;
         }
+        #endregion
 
+        #region GetSiteName
         public async Task<string> GetSiteName()
         {
             return (await GetSettingsForEdit()).SiteName;
         }
+        #endregion
 
+        #region GetContactInfo
         public async Task<string> GetContactInfo()
         {
             return (await GetSettingsForEdit()).ContactInfo;
         }
+        #endregion
 
+        #region GetSiteMetaTags
         public async Task<SiteMetaTags> GetSiteMetaTags()
         {
             return new SiteMetaTags
@@ -90,7 +95,9 @@ namespace Iris.ServiceLayer
                 Description = (await GetSettingsForEdit()).ContactInfo
             };
         }
+        #endregion
 
+        #region GetNotificationEmail
         public async Task<string> GetNotificationEmail()
         {
             return await _SiteOptions
@@ -98,7 +105,9 @@ namespace Iris.ServiceLayer
                 .Select(option => option.Value)
                 .FirstOrDefaultAsync();
         }
+        #endregion
 
+        #region GetSmtpSettings
         public async Task<SmtpSettings> GetSmtpSettings()
         {
             var settings = await GetSettingsForEdit();
@@ -116,7 +125,9 @@ namespace Iris.ServiceLayer
 
             return smtpSettings;
         }
+        #endregion
 
+        #region GetSettings
         public EditSettingViewModel GetSettings()
         {
             var settings = _SiteOptions.AsNoTracking().ToList();
@@ -136,7 +147,9 @@ namespace Iris.ServiceLayer
 
             return settingsViewModel;
         }
+        #endregion
 
+        #region GetValue
         private string GetValue(string key)
         {
             return _SiteOptions
@@ -145,7 +158,9 @@ namespace Iris.ServiceLayer
                            .Cacheable()
                                .FirstOrDefault();
         }
+        #endregion
 
+        #region GetValueAsync
         private Task<string> GetValueAsync(string key)
         {
             return _SiteOptions
@@ -154,6 +169,17 @@ namespace Iris.ServiceLayer
                            .Cacheable()
                                .FirstOrDefaultAsync();
         }
-
+        #endregion
     }
+
+    #region enum SettingsName
+    public enum SettingsName
+    {
+        SiteName,
+        ContactInfo,
+        SiteKeywords,
+        SiteDescription
+    }
+    #endregion
+
 }

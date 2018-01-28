@@ -12,13 +12,18 @@ namespace Iris.ServiceLayer
 {
     public class SiteMapService : ISiteMapService
     {
+        #region Fields
         private readonly IDbSet<Product> _products;
+        #endregion
 
+        #region Constractors
         public SiteMapService(IUnitOfWork unitOfWork)
         {
             _products = unitOfWork.Set<Product>();
         }
+        #endregion
 
+        #region GetProductsSiteMap
         public async Task<IList<SiteMapLinkViewModel>> GetProductsSiteMap()
         {
             return await _products.OrderByDescending(p => p.PostedDate)
@@ -29,5 +34,6 @@ namespace Iris.ServiceLayer
                     LastModified = p.PostedDate
                 }).Cacheable().ToListAsync();
         }
+        #endregion
     }
 }

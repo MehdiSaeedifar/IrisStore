@@ -9,20 +9,26 @@ using PagedList;
 
 namespace Iris.Web.Areas.Post.Controllers
 {
+    #region HomePostController
     [RouteArea("Post", AreaPrefix = "Post")]
     public partial class HomeController : Controller
     {
+        #region Fields
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPostService _postService;
         private readonly IPostCategoryService _postCategoryService;
+        #endregion
 
+        #region Constructors
         public HomeController(IUnitOfWork unitOfWork, IPostService postService, IPostCategoryService postCategoryService)
         {
             _unitOfWork = unitOfWork;
             _postService = postService;
             _postCategoryService = postCategoryService;
         }
+        #endregion
 
+        #region Index
         [Route("{id:int}/{slugUrl?}")]
         public virtual async Task<ActionResult> Index(int id)
         {
@@ -46,7 +52,9 @@ namespace Iris.Web.Areas.Post.Controllers
 
             return View(post);
         }
+        #endregion
 
+        #region List
         [Route("List/{id:int}/{slugUrl}/{page:int?}")]
         public virtual async Task<ActionResult> List(int id, int? page)
         {
@@ -61,6 +69,7 @@ namespace Iris.Web.Areas.Post.Controllers
 
             return View();
         }
-
+        #endregion
     }
+    #endregion
 }

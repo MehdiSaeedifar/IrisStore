@@ -2,6 +2,7 @@
 
 namespace Iris.Web.Controllers
 {
+    #region TestController
     [RoutePrefix("Test")]
     public partial class TestController : Controller
     {
@@ -28,4 +29,5 @@ namespace Iris.Web.Controllers
             return View();
         }
     }
+    #endregion
 }

@@ -2,13 +2,14 @@
 using System.Web.Mvc;
 using Iris.ServiceLayer.Contracts;
 using Iris.ViewModels;
+using Infrastructure;
+using System;
 
 namespace Iris.Web.Controllers
 {
     [RoutePrefix("Home")]
     public partial class HomeController : Controller
     {
-
         private IApplicationUserManager _userManager;
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
@@ -34,7 +35,6 @@ namespace Iris.Web.Controllers
         [Route("Index")]
         public virtual async Task<ActionResult> Index()
         {
-
             var model = new HomePageViewModel
             {
                 NewestProducts = await _productService.GetNewestProducts(8),
@@ -71,6 +71,27 @@ namespace Iris.Web.Controllers
             };
 
             return PartialView(MVC.Home.Views._Footer, links);
+        }
+
+
+        /// <summary>
+        /// Custom error handling for erro404
+        /// </summary>
+        /// <returns></returns>
+        [Route("~/Shared/Error404")]
+        public ActionResult Error404()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Custom error handling for erro500
+        /// </summary>
+        /// <returns></returns>
+        [Route("~/Shared/Error")]
+        public ActionResult Error()
+        {
+            return View();
         }
 
     }

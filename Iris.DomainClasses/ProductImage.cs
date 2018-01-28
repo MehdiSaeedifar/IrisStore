@@ -2,6 +2,7 @@
 {
     public class ProductImage : BaseEntity
     {
+        #region Properties
         public string Name { get; set; }
         public int? Order { get; set; }
         public string ThumbnailUrl { get; set; }
@@ -10,5 +11,6 @@
         public string DeleteUrl { get; set; }
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
+        #endregion
     }
 }

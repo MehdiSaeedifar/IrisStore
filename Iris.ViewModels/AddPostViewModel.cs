@@ -6,8 +6,10 @@ using Utilities;
 
 namespace Iris.ViewModels
 {
+    #region AddPostViewModel
     public class AddPostViewModel : MetaTagsViewModel
     {
+        #region Properties
         public int? Id { get; set; }
 
         [Display(Name = "عنوان")]
@@ -22,7 +24,9 @@ namespace Iris.ViewModels
 
         [Display(Name = "تصویر")]
         public string Image { get; set; }
+        #endregion
 
+        #region CreateMappings
         public override void CreateMappings(IConfiguration configuration)
         {
             base.CreateMappings(configuration);
@@ -40,5 +44,7 @@ namespace Iris.ViewModels
 
                       .ForMember(postModel => postModel.Tags, opt => opt.Ignore()).IncludeBase<MetaTagsViewModel, Post>();
         }
+        #endregion
     }
+    #endregion
 }

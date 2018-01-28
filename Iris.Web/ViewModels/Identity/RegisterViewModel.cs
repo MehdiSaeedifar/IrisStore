@@ -2,8 +2,10 @@
 
 namespace Iris.Web.ViewModels.Identity
 {
+    #region RegisterViewModel
     public class RegisterViewModel
     {
+        #region Properties
         public int? Id { get; set; }
 
         [Required]
@@ -27,5 +29,7 @@ namespace Iris.Web.ViewModels.Identity
         public string ConfirmPassword { get; set; }
 
         public string ReturnUrl { get; set; }
+        #endregion
     }
+    #endregion
 }

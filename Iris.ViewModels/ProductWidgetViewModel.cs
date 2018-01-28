@@ -8,8 +8,10 @@ using System;
 
 namespace Iris.ViewModels
 {
+    #region ProductWidgetViewModel
     public class ProductWidgetViewModel : IHaveCustomMappings
     {
+        #region Properties
         public int Id { get; set; }
         public string Name { get; set; }
         [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
@@ -23,6 +25,19 @@ namespace Iris.ViewModels
 
         public IList<ProductPageDiscountWidgetViewModel> Discounts { get; set; }
 
+        #region Calculator Properties
+        /// <summary>
+        /// Calculator Discounts
+        /// </summary>
+        [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
+        public decimal CalcDiscount { get { return (Price - ((Price * Discount) / 100)); } }
+        [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
+        public decimal CalcDiscountFee { get { return (((Price * Discount) / 100)); } }
+        #endregion
+
+        #endregion
+
+        #region CreateMappings
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Product, ProductWidgetViewModel>()
@@ -52,31 +67,27 @@ namespace Iris.ViewModels
                             product =>
                                 product.Images.OrderBy(image => image.Order).Select(image => image.ThumbnailUrl).FirstOrDefault()));
         }
-
-        #region Calculator Properties
-        /// <summary>
-        /// Calculator Discounts
-        /// </summary>
-        [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
-        public decimal CalcDiscount { get { return (Price - ((Price * Discount) / 100)); } }
-        [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
-        public decimal CalcDiscountFee { get { return (((Price * Discount) / 100)); } }
         #endregion
     }
+    #endregion
 
+    #region ProductPageDiscountWidgetViewModel
     public class ProductPageDiscountWidgetViewModel : IHaveCustomMappings
     {
+        #region Properties
         public decimal Discount { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        #endregion
 
+        #region CreateMappings
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<ProductDiscount, ProductPageDiscountWidgetViewModel>()
                .ForMember(discountModel => discountModel.StartDate, opt => opt.MapFrom(productdiscount => productdiscount.StartDate))
                            .ForMember(discountModel => discountModel.EndDate, opt => opt.MapFrom(productdiscount => productdiscount.EndDate));
-
         }
-
+        #endregion
     }
+    #endregion
 }

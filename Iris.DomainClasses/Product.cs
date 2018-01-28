@@ -4,18 +4,9 @@ using System.ComponentModel;
 
 namespace Iris.DomainClasses
 {
-    public enum ProductStatus
-    {
-        [Description("موجود")]
-        Available,
-        [Description("ناموجود")]
-        NotAvailable,
-        [Description("به زودی")]
-        ComingSoon,
-    }
-
     public class Product : BaseEntity
     {
+        #region Constractors
         public Product()
         {
             Prices = new HashSet<ProductPrice>();
@@ -23,7 +14,9 @@ namespace Iris.DomainClasses
             Categories = new HashSet<Category>();
             Images = new HashSet<ProductImage>();
         }
+        #endregion
 
+        #region Properties
         public string Title { get; set; }
         public string Body { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
@@ -45,5 +38,18 @@ namespace Iris.DomainClasses
         public virtual ICollection<ProductPrice> Prices { get; set; }
         public virtual ICollection<ProductDiscount> Discounts { get; set; }
         public virtual ICollection<ProductImage> Images { get; set; }
+        #endregion
     }
+
+    #region enum ProductStatus
+    public enum ProductStatus
+    {
+        [Description("موجود")]
+        Available,
+        [Description("ناموجود")]
+        NotAvailable,
+        [Description("به زودی")]
+        ComingSoon,
+    }
+    #endregion
 }
