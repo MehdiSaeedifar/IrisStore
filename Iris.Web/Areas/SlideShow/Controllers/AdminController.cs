@@ -19,7 +19,7 @@ namespace Iris.Web.Areas.SlideShow.Controllers
     [RouteArea("SlideShow", AreaPrefix = "SlideShow-Admin")]
     public partial class AdminController : Controller
     {
-        #region Feild
+        #region Feilds
         private readonly IUnitOfWork _unitOfWork;
         private readonly ISlideShowImageService _slideShowService;
         private readonly IMappingEngine _mappingEngine;

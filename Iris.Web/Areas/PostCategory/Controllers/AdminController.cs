@@ -18,7 +18,7 @@ namespace Iris.Web.Areas.PostCategory.Controllers
     [RouteArea("PostCategory", AreaPrefix = "PostCategory-Admin")]
     public partial class AdminController : Controller
     {
-        #region Feild
+        #region Feilds
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPostCategoryService _categoryService;
         private readonly IMappingEngine _mappingEngine;

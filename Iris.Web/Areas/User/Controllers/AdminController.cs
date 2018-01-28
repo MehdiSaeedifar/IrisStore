@@ -22,7 +22,7 @@ namespace Iris.Web.Areas.User.Controllers
     [RouteArea("User", AreaPrefix = "User-Admin")]
     public partial class AdminController : Controller
     {
-        #region Feild
+        #region Feilds
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMappingEngine _mappingEngine;
         private readonly IApplicationUserManager _userManager;

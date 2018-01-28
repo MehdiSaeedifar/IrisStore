@@ -22,7 +22,7 @@ namespace Iris.Web.Areas.Product.Controllers
     [RouteArea("Product", AreaPrefix = "Product-Admin")]
     public partial class AdminController : Controller
     {
-        #region Feild
+        #region Feilds
         private readonly IMappingEngine _mappingEngine;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICategoryService _categoryService;

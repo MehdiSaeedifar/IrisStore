@@ -13,7 +13,7 @@ namespace Iris.Web.Areas.Product.Controllers
     [RouteArea("Product", AreaPrefix = "product")]
     public partial class SearchProductController : Controller
     {
-        #region Feild
+        #region Feilds
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
         private readonly IMappingEngine _mappingEngine;

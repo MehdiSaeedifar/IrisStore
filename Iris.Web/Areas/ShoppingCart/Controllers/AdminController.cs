@@ -22,7 +22,7 @@ namespace Iris.Web.Areas.ShoppingCart.Controllers
     [RouteArea("ShoppingCart", AreaPrefix = "ShoppingCart-Admin")]
     public partial class AdminController : Controller
     {
-        #region Feild
+        #region Feilds
         private readonly IMappingEngine _mappingEngine;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IShoppingCartService _shoppingCartService;

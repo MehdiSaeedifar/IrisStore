@@ -18,7 +18,7 @@ namespace Iris.Web.Areas.User.Controllers
     [RouteArea("User", AreaPrefix = "User")]
     public partial class HomeController : Controller
     {
-        #region Feild
+        #region Feilds
         private readonly IApplicationUserManager _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IApplicationSignInManager _signInManager;
