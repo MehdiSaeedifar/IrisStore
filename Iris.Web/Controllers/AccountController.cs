@@ -12,14 +12,19 @@ using Microsoft.Owin.Security;
 
 namespace Iris.Web.Controllers
 {
+    #region AccountController
     [RoutePrefix("Account")]
     public partial class AccountController : Controller
     {
+        #region Feilds
         private readonly IUnitOfWork _unitOfWork;
         private readonly IApplicationUserManager _userManager;
         private readonly IApplicationSignInManager _signInManager;
         private readonly IAuthenticationManager _authenticationManager;
 
+        #endregion
+
+        #region Constractors
         public AccountController(IUnitOfWork unitOfWork, IApplicationUserManager userManager, IApplicationSignInManager applicationSignInManager,
             IAuthenticationManager authenticationManager)
         {
@@ -28,7 +33,9 @@ namespace Iris.Web.Controllers
             _signInManager = applicationSignInManager;
             _authenticationManager = authenticationManager;
         }
+        #endregion
 
+        #region Login
         [Route("Login")]
         [AllowAnonymous]
         public virtual ActionResult Login(string returnUrl, bool isUser = false)
@@ -76,7 +83,9 @@ namespace Iris.Web.Controllers
                         return View("UserLogin", model);
             }
         }
+        #endregion
 
+        #region LogOff
         [Route("LogOff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -88,7 +97,9 @@ namespace Iris.Web.Controllers
 
             return RedirectToAction((string)MVC.Account.ActionNames.Login, (string)MVC.Account.Name);
         }
+        #endregion
 
+        #region ResetPassword
         [Route("ResetPassword")]
         [AllowAnonymous]
         public virtual ActionResult ResetPassword(string code)
@@ -120,7 +131,18 @@ namespace Iris.Web.Controllers
             addErrors(result);
             return View();
         }
+        #endregion
 
+        #region ResetPasswordConfirmation
+        // GET: /Account/ResetPasswordConfirmation
+        [AllowAnonymous]
+        public virtual ActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
+        #endregion
+
+        #region Register
         [Route("Register")]
         [AllowAnonymous]
         public virtual ActionResult Register(string returnUrl)
@@ -171,24 +193,16 @@ namespace Iris.Web.Controllers
 
             return redirectToLocal(returnUrl);
         }
+        #endregion
 
-        //
-        // GET: /Account/ResetPasswordConfirmation
-        [AllowAnonymous]
-        public virtual ActionResult ResetPasswordConfirmation()
-        {
-            return View();
-        }
-
-
+        #region ForgotPassword
         [Route("ForgotPassword")]
         [AllowAnonymous]
         public virtual ActionResult ForgotPassword()
         {
             return View();
         }
-
-
+        
         [Route("ForgotPassword")]
         [HttpPost]
         [AllowAnonymous]
@@ -215,21 +229,49 @@ namespace Iris.Web.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+        #endregion
 
-        //
+        #region ForgotPasswordConfirmation
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
         public virtual ActionResult ForgotPasswordConfirmation()
         {
             return View();
         }
+        #endregion
 
+        #region ChangePassword
         [Route("ChangePassword")]
         public virtual ActionResult ChangePassword()
         {
             return View();
         }
 
+        [Route("ChangePassword")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var result = await _userManager.ChangePasswordAsync(_userManager.GetCurrentUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await _userManager.GetCurrentUserAsync();
+                if (user != null)
+                {
+                    await signInAsync(user, isPersistent: false);
+                }
+                TempData["message"] = "کلمه عبور با موفقیت ویرایش شد";
+            }
+            addErrors(result);
+            return View(model);
+        }
+        #endregion
+
+        #region ChangeUserPassword
         [Route("ChangeUserPassword")]
         public virtual ActionResult ChangeUserPassword()
         {
@@ -259,31 +301,9 @@ namespace Iris.Web.Controllers
             addErrors(result);
             return View("ChangeUserPassword", model);
         }
+        #endregion
 
-        [Route("ChangePassword")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public virtual async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var result = await _userManager.ChangePasswordAsync(_userManager.GetCurrentUserId(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
-            {
-                var user = await _userManager.GetCurrentUserAsync();
-                if (user != null)
-                {
-                    await signInAsync(user, isPersistent: false);
-                }
-                TempData["message"] = "کلمه عبور با موفقیت ویرایش شد";
-            }
-            addErrors(result);
-            return View(model);
-        }
-
-
+        #region AddErrors
         private void addErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
@@ -291,7 +311,9 @@ namespace Iris.Web.Controllers
                 ModelState.AddModelError("", error);
             }
         }
+        #endregion
 
+        #region redirectToLocal
         private ActionResult redirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
@@ -301,13 +323,16 @@ namespace Iris.Web.Controllers
             return RedirectToAction(MVC.AdminPanel.Dashboard.ActionNames.Index, MVC.AdminPanel.Dashboard.Name, new { area = MVC.AdminPanel.Name });
         }
 
+        #endregion
+
+        #region SignInAsync
         private async Task signInAsync(ApplicationUser user, bool isPersistent)
         {
             _authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie);
             _authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent },
                 await _userManager.GenerateUserIdentityAsync(user));
         }
-
-
+        #endregion
     }
+    #endregion
 }

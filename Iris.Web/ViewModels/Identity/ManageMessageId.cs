@@ -1,5 +1,6 @@
 ﻿namespace Iris.Web.ViewModels.Identity
 {
+    #region enum ManageMessageId
     public enum ManageMessageId
     {
         AddPhoneSuccess,
@@ -11,4 +12,5 @@
         Error,
         UserProfileSuccessfully
     }
+    #endregion
 }

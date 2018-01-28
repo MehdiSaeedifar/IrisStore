@@ -9,6 +9,7 @@ namespace Iris.DomainClasses
 {
     public class FactorProduct
     {
+        #region Properties
         public int Id { get; set; }
         public decimal Price { get; set; }
         public decimal Discount { get; set; }
@@ -22,6 +23,6 @@ namespace Iris.DomainClasses
 
         public decimal TotalPrice { get { return (Price - ((Price * Discount) / 100) * Count); } set {; } }
         public decimal TotalDiscount { get { return (((Price * Discount) / 100) * Count); } set {; } }
-
+        #endregion
     }
 }

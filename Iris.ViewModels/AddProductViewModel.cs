@@ -10,8 +10,10 @@ using Utilities;
 
 namespace Iris.ViewModels
 {
+    #region AddProductViewModel
     public class AddProductViewModel : IHaveCustomMappings
     {
+        #region Constrctors
         public AddProductViewModel()
         {
             Categories = new List<string>();
@@ -20,7 +22,9 @@ namespace Iris.ViewModels
             Prices = new List<AddProductPriceViewModel>();
             Discounts = new List<AddProductDiscountViewModel>();
         }
+        #endregion
 
+        #region Properties
         public int? Id { get; set; }
 
         [Display(Name = "نام کالا")]
@@ -55,6 +59,9 @@ namespace Iris.ViewModels
         public List<AddProductDiscountViewModel> Discounts { get; set; }
 
         public MetaTagsViewModel SeoFields { get; set; }
+        #endregion
+
+        #region CreateMappings
         public void CreateMappings(IConfiguration configuration)
         {
 
@@ -77,9 +84,6 @@ namespace Iris.ViewModels
 
             .ForMember(productModel => productModel.Discounts,
             opt => opt.MapFrom(product => product.Discounts.OrderByDescending(Discount => Discount.StartDate)));
-
-
-
 
             configuration.CreateMap<AddProductViewModel, Product>()
                 .ForMember(product => product.Categories,
@@ -146,13 +150,15 @@ namespace Iris.ViewModels
 
 
                 .ForMember(product => product.Tags, opt => opt.Ignore());
-
-
         }
+        #endregion
     }
+    #endregion
 
+    #region AddProductImageViewModel
     public class AddProductImageViewModel : IHaveCustomMappings
     {
+        #region Properties
         public int? Id { get; set; }
         public string Name { get; set; }
         public int? Order { get; set; }
@@ -161,6 +167,9 @@ namespace Iris.ViewModels
         public int Size { get; set; }
         public string DeleteUrl { get; set; }
         public int? ProductId { get; set; }
+        #endregion
+
+        #region CreateMappings
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<ProductImage, AddProductImageViewModel>();
@@ -168,10 +177,14 @@ namespace Iris.ViewModels
             configuration.CreateMap<AddProductImageViewModel, ProductImage>()
                 .ForMember(image => image.Product, opt => opt.Ignore());
         }
+        #endregion
     }
+    #endregion
 
+    #region MetaTagsViewModel
     public class MetaTagsViewModel : IHaveCustomMappings
     {
+        #region Properties
         [Display(Name = "نام URL")]
         public string SlugUrl { get; set; }
 
@@ -180,20 +193,29 @@ namespace Iris.ViewModels
 
         [Display(Name = "توضیحات")]
         public string MetaDescription { get; set; }
+        #endregion
+
+        #region CreateMappings
         public virtual void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<MetaTagsViewModel, Post>().ForMember(x => x.Tags, opt => opt.Ignore());
         }
+        #endregion
     }
+    #endregion
 
+    #region AddProductPriceViewModel
     public class AddProductPriceViewModel : IHaveCustomMappings
     {
-
+        #region Properties
         public int? Id { get; set; }
         [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
         public decimal Price { get; set; }
         public DateTime Date { get; set; }
         public int? ProductId { get; set; }
+        #endregion
+
+        #region CreateMappings
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<ProductPrice, AddProductPriceViewModel>();
@@ -201,17 +223,23 @@ namespace Iris.ViewModels
             configuration.CreateMap<AddProductPriceViewModel, ProductPrice>()
                 .ForMember(price => price.Product, opt => opt.Ignore());
         }
+        #endregion
     }
+    #endregion
 
+    #region AddProductDiscountViewModel
     public class AddProductDiscountViewModel : IHaveCustomMappings
     {
-
+        #region Properties
         public int? Id { get; set; }
         [DisplayFormat(DataFormatString = "{0:0}", ApplyFormatInEditMode = true)]
         public decimal Discount { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int? ProductId { get; set; }
+        #endregion
+
+        #region CreateMappings
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<ProductDiscount, AddProductDiscountViewModel>();
@@ -219,7 +247,7 @@ namespace Iris.ViewModels
             configuration.CreateMap<AddProductDiscountViewModel, ProductDiscount>()
                 .ForMember(discount => discount.Product, opt => opt.Ignore());
         }
+        #endregion
     }
-
-
+    #endregion
 }

@@ -18,32 +18,43 @@ namespace Iris.ServiceLayer
 {
     public class CategoryService : ICategoryService
     {
+        #region Fields
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMappingEngine _mappingEngine;
         private readonly IDbSet<Category> _categories;
+        #endregion
 
+        #region Constractors
         public CategoryService(IUnitOfWork unitOfWork, IMappingEngine mappingEngine)
         {
             _unitOfWork = unitOfWork;
             _categories = unitOfWork.Set<Category>();
             _mappingEngine = mappingEngine;
         }
+        #endregion
 
+        #region Add
         public void Add(Category category)
         {
             _categories.Add(category);
         }
+        #endregion
 
+        #region GetListOfActualCategories
         public async Task<IList<Category>> GetListOfActualCategories(IList<string> categoriesList)
         {
             return await _categories.Where(x => categoriesList.Contains(x.Name)).ToListAsync();
         }
+        #endregion
 
+        #region GetAll
         public async Task<IList<Category>> GetAll()
         {
             return await _categories.ToListAsync();
         }
+        #endregion
 
+        #region GetSearchProductsCategories
         public async Task<IList<CategoryViewModel>> GetSearchProductsCategories()
         {
             return await _categories.OrderByDescending(c => c.Products.Count)
@@ -51,14 +62,18 @@ namespace Iris.ServiceLayer
                 .Cacheable().ToListAsync();
 
         }
+        #endregion
 
+        #region SearchCategory
         public async Task<IList<CategoryViewModel>> SearchCategory(string term, int count)
         {
             return await _categories.OrderBy(category => category.Name)
                 .Where(category => category.Name.Contains(term))
                 .ProjectTo<CategoryViewModel>(null, _mappingEngine).Take(count).ToListAsync();
         }
+        #endregion
 
+        #region GetSidebarCategories
         public async Task<IList<SidebarCategoryViewModel>> GetSidebarCategories(int count)
         {
             return await _categories.AsNoTracking()
@@ -67,7 +82,9 @@ namespace Iris.ServiceLayer
                         .Take(count)
                         .Cacheable().ToListAsync();
         }
+        #endregion
 
+        #region GetDataGridSource
         public async Task<DataGridViewModel<CategoryDataGridViewModel>> GetDataGridSource(string orderBy, JqGridRequest request, NameValueCollection form, DateTimeType dateTimeType,
             int page, int pageSize)
         {
@@ -86,19 +103,24 @@ namespace Iris.ServiceLayer
 
             return dataGridModel;
         }
+        #endregion
 
+        #region Delete
         public void Delete(int id)
         {
             var entity = new Category { Id = id };
             _categories.Attach(entity);
             _categories.Remove(entity);
         }
+        #endregion
 
+        #region Edit
         public void Edit(Category category)
         {
             _categories.Attach(category);
 
             _unitOfWork.Entry(category).State = EntityState.Modified;
         }
+        #endregion
     }
 }

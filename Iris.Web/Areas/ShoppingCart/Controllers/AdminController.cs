@@ -17,15 +17,19 @@ using Utilities;
 
 namespace Iris.Web.Areas.ShoppingCart.Controllers
 {
+    #region AdminShoppingCartController
     [Authorize(Roles = "Admin")]
     [RouteArea("ShoppingCart", AreaPrefix = "ShoppingCart-Admin")]
     public partial class AdminController : Controller
     {
+        #region Feild
         private readonly IMappingEngine _mappingEngine;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IShoppingCartService _shoppingCartService;
         private readonly ICategoryService _categoryService;
+        #endregion
 
+        #region Constructors
         public AdminController(IUnitOfWork unitOfWork, IShoppingCartService shoppingCartService, ICategoryService categoryService,
             IMappingEngine mappingEngine)
         {
@@ -34,13 +38,17 @@ namespace Iris.Web.Areas.ShoppingCart.Controllers
             _categoryService = categoryService;
             _mappingEngine = mappingEngine;
         }
+        #endregion
 
+        #region Index
         [Route("List")]
         public virtual ActionResult Index()
         {
             return View();
         }
+        #endregion
 
+        #region EditFactor
         [Route("EditFactor")]
         [HttpPost]
         public virtual async Task<ActionResult> EditFactor(ListFactorViewModel factorViewModel)
@@ -49,7 +57,9 @@ namespace Iris.Web.Areas.ShoppingCart.Controllers
             await _unitOfWork.SaveAllChangesAsync();
             return Content(Url.Action("UserFactor", "Home", new { area = "ShoppingCart" }));
         }
+        #endregion
 
+        #region GetFactors
         [Route("GetFactors")]
         public virtual async Task<ActionResult> GetFactors(JqGridRequest request, string hiddenColumns)
         {
@@ -89,7 +99,9 @@ namespace Iris.Web.Areas.ShoppingCart.Controllers
             };
             return Json(jqGridData, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region AddProduct
         [Route("Add")]
         public virtual async Task<ActionResult> AddProduct()
         {
@@ -99,7 +111,9 @@ namespace Iris.Web.Areas.ShoppingCart.Controllers
 
             return View(productModel);
         }
+        #endregion
 
+        #region Edit
         [Route("Edit/{id:int?}")]
         [HttpGet]
         public virtual async Task<ActionResult> Edit(int id)
@@ -109,7 +123,7 @@ namespace Iris.Web.Areas.ShoppingCart.Controllers
 
             return View(selectedProduct);
         }
-
+         
         [Route("Edit")]
         [HttpPost]
         public virtual async Task<ActionResult> Edit(ListFactorViewModel factorViewModel)
@@ -119,7 +133,9 @@ namespace Iris.Web.Areas.ShoppingCart.Controllers
             TempData["message"] = "فاکتور مورد نظر با موفقیت ویرایش شد.";
             return Json(true);
         }
+        #endregion
 
+        #region Delete
         [Route("Delete")]
         [HttpPost]
         public virtual async Task<ActionResult> Delete(int id)
@@ -129,13 +145,7 @@ namespace Iris.Web.Areas.ShoppingCart.Controllers
 
             return Json(true);
         }
-
-
-
+        #endregion
     }
-
-
-
-
-  
+    #endregion
 }

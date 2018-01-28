@@ -17,15 +17,19 @@ using Utilities;
 
 namespace Iris.Web.Areas.Product.Controllers
 {
+    #region AdminProductController
     [Authorize(Roles = "Admin")]
     [RouteArea("Product", AreaPrefix = "Product-Admin")]
     public partial class AdminController : Controller
     {
+        #region Feild
         private readonly IMappingEngine _mappingEngine;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
+        #endregion
 
+        #region Constructors
         public AdminController(IUnitOfWork unitOfWork, IProductService productService, ICategoryService categoryService,
             IMappingEngine mappingEngine)
         {
@@ -34,13 +38,17 @@ namespace Iris.Web.Areas.Product.Controllers
             _categoryService = categoryService;
             _mappingEngine = mappingEngine;
         }
+        #endregion
 
+        #region Index
         [Route("List")]
         public virtual ActionResult Index()
         {
             return View();
         }
+        #endregion
 
+        #region GetProducts
         [Route("GetProducts")]
         public virtual async Task<ActionResult> GetProducts(JqGridRequest request, string hiddenColumns)
         {
@@ -80,7 +88,9 @@ namespace Iris.Web.Areas.Product.Controllers
             };
             return Json(jqGridData, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region AddProduct
         [Route("Add")]
         public virtual async Task<ActionResult> AddProduct()
         {
@@ -196,7 +206,9 @@ namespace Iris.Web.Areas.Product.Controllers
 
             return RedirectToAction(MVC.Product.Admin.ActionNames.Index);
         }
+        #endregion
 
+        #region EditProduct
         [Route("Edit/{id:int?}")]
         public virtual async Task<ActionResult> EditProduct(int id)
         {
@@ -207,7 +219,9 @@ namespace Iris.Web.Areas.Product.Controllers
 
             return View(MVC.Product.Admin.Views.AddProduct, selectedProduct);
         }
+        #endregion
 
+        #region DeleteProduct
         [Route("Delete")]
         [HttpPost]
         public virtual async Task<ActionResult> DeleteProduct(int id)
@@ -230,8 +244,9 @@ namespace Iris.Web.Areas.Product.Controllers
 
             return Json(true);
         }
+        #endregion
 
-
+        #region getFilePath
         private string getFilePath(string fileName, string path)
         {
             int count = 1;
@@ -248,12 +263,11 @@ namespace Iris.Web.Areas.Product.Controllers
 
             return newFullPath;
         }
-
+        #endregion
     }
+    #endregion
 
-
-
-
+    #region Class ProductCategoryComparer
     class ProductCategoryComparer : IEqualityComparer<Category>
     {
         public bool Equals(Category x, Category y)
@@ -266,4 +280,5 @@ namespace Iris.Web.Areas.Product.Controllers
             return obj.Name.GetHashCode();
         }
     }
+    #endregion
 }

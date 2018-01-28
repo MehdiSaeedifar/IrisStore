@@ -9,21 +9,27 @@ using Utilities;
 
 namespace Iris.Web.Areas.SiteSetting.Controllers
 {
+    #region AdminSiteSettingController
     [Authorize(Roles = "Admin")]
     [RouteArea("SiteSetting", AreaPrefix = "SiteSetting-Admin")]
     public partial class AdminController : Controller
     {
+        #region Fields
         private readonly IUnitOfWork _unitOfWork;
         private readonly ISiteSettingService _settingService;
         private readonly ICacheService _cacheService;
+        #endregion
 
+        #region Constructors
         public AdminController(IUnitOfWork unitOfWork, ISiteSettingService settingService, ICacheService cacheService)
         {
             _unitOfWork = unitOfWork;
             _settingService = settingService;
             _cacheService = cacheService;
         }
+        #endregion
 
+        #region Edit
         [Route("Edit")]
         public virtual async Task<ActionResult> Edit()
         {
@@ -36,7 +42,7 @@ namespace Iris.Web.Areas.SiteSetting.Controllers
 
             return View(model);
         }
-
+        
         [Route("Edit")]
         [HttpPost]
         public virtual async Task<ActionResult> Edit(EditSettingViewModel settingModel)
@@ -61,6 +67,7 @@ namespace Iris.Web.Areas.SiteSetting.Controllers
 
             return RedirectToAction(MVC.SiteSetting.Admin.ActionNames.Edit);
         }
-
+        #endregion
     }
+    #endregion
 }

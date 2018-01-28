@@ -12,15 +12,18 @@ using Iris.Web.ViewModels.Identity;
 
 namespace Iris.Web.Areas.ShoppingCart.Controllers
 {
+    #region HomeShoppingCartController
     [RouteArea("ShoppingCart", AreaPrefix = "ShpppingCart")]
     public partial class HomeController : Controller
     {
+        #region Fields
         private readonly IProductService _productService;
         private readonly IShoppingCartService _shoppingCartService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IApplicationUserManager _userManager;
+        #endregion
 
-
+        #region Constructors
         public HomeController(IProductService productService, IApplicationUserManager userManager, IShoppingCartService shoppingCartService,
             IUnitOfWork unitOfWork)
         {
@@ -29,19 +32,25 @@ namespace Iris.Web.Areas.ShoppingCart.Controllers
             _unitOfWork = unitOfWork;
             _userManager = userManager;
         }
+        #endregion
 
+        #region Index
         [Route]
         public virtual ActionResult Index()
         {
             return View();
         }
+        #endregion
 
+        #region GetOrdersList
         [Route("GetOrdersList")]
         public virtual async Task<ActionResult> GetOrdersList(int[] productIds)
         {
             return PartialView(await _productService.GetProductsOrders(productIds));
         }
+        #endregion
 
+        #region CreateFactor
         [Route("CreateFactor")]
         [HttpGet]
         public virtual async Task<ActionResult> CreateFactor()
@@ -81,14 +90,16 @@ namespace Iris.Web.Areas.ShoppingCart.Controllers
                 return Content(Url.Action("UserFactor", "Home", new { area = "ShoppingCart" }));
             }
         }
+        #endregion
 
-
+        #region UserFactor
         [Route("UserFactor")]
         [HttpGet]
         public virtual async Task<ActionResult> UserFactor()
         {
             return View(await _shoppingCartService.GetUserFactor(Convert.ToInt32(User.Identity.GetUserId())));
         }
-
+        #endregion 
     }
+    #endregion
 }

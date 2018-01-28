@@ -25,6 +25,7 @@ namespace Iris.ServiceLayer
     public class ApplicationUserManager
         : UserManager<ApplicationUser, int>, IApplicationUserManager
     {
+        #region Fields
         private readonly IDataProtectionProvider _dataProtectionProvider;
         private readonly IApplicationRoleManager _roleManager;
         private readonly IUserStore<ApplicationUser, int> _store;
@@ -33,7 +34,9 @@ namespace Iris.ServiceLayer
         private readonly IIdentity _identity;
         private ApplicationUser _user;
         private readonly IMappingEngine _mappingEngine;
+        #endregion
 
+        #region Constractors
         public ApplicationUserManager(IUserStore<ApplicationUser, int> store,
             IUnitOfWork uow,
             IIdentity identity,
@@ -57,12 +60,16 @@ namespace Iris.ServiceLayer
 
             createApplicationUserManager();
         }
+        #endregion
 
+        #region FindById
         public ApplicationUser FindById(int userId)
         {
             return _users.Find(userId);
         }
+        #endregion
 
+        #region GenerateUserIdentityAsync
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(ApplicationUser applicationUser)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -70,39 +77,53 @@ namespace Iris.ServiceLayer
             // Add custom user claims here
             return userIdentity;
         }
+        #endregion
 
+        #region GetAllUsersAsync
         public Task<List<ApplicationUser>> GetAllUsersAsync()
         {
             return this.Users.ToListAsync();
         }
+        #endregion
 
+        #region GetCurrentUser
         public ApplicationUser GetCurrentUser()
         {
             return _user ?? (_user = this.FindById(GetCurrentUserId()));
         }
+        #endregion
 
+        #region GetCurrentUserAsync
         public async Task<ApplicationUser> GetCurrentUserAsync()
         {
             return _user ?? (_user = await this.FindByIdAsync(GetCurrentUserId()));
         }
+        #endregion
 
+        #region GetCurrentUserId
         public int GetCurrentUserId()
         {
             return _identity.GetUserId<int>();
         }
+        #endregion
 
+        #region HasPassword
         public async Task<bool> HasPassword(int userId)
         {
             var user = await FindByIdAsync(userId);
             return user != null && user.PasswordHash != null;
         }
+        #endregion
 
+        #region HasPhoneNumber
         public async Task<bool> HasPhoneNumber(int userId)
         {
             var user = await FindByIdAsync(userId);
             return user != null && user.PhoneNumber != null;
         }
+        #endregion
 
+        #region OnValidateIdentity
         public Func<CookieValidateIdentityContext, Task> OnValidateIdentity()
         {
             return SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser, int>(
@@ -110,7 +131,9 @@ namespace Iris.ServiceLayer
                          regenerateIdentityCallback: (manager, user) => generateUserIdentityAsync(manager, user),
                          getUserIdCallback: id => id.GetUserId<int>());
         }
+        #endregion
 
+        #region SeedDatabase
         public void SeedDatabase()
         {
             const string userName = "demo";
@@ -146,7 +169,9 @@ namespace Iris.ServiceLayer
                 Name = "User"
             });
         }
+        #endregion
 
+        #region CreateApplicationUserManager
         private void createApplicationUserManager()
         {
             // Configure validation logic for usernames
@@ -189,7 +214,9 @@ namespace Iris.ServiceLayer
                 this.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser, int>(dataProtector);
             }
         }
+        #endregion
 
+        #region GenerateUserIdentityAsync
         private async Task<ClaimsIdentity> generateUserIdentityAsync(ApplicationUserManager manager, ApplicationUser applicationUser)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -197,7 +224,9 @@ namespace Iris.ServiceLayer
             // Add custom user claims here
             return userIdentity;
         }
+        #endregion
 
+        #region GetDataGridSource
         public async Task<DataGridViewModel<UserDataGridViewModel>> GetDataGridSource(string orderBy, JqGridRequest request, NameValueCollection form, DateTimeType dateTimeType,
             int page, int pageSize)
         {
@@ -216,10 +245,7 @@ namespace Iris.ServiceLayer
 
             return dataGridModel;
         }
+        #endregion
     }
-
-
-
-
 }
 

@@ -11,17 +11,22 @@ using Utilities;
 
 namespace Iris.Web.Controllers
 {
+    #region SearchController
     [RoutePrefix("Search")]
     public partial class SearchController : Controller
     {
+        #region Feilds
         private readonly ICategoryService _categoryService;
+        #endregion
 
+        #region Constractors
         public SearchController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
         }
+        #endregion
 
-
+        #region AutoCompleteSearch
         [Route("AutoCompleteSearch")]
         [OutputCache(Location = OutputCacheLocation.None, NoStore = true)]
         public virtual async Task<ActionResult> AutoCompleteSearch(string term)
@@ -60,5 +65,7 @@ namespace Iris.Web.Controllers
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        #endregion
     }
+    #endregion
 }

@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Iris.DomainClasses;
-using AutoMapper;
-using AutoMapperContracts;
 
 namespace Iris.ViewModels
 {
+    #region ListFactorViewModel
     public class ListFactorViewModel 
     {
+        #region Properties
         public int Id { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "لطفا نام را وارد کنید")]
         public string Name { get; set; }
@@ -25,10 +22,14 @@ namespace Iris.ViewModels
         [Required]
         public FactorStatus Status { get; set; } = FactorStatus.Paid;
         public IList<ListFactorProductViewModel> Products { get; set; }
+        #endregion
     }
+    #endregion
 
+    #region ListFactorProductViewModel
     public class ListFactorProductViewModel 
     {
+        #region Properties
         public int Id { get; set; }
         public decimal Price { get; set; }
         public decimal Discount { get; set; }
@@ -36,7 +37,7 @@ namespace Iris.ViewModels
         public int MaxCount { get; set; } = 0;
         public int ProductId { get; set; }
         public string ProductName { get; set; }
-        
+
         #region Calculator Properties
         /// <summary>
         /// Calculator Discounts
@@ -46,5 +47,8 @@ namespace Iris.ViewModels
         [DisplayFormat(DataFormatString = "{0:###,###}", ApplyFormatInEditMode = true)]
         public decimal CalcDiscountFee { get { return (((Price * Discount) / 100)); } }
         #endregion
+
+        #endregion
     }
+    #endregion
 }

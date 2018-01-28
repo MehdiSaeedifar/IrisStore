@@ -13,28 +13,35 @@ using JqGridHelper.Models;
 
 namespace Iris.Web.Areas.PostCategory.Controllers
 {
+    #region AdminPostCategoryController
     [Authorize(Roles = "Admin")]
     [RouteArea("PostCategory", AreaPrefix = "PostCategory-Admin")]
     public partial class AdminController : Controller
     {
+        #region Feild
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPostCategoryService _categoryService;
         private readonly IMappingEngine _mappingEngine;
+        #endregion
 
+        #region Constructors
         public AdminController(IUnitOfWork unitOfWork, IPostCategoryService categoryService, IMappingEngine mappingEngine)
         {
             _unitOfWork = unitOfWork;
             _categoryService = categoryService;
             _mappingEngine = mappingEngine;
         }
+        #endregion
 
+        #region Index
         [Route("List")]
         public virtual ActionResult Index()
         {
             return View();
         }
+        #endregion
 
-
+        #region GetDataGridData
         [Route("GetDataGridData")]
         public virtual async Task<ActionResult> GetDataGridData(JqGridRequest request)
         {
@@ -73,7 +80,9 @@ namespace Iris.Web.Areas.PostCategory.Controllers
             };
             return Json(jqGridData, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region Add
         [Route("Add")]
         [HttpPost]
         public virtual async Task<ActionResult> Add(AddPostCategoryViewModel categoryModel)
@@ -97,7 +106,9 @@ namespace Iris.Web.Areas.PostCategory.Controllers
 
             return Json(new { id = postCategory.Id, success = true });
         }
+        #endregion
 
+        #region Delete
         [Route("Delete")]
         [HttpPost]
         public virtual async Task<ActionResult> Delete(int id)
@@ -107,5 +118,7 @@ namespace Iris.Web.Areas.PostCategory.Controllers
 
             return Json("ok");
         }
+        #endregion
     }
+    #endregion
 }

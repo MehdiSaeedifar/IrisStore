@@ -10,13 +10,18 @@ namespace Iris.ServiceLayer
 {
     public class AdminPanelService : IAdminPanelService
     {
+        #region Fields
         private readonly IDbSet<Product> _products;
+        #endregion
 
+        #region Constractors
         public AdminPanelService(IUnitOfWork unitOfWork)
         {
             _products = unitOfWork.Set<Product>();
         }
+        #endregion
 
+        #region GetDashboardStatistics
         public async Task<AdminDashboardViewModel> GetDashboardStatistics()
         {
             return new AdminDashboardViewModel
@@ -28,5 +33,6 @@ namespace Iris.ServiceLayer
                 TotalProductsCount = await _products.CountAsync()
             };
         }
+        #endregion
     }
 }

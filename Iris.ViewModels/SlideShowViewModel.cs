@@ -6,13 +6,17 @@ using Iris.DomainClasses;
 
 namespace Iris.ViewModels
 {
+    #region SlideShowViewModel
     public class SlideShowViewModel : IHaveCustomMappings
     {
+        #region Constractors
         public SlideShowViewModel()
         {
             Order = 0;
         }
+        #endregion
 
+        #region Properties
         public int? Id { get; set; }
         [Display(Name = "عنوان")]
         public string Title { get; set; }
@@ -30,7 +34,9 @@ namespace Iris.ViewModels
         public int Order { get; set; }
 
         public IList<SlideShowViewModel> SlideShowImages { get; set; }
+        #endregion
 
+        #region CreateMappings
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<SlideShowViewModel, SlideShowImage>();
@@ -39,5 +45,7 @@ namespace Iris.ViewModels
             configuration.CreateMap<SlideShowImage, SlideShowViewModel>()
                 .ForMember(slideShow => slideShow.SlideShowImages, opt => opt.Ignore());
         }
+        #endregion
     }
+    #endregion
 }

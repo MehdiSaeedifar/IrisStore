@@ -17,17 +17,22 @@ namespace Iris.ServiceLayer
 {
     public class PostService : IPostService
     {
+        #region Fields
         private readonly IMappingEngine _mappingEngine;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IDbSet<Post> _posts;
+        #endregion
 
+        #region Constractors
         public PostService(IUnitOfWork unitOfWork, IMappingEngine mappingEngine)
         {
             _unitOfWork = unitOfWork;
             _posts = unitOfWork.Set<Post>();
             _mappingEngine = mappingEngine;
         }
+        #endregion
 
+        #region GetDataGridSource
         public async Task<DataGridViewModel<PostDataGridViewModel>> GetDataGridSource(string orderBy, JqGridRequest request, NameValueCollection form, DateTimeType dateTimeType,
             int page, int pageSize)
         {
@@ -46,26 +51,34 @@ namespace Iris.ServiceLayer
 
             return dataGridModel;
         }
+        #endregion
 
+        #region Add
         public void Add(Post post)
         {
             _posts.Add(post);
         }
+        #endregion
 
+        #region Delete
         public void Delete(int id)
         {
             var entity = new Post() { Id = id };
 
             _unitOfWork.Entry(entity).State = EntityState.Deleted;
         }
+        #endregion
 
+        #region Edit
         public void Edit(Post post)
         {
             _posts.Attach(post);
             _unitOfWork.Entry(post).State = EntityState.Modified;
             _unitOfWork.Entry(post).Property(p => p.ViewNumber).IsModified = false;
         }
+        #endregion
 
+        #region GetPostForEdit
         public async Task<AddPostViewModel> GetPostForEdit(int id)
         {
             return
@@ -74,7 +87,9 @@ namespace Iris.ServiceLayer
                         .ProjectTo<AddPostViewModel>(null, _mappingEngine)
                         .FirstOrDefaultAsync();
         }
+        #endregion
 
+        #region GetPost
         public async Task<PostViewModel> GetPost(int id)
         {
             var selectedPost = await _posts.AsNoTracking().Where(post => post.Id == id)
@@ -92,7 +107,9 @@ namespace Iris.ServiceLayer
             return selectedPost;
 
         }
+        #endregion
 
+        #region IncrementViewNumber
         public async Task IncrementViewNumber(int id)
         {
             //await _unitOfWork.Database.ExecuteSqlCommandAsync("UPDATE Posts SET ViewNumber = ViewNumber + 1 WHERE Id = @id ",
@@ -101,8 +118,9 @@ namespace Iris.ServiceLayer
             var post = await _posts.FindAsync(id);
             post.ViewNumber++;
         }
+        #endregion
 
-
+        #region GetPagedList
         public async Task<PagedListViewModel<PagedListPostViewModel>> GetPagedList(int categoryId, int pageNumber, int pageSize)
         {
             var resultsToSkip = pageNumber * pageSize;
@@ -119,7 +137,9 @@ namespace Iris.ServiceLayer
 
             return pagedList;
         }
+        #endregion
 
+        #region GetAllForLuceneIndex
         public async Task<IList<LueneProduct>> GetAllForLuceneIndex()
         {
             return await _posts.AsNoTracking().Where(p => !(p is Page)).AsQueryable().Select(p => new LueneProduct
@@ -132,10 +152,13 @@ namespace Iris.ServiceLayer
                 SlugUrl = p.SlugUrl
             }).ToListAsync();
         }
+        #endregion
 
+        #region GetTotalPostsCount
         public async Task<int> GetTotalPostsCount()
         {
             return await _posts.CountAsync();
         }
+        #endregion
     }
 }

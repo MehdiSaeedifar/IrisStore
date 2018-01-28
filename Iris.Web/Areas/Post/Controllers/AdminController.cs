@@ -16,15 +16,19 @@ using Utilities;
 
 namespace Iris.Web.Areas.Post.Controllers
 {
+    #region AdminPostController
     [Authorize(Roles = "Admin")]
     [RouteArea("Post", AreaPrefix = "Post-Admin")]
     public partial class AdminController : Controller
     {
+        #region Fields
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPostService _postService;
         private readonly IMappingEngine _mappingEngine;
         private readonly IPostCategoryService _postCategoryService;
+        #endregion
 
+        #region Constructors
         public AdminController(IUnitOfWork unitOfWork, IPostService pageService, IMappingEngine mappingEngine, IPostCategoryService postCategoryService)
         {
             _unitOfWork = unitOfWork;
@@ -32,14 +36,17 @@ namespace Iris.Web.Areas.Post.Controllers
             _mappingEngine = mappingEngine;
             _postCategoryService = postCategoryService;
         }
+        #endregion
 
+        #region Index
         [Route("List")]
         public virtual ActionResult Index()
         {
             return View();
         }
+        #endregion
 
-
+        #region GetDataGridData
         [Route("GetDataGridData")]
         public virtual async Task<ActionResult> GetDataGridData(JqGridRequest request)
         {
@@ -78,8 +85,9 @@ namespace Iris.Web.Areas.Post.Controllers
             };
             return Json(jqGridData, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
-
+        #region Add
         [Route("Add")]
         public virtual async Task<ActionResult> Add()
         {
@@ -140,7 +148,9 @@ namespace Iris.Web.Areas.Post.Controllers
 
             return RedirectToAction(MVC.Post.Admin.ActionNames.Index);
         }
+        #endregion
 
+        #region Edit
         [Route("Edit/{id:int?}")]
         public virtual async Task<ActionResult> Edit(int id)
         {
@@ -150,7 +160,9 @@ namespace Iris.Web.Areas.Post.Controllers
 
             return View(MVC.Post.Admin.Views.Add, model);
         }
+        #endregion
 
+        #region Delete
         [Route("Delete")]
         [HttpPost]
         public virtual async Task<ActionResult> Delete(int id)
@@ -163,6 +175,7 @@ namespace Iris.Web.Areas.Post.Controllers
 
             return Json("ok");
         }
-
+        #endregion
     }
+    #endregion
 }

@@ -18,18 +18,22 @@ namespace Iris.ServiceLayer
 {
     public class SlideShowImageService : ISlideShowImageService
     {
+        #region Fields
         private readonly IMappingEngine _mappingEngine;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IDbSet<SlideShowImage> _slideShowImages;
+        #endregion
 
-
+        #region Constractors
         public SlideShowImageService(IUnitOfWork unitOfWork, IMappingEngine mappingEngine)
         {
             _unitOfWork = unitOfWork;
             _slideShowImages = unitOfWork.Set<SlideShowImage>();
             _mappingEngine = mappingEngine;
         }
+        #endregion
 
+        #region GetDataGridSource
         public async Task<DataGridViewModel<SlideShowDataGridViewModel>> GetDataGridSource(string orderBy, JqGridRequest request, NameValueCollection form, DateTimeType dateTimeType,
             int page, int pageSize)
         {
@@ -48,15 +52,18 @@ namespace Iris.ServiceLayer
 
             return dataGridModel;
         }
+        #endregion
 
+        #region AddSlide
         public void AddSlide(SlideShowImage slideShow, IList<SlideShowImage> otherSlideShows)
         {
 
             _slideShowImages.Add(slideShow);
             FixOrder(otherSlideShows);
         }
+        #endregion
 
-
+        #region FixOrder
         private void FixOrder(IList<SlideShowImage> otherSlideShows)
         {
             foreach (var slideShow in otherSlideShows)
@@ -65,15 +72,18 @@ namespace Iris.ServiceLayer
                 _unitOfWork.Entry(slideShow).Property(slide => slide.Order).IsModified = true;
             }
         }
+        #endregion
 
-
+        #region DeleteSlide
         public void DeleteSlide(int slideId)
         {
             var entity = new SlideShowImage() { Id = slideId };
 
             _unitOfWork.Entry(entity).State = EntityState.Deleted;
         }
+        #endregion
 
+        #region EditSlide
         public void EditSlide(SlideShowImage slideShow, IList<SlideShowImage> otherSlideShows)
         {
             _slideShowImages.Attach(slideShow);
@@ -82,7 +92,9 @@ namespace Iris.ServiceLayer
 
             FixOrder(otherSlideShows);
         }
+        #endregion
 
+        #region GetSlideShowImages
         public async Task<IList<SlideShowViewModel>> GetSlideShowImages()
         {
             return await _slideShowImages
@@ -91,11 +103,14 @@ namespace Iris.ServiceLayer
                         .ProjectTo<SlideShowViewModel>()
                         .Cacheable().ToListAsync();
         }
+        #endregion
 
+        #region GetSlideShow
         public async Task<SlideShowViewModel> GetSlideShow(int slideShowId)
         {
             return await _slideShowImages.Where(slideShow => slideShow.Id == slideShowId)
                 .ProjectTo<SlideShowViewModel>().FirstOrDefaultAsync();
         }
+        #endregion
     }
 }

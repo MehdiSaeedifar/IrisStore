@@ -7,7 +7,7 @@ namespace Utilities.HtmlCleaner
 {
     public static class HtmlSanitizer
     {
-        #region Fields (4)
+        #region Fieldss (4)
 
         private static readonly Regex ChromeWhiteSpace = new Regex(@"style=""white-space\s*:\s*pre\s*;\s*""",
             RegexOptions.Singleline | RegexOptions.IgnoreCase | RegexOptions.Compiled);

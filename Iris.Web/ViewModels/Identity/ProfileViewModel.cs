@@ -2,8 +2,10 @@
 
 namespace Iris.Web.ViewModels.Identity
 {
+    #region ProfileViewmodel
     public class ProfileViewmodel
     {
+        #region Properties
         public int? Id { get; set; }
 
         [Required (ErrorMessage = "نام را وارد نمائید")]
@@ -22,6 +24,7 @@ namespace Iris.Web.ViewModels.Identity
         [Required(ErrorMessage = "آدرس را وارد نمائید")]
         [Display(Name = "آدرس کامل")]
         public string Address { get; set; }
-
+        #endregion
     }
+    #endregion
 }

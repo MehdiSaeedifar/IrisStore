@@ -14,15 +14,18 @@ using Microsoft.Owin.Security;
 
 namespace Iris.Web.Areas.User.Controllers
 {
+    #region HomeUserController
     [RouteArea("User", AreaPrefix = "User")]
     public partial class HomeController : Controller
     {
+        #region Feild
         private readonly IApplicationUserManager _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IApplicationSignInManager _signInManager;
         private readonly IAuthenticationManager _authenticationManager;
+        #endregion
 
-
+        #region Constructors
         public HomeController(IUnitOfWork unitOfWork, IApplicationUserManager userManager, IApplicationSignInManager applicationSignInManager,
             IAuthenticationManager authenticationManager)
         {
@@ -31,7 +34,9 @@ namespace Iris.Web.Areas.User.Controllers
             _signInManager = applicationSignInManager;
             _authenticationManager = authenticationManager;
         }
+        #endregion
 
+        #region Index
         [Route]
         public virtual ActionResult Index(ManageMessageId? message)
         {
@@ -42,10 +47,11 @@ namespace Iris.Web.Areas.User.Controllers
              : message == ManageMessageId.SetTwoFactorSuccess ? "احراز هویت دو مرحله ای بازنشانی شد."
              : message == ManageMessageId.Error ? "یک خطا رخ داده است."
              : "";
-
             return View();
         }
+        #endregion
 
+        #region UserProfile
         [Route("UserProfile")]
         [HttpGet]
         public virtual async Task<ActionResult> UserProfile()
@@ -60,7 +66,7 @@ namespace Iris.Web.Areas.User.Controllers
             }
             return View();
         }
-
+        
         [Route("UserProfile")]
         [HttpPost]
         public virtual async Task<ActionResult> UserProfile
@@ -91,8 +97,7 @@ namespace Iris.Web.Areas.User.Controllers
 
             return RedirectToAction("Index", new { Message = ManageMessageId.UserProfileSuccessfully });
         }
-
-
-
+        #endregion
     }
+    #endregion
 }

@@ -5,11 +5,14 @@ namespace Iris.DomainClasses
 {
     public class Post : BaseEntity
     {
+        #region Constractors
         public Post()
         {
             PostedDate = DateTime.Now;
         }
+        #endregion
 
+        #region Properties
         public string Title { get; set; }
         public string Body { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
@@ -23,6 +26,6 @@ namespace Iris.DomainClasses
         public string Image { get; set; }
         public int? CategoryId { get; set; }
         public virtual PostCategory Category { get; set; }
-
+        #endregion
     }
 }

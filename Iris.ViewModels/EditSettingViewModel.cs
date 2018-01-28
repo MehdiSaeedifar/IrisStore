@@ -3,9 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Iris.ViewModels
 {
+    #region EditSettingViewModel
     public class EditSettingViewModel
     {
-
+        #region Properties
         [DisplayName("آدرس سایت")]
         public string SiteUrl { get; set; }
 
@@ -35,6 +36,7 @@ namespace Iris.ViewModels
         [DisplayName("اطلاعات تماس")]
         [DataType(DataType.MultilineText)]
         public string ContactInfo { get; set; }
-
+        #endregion
     }
+    #endregion
 }

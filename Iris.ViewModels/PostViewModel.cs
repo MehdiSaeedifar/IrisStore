@@ -5,8 +5,10 @@ using Iris.DomainClasses;
 
 namespace Iris.ViewModels
 {
+    #region PostViewModel
     public class PostViewModel : IHaveCustomMappings
     {
+        #region Properties
         public int Id { get; set; }
         public string Title { get; set; }
         public string Body { get; set; }
@@ -19,7 +21,9 @@ namespace Iris.ViewModels
         public string CategoryName { get; set; }
         public string Image { get; set; }
         public string SlugUrl { get; set; }
+        #endregion
 
+        #region CreateMappings
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Post, PostViewModel>()
@@ -31,5 +35,7 @@ namespace Iris.ViewModels
              .ForMember(postModel => postModel.CategoryId, opt => opt.Ignore())
              .ForMember(postModel => postModel.CategoryName, opt => opt.Ignore());
         }
+        #endregion
     }
+    #endregion
 }

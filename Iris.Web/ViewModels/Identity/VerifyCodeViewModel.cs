@@ -2,8 +2,10 @@
 
 namespace Iris.Web.ViewModels.Identity
 {
+    #region VerifyCodeViewModel
     public class VerifyCodeViewModel
     {
+        #region Properties
         [Required]
         public string Provider { get; set; }
 
@@ -14,5 +16,7 @@ namespace Iris.Web.ViewModels.Identity
 
         [Display(Name = "Remember this browser?")]
         public bool RememberBrowser { get; set; }
+        #endregion
     }
+    #endregion
 }

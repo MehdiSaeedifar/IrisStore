@@ -9,20 +9,26 @@ using PagedList;
 
 namespace Iris.Web.Areas.Product.Controllers
 {
+    #region SearchProductController
     [RouteArea("Product", AreaPrefix = "product")]
     public partial class SearchProductController : Controller
     {
+        #region Feild
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
         private readonly IMappingEngine _mappingEngine;
+        #endregion
 
+        #region Constructors
         public SearchProductController(ICategoryService categoryService, IMappingEngine mappingEngine, IProductService productService)
         {
             _categoryService = categoryService;
             _productService = productService;
             _mappingEngine = mappingEngine;
         }
+        #endregion
 
+        #region SearchIndex
         [Route("Search")]
         public virtual async Task<ActionResult> Index()
         {
@@ -40,7 +46,9 @@ namespace Iris.Web.Areas.Product.Controllers
 
             return View(model);
         }
+        #endregion
 
+        #region GetProducts
         [Route("GetProducts")]
         [OutputCache(Location = OutputCacheLocation.None, NoStore = true)]
         public virtual async Task<ActionResult> GetProducts(SearchProductViewModel model)
@@ -52,5 +60,7 @@ namespace Iris.Web.Areas.Product.Controllers
             return PartialView(MVC.Product.SearchProduct.Views._GetProducts,
                                productsAsIPagedList);
         }
+        #endregion
     }
+    #endregion
 }

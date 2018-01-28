@@ -9,18 +9,24 @@ using Iris.Web.Helpers;
 
 namespace Iris.Web.Areas.Product.Controllers
 {
+    #region HomeProductController
     [RouteArea("Product", AreaPrefix = "product")]
     public partial class HomeController : Controller
     {
+        #region Fields
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductService _productService;
+        #endregion
 
+        #region Constructors
         public HomeController(IUnitOfWork unitOfWork, IProductService productService)
         {
             _unitOfWork = unitOfWork;
             _productService = productService;
         }
+        #endregion
 
+        #region Index
         [Route("{id:int?}/{slugUrl?}")]
         public virtual async Task<ActionResult> Index(int id)
         {
@@ -46,7 +52,9 @@ namespace Iris.Web.Areas.Product.Controllers
 
             return View(model);
         }
+        #endregion
 
+        #region SaveRatings
         [Route("SaveRatings")]
         [OutputCache(Location = OutputCacheLocation.None, NoStore = true)]
         public virtual async Task<ActionResult> SaveRatings(int id, double value)
@@ -62,6 +70,7 @@ namespace Iris.Web.Areas.Product.Controllers
 
             return Content("ok"); //اعلام موفقیت آمیز بودن ثبت اطلاعات
         }
-
+        #endregion
     }
+    #endregion
 }

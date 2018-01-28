@@ -8,9 +8,12 @@ namespace Iris.ServiceLayer
     public class ApplicationSignInManager :
         SignInManager<ApplicationUser, int>, IApplicationSignInManager
     {
+        #region Feilds
         private readonly ApplicationUserManager _userManager;
         private readonly IAuthenticationManager _authenticationManager;
+        #endregion
 
+        #region Constractors
         public ApplicationSignInManager(ApplicationUserManager userManager,
                                         IAuthenticationManager authenticationManager) :
             base(userManager, authenticationManager)
@@ -18,5 +21,6 @@ namespace Iris.ServiceLayer
             _userManager = userManager;
             _authenticationManager = authenticationManager;
         }
+        #endregion
     }
 }
