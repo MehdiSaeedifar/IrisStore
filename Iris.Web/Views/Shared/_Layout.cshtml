@@ -1,7 +1,7 @@
 ﻿@using Utilities
 
 <!DOCTYPE html>
-<html>
+<html lang="fa">
 <head>
     <title>@SeoHelpers.GeneratePageTitle(ViewBag.Title, ViewBag.SiteName)</title>
     <link rel="canonical" href="@(Request.Url?.AbsoluteUri)" />
@@ -9,6 +9,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="application-name" content="@ViewBag.SiteName" />
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#f7858d">
+    <meta name="msapplication-navbutton-color" content="#f7858d">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#f7858d">
 
     @if (!string.IsNullOrWhiteSpace(ViewBag.Keywords))
     {
@@ -27,42 +33,55 @@
         <meta name="author" content="@ViewBag.Author (@Request.Url)" />
     }
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    @Styles.Render("~/Content/bootstrap")
+
     @Styles.Render("~/Content/themes/base/jqueryUi")
     @Styles.Render("~/Content/css")
     @RenderSection("styles", required: false)
+
+    <!-- Bootstrap -->
+    @Styles.Render("~/Content/css/vendor/bootstrap.min.css")
+    <!-- Plugins -->
+    @Styles.Render("~/Content/css/vendor/owl.carousel.min.css")
+    @Styles.Render("~/Content/css/vendor/jquery.horizontalmenu.css")
+    <!-- Font Icon -->
+    @Styles.Render("~/Content/css/vendor/materialdesignicons.min.css")
+    <!-- Main CSS File -->
+    @Styles.Render("~/Content/css/main.css")
+
+    @*@Styles.Render("~/Content/bootstrap")*@
 </head>
 <body>
-
-    @Html.Partial(MVC.Home.Views._Header)
-    @{
-        Html.RenderAction(MVC.Home.ActionNames.MenuBar, MVC.Home.Name, new { area = "" });
-    }
-    <main class="container mainWrapper">
-        @RenderBody()
-    </main>
-    @{
-        Html.RenderAction(MVC.Home.ActionNames.Footer, MVC.Home.Name, new { area = "" });
-    }
-    <div id="authenticationModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div>
-                        <p>برای ثبت سفارش احتیاج است که وارد سیستم شوید.</p>
-                        <ul class="list-inline">
-                            <li><a href="@Url.Action("Login", "Account", new { isUser = true, area = "", returnUrl = Request.Url?.AbsolutePath })" class="btn btn-primary btn-block">ورود</a></li>
-                            <li><a class="btn btn-sm btn-success" href="@Url.Action("Register", "Account", new { area = "", returnUrl = Request.Url?.AbsolutePath })">ثبت نام</a></li>
-                        </ul>
+    <div class="wrapper">
+        @{
+            Html.RenderAction(MVC.Home.ActionNames.Header, MVC.Home.Name, new { area = "" });
+            //Html.RenderAction(MVC.Home.ActionNames.MenuBar, MVC.Home.Name, new { area = "" });
+        }
+        <main class="container mainWrapper">
+            @RenderBody()
+        </main>
+        @{
+            Html.RenderAction(MVC.Home.ActionNames.Footer, MVC.Home.Name, new { area = "" });
+        }
+        <div id="authenticationModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div>
+                            <p>برای ثبت سفارش احتیاج است که وارد سیستم شوید.</p>
+                            <ul class="list-inline">
+                                <li><a href="@Url.Action("Login", "Account", new { isUser = true, area = "", returnUrl = Request.Url?.AbsolutePath })" class="btn btn-primary btn-block">ورود</a></li>
+                                <li><a class="btn btn-sm btn-success" href="@Url.Action("Register", "Account", new { area = "", returnUrl = Request.Url?.AbsolutePath })">ثبت نام</a></li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
     @Scripts.Render("~/bundles/common")
     <script>
-        var autocompleteSource = "@Url.Action(MVC.Search.ActionNames.AutoCompleteSearch, MVC.Search.Name, new {area = ""})";
+    var autocompleteSource = "@Url.Action(MVC.Search.ActionNames.AutoCompleteSearch, MVC.Search.Name, new {area = ""})";
     </script>
     @Scripts.Render("~/bundles/layout")
     @RenderSection("scripts", required: false)

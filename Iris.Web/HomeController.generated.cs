@@ -74,6 +74,7 @@ namespace Iris.Web.Controllers
         {
             public readonly string Index = "Index";
             public readonly string MenuBar = "MenuBar";
+            public readonly string Header = "Header";
             public readonly string Footer = "Footer";
         }
 
@@ -82,6 +83,7 @@ namespace Iris.Web.Controllers
         {
             public const string Index = "Index";
             public const string MenuBar = "MenuBar";
+            public const string Header = "Header";
             public const string Footer = "Footer";
         }
 
@@ -134,6 +136,17 @@ namespace Iris.Web.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.MenuBar);
             MenuBarOverride(callInfo);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
+        partial void HeaderOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> Header()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Header);
+            HeaderOverride(callInfo);
             return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 

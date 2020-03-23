@@ -61,6 +61,14 @@ namespace Iris.Web.Controllers
             return PartialView(MVC.Home.Views._MenuBar, pageLinks);
         }
 
+        [Route("Header")]
+        public virtual async Task<ActionResult> Header()
+        {
+            var pageLinks = await _pageService.GetPageLinks();
+
+            return PartialView(MVC.Home.Views._Header, pageLinks);
+        }
+
         [Route("Footer")]
         public virtual async Task<ActionResult> Footer()
         {

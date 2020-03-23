@@ -134,6 +134,7 @@ namespace T4MVC
     {
         public readonly string Name = "User";
         public Iris.Web.Areas.User.Controllers.AdminController Admin = new Iris.Web.Areas.User.Controllers.T4MVC_AdminController();
+        public Iris.Web.Areas.User.Controllers.HomeController Home = new Iris.Web.Areas.User.Controllers.T4MVC_HomeController();
         public T4MVC.User.SharedController Shared = new T4MVC.User.SharedController();
     }
 }

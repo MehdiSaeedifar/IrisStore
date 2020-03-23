@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 274 203.64">
+    <g fill="none" fill-rule="evenodd">
+        <path fill="#00BFD6" fill-rule="nonzero" d="M168.6 157.43c-47.76 45.59-85.4 43.38-133.17-2.21-45.59-43.52-48-84-2.42-127.55 47.76-45.59 73.71-25 133.47 3.11 61.88 29.08 47.71 83.13 2.12 126.65z" opacity=".4"/>
+        <path fill="#FFF" fill-rule="nonzero" stroke="#000" stroke-linecap="round" stroke-linejoin="round" d="M108.21 155.99l52.88-30.96V64.4l-52.88-30.52"/>
+        <path fill="#CAC8C8" fill-rule="nonzero" stroke="#000" stroke-linecap="round" stroke-linejoin="round" d="M108.21 33.88L55.33 64.4v58.68a4.12 4.12 0 0 0 2.06 3.57L108.21 156"/>
+        <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" d="M159.71 65.17l-51.5 29.74-51.5-29.74M108.21 94.93v61.06M108.21 92.77v14.44"/>
+        <path fill="#77787B" fill-rule="nonzero" d="M133.11 108.28c2.45-1.41 4.41-.27 4.41 2.57v8.24a9.47 9.47 0 0 1-4.38 7.59l-8.08 4.67v-4l7.09-4.09A4.42 4.42 0 0 0 134 120v-6.24c0-1-.85-1.42-1.86-.83L125 117v-4.06l8.11-4.66z"/>
+        <path fill="#EF5662" fill-rule="nonzero" d="M148.73 99.26l-6.61 13.03 6.66 5.37-4.58 2.65-6.66-5.37 6.61-13.03z"/>
+        <path fill="#CAC8C8" fill-rule="nonzero" stroke="#000" stroke-linecap="round" stroke-linejoin="round" d="M50.53 61.21v13.47l57.68 33.07V81.89z"/>
+        <path fill="#FFF" fill-rule="nonzero" stroke="#000" stroke-linecap="round" stroke-linejoin="round" d="M165.89 61.21v13.47l-57.68 33.07V87.38l50.82-27.47z"/>
+        <path fill="#F2F2F2" fill-rule="nonzero" stroke="#000" stroke-linecap="round" stroke-linejoin="round" d="M165.89 60.86l-57.68 33.07-57.68-33.07L106.16 29a4.12 4.12 0 0 1 4.1 0l55.63 31.86z"/>
+        <path fill="#FFF" fill-rule="nonzero" stroke="#000" stroke-linecap="round" stroke-linejoin="round" d="M76.46 139.62l39.83 2.55a7.48 7.48 0 1 0 0-14.96h-.85a59.28 59.28 0 0 1-32.88-10 33.58 33.58 0 0 0-18.63-5.64h-16.4l.7 35.78 44 14.73a20.77 20.77 0 0 0 14.52-.5l61.31-25.35a7.22 7.22 0 0 0 3.79-9.71 7.22 7.22 0 0 0-9.24-3.67L122.54 139"/>
+        <rect width="14.08" height="44.56" x="34.14" y="107.02" fill="#F2F2F2" fill-rule="nonzero" stroke="#000" stroke-linecap="round" stroke-linejoin="round" rx="5.53"/>
+        <circle cx="41.45" cy="142.65" r="2.5" fill="#CCC" fill-rule="nonzero" stroke="#000"/>
+    </g>
+</svg>
