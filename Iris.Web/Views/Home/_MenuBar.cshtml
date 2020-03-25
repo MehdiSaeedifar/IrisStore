@@ -1,71 +1,92 @@
 ﻿@model IEnumerable<Iris.ViewModels.LinkViewModel>
-<nav id="menuNav" class="navbar navbar-default" data-spy="affix" data-offset-top="150">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <div class="navbar-header">
-                <a class="navbar-brand animated fadeInDown" style="-moz-animation-duration: 500ms; -o-animation-duration: 500ms; -webkit-animation-duration: 500ms; animation-duration: 500ms;" href="@Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name, new {area=""})">@ViewBag.SiteName</a>
-            </div>
-        </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="@Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name, new {area = ""})">صفحه اصلی <span class="sr-only">(current)</span></a>
+<!-- Start bottom-header -->
+<div class="bottom-header dt-sl mb-sm-bottom-header">
+    <div class="container main-container">
+        <!-- Start Main-Menu -->
+        <nav id="menuNav" class="main-menu dt-sl">
+            <ul class="list float-right hidden-sm">
+                <li class="list-item">
+                    <a class="nav-link" href="@Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name, new {area = ""})">صفحه اصلی <span class="sr-only">(current)</span></a>
                 </li>
-                <li>
-                    <a href="@Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new {area = MVC.Product.Name})#/page">کالا‌ها</a>
+                <li class="list-item">
+                    <a class="nav-link" href="@Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new {area = MVC.Product.Name})">کالا‌ها</a>
                 </li>
-                @if (!User.Identity.IsAuthenticated)
+                <!-- dropdown-menu -->
+                @if (Model.Count() > 0)
                 {
-                    <li>
-                        <a href="@Url.Action("Login", "Account", new { isUser = true, area = "", returnUrl = Request.Url?.AbsolutePath })">ورود</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Register", "Account", new { area = "", returnUrl = Request.Url?.AbsolutePath })">ثبت نام</a>
-                    </li>
-                }
-
-                @foreach (var pageLink in Model)
-                {
-                    <li><a href="@Url.Action(MVC.Post.Home.ActionNames.Index, MVC.Post.Home.Name, new { area = MVC.Post.Name, id = pageLink.Id, slugUrl = pageLink.SlugUrl })">@pageLink.Title</a></li>
-                }
-            </ul>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <ul class="nav navbar-nav navbar-right pull-left">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@User.Identity.Name <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            @{ 
-                                if (User.IsInRole("Admin"))
-                                {
-                                    <li>@Html.ActionLink("پیشخوان مدیریت", "Index", "Dashboard", routeValues: new { Area = "AdminPanel" }, htmlAttributes: null)</li>
-                                }
+                    <li class="list-item list-item-has-children menu-col-1">
+                        <a class="nav-link" href="#">صفحات</a>
+                        <ul class="sub-menu nav">
+                            @foreach (var pageLink in Model)
+                            {
+                                <li class="list-item"><a href="@Url.Action(MVC.Post.Home.ActionNames.Index, MVC.Post.Home.Name, new { area = MVC.Post.Name, id = pageLink.Id, slugUrl = pageLink.SlugUrl })">@pageLink.Title</a></li>
                             }
-                            <li role="separator" class="divider"></li>
-                            <li><a href="@Url.Action("Index", "Home", new { area = "User" })">حساب کاربری</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="@Url.Action("UserFactor","Home",new{area="ShoppingCart"})">سفارشات</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                @using (Html.BeginForm(MVC.Account.ActionNames.LogOff, MVC.Account.Name, new { area = "" }, FormMethod.Post, new { id = "logoutForm", style = "width:auto;padding:0;" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <a href="#" onclick="document.getElementById('logoutForm').submit()" style="display: block;padding: 3px 20px;">خروج</a>
-                                }
-                            </li>
                         </ul>
                     </li>
+                }
+            </ul>
+            <ul class="nav float-left">
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index", "Home", new { area = "ShoppingCart" })"
+                       @*data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"*@>
+                        <span class="label-dropdown">سبد خرید</span>
+                        <i class="mdi mdi-cart-outline"></i>
+                        <span class="count" id="shoppingCartIcon" data-count="0">0</span>
+                    </a>
+                </li>
+            </ul>
+            <!--Bgin Nuget BTN Menu-->
+            <button class="btn-menu">
+                <div class="align align__justify">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            <div class="side-menu">
+                <div class="logo-nav-res dt-sl text-center">
+                    <a href="#">
+                        <img src="../../Content/img/logo.png" alt="">
+                    </a>
+                </div>
+                <div class="search-box-side-menu dt-sl text-center mt-2 mb-3">
+                    
+                    @using (Html.BeginForm(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new { area = MVC.Product.Name }, FormMethod.Post, new { @class = "search", @Id="SearchFormMini" }))
+                    {
+                        <input id="searchInputmini" type="text" name="s" placeholder="جستجو کنید...">
+                        <i onclick="$('#SearchFormMini').submit();" class="mdi mdi-magnify"></i>
+                    }
+                </div>
+
+                <ul class="navbar-nav dt-sl">
+                    <li>
+                        <a class="nav-link" href="@Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name, new {area = ""})">صفحه اصلی <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li >
+                        <a class="nav-link" href="@Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new {area = MVC.Product.Name})#/page">کالا‌ها</a>
+                    </li>
+                    <!-- dropdown-menu -->
+                    @if (Model.Count() > 0)
+                    {
+                        <li class="sub-menu">
+                            <a class="nav-link" href="#">صفحات</a>
+                            <ul class="sub-menu">
+                                @foreach (var pageLink in Model)
+                                {
+                                    <li ><a href="@Url.Action(MVC.Post.Home.ActionNames.Index, MVC.Post.Home.Name, new { area = MVC.Post.Name, id = pageLink.Id, slugUrl = pageLink.SlugUrl })">@pageLink.Title</a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
                 </ul>
-            }
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+
+            </div>
+            <div class="overlay-side-menu">
+            </div>
+            <!--End Nuget BTN Menu-->
+        </nav>
+        <!-- End Main-Menu -->
+    </div>
+</div>
+<!-- End bottom-header -->

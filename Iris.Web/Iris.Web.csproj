@@ -647,6 +647,27 @@
     <Content Include="Content\img\theme\title-circles.png" />
     <Content Include="Content\video\download.mp4" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap-confirmation.js" />
+    <Content Include="Scripts\bootstrap-editable.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <Content Include="Scripts\jquery.magnific-popup.js" />
+    <Content Include="Scripts\jquery.noty.packaged.js" />
+    <Content Include="Scripts\jquery.number.js" />
+    <Content Include="Scripts\jquery.ui.slider-rtl.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\js\main.js" />
     <Content Include="Scripts\js\vendor\bootstrap-slider.min.js" />
     <Content Include="Scripts\js\vendor\bootstrap.min.js" />
@@ -754,10 +775,6 @@
     <Content Include="Scripts\Admin\Product\image-tab.js" />
     <Content Include="Scripts\Admin\Product\info-tab.js" />
     <Content Include="Scripts\Admin\Product\price-tab.js" />
-    <Content Include="Scripts\bootstrap-confirmation.js" />
-    <Content Include="Scripts\bootstrap-editable.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Product\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Product\Views\Home\Index.cshtml" />
     <Content Include="Areas\Product\Views\Admin\Index.cshtml" />
@@ -1249,7 +1266,6 @@
     <Content Include="Scripts\jQuery-File-Upload\server\gae-python\static\robots.txt" />
     <Content Include="Scripts\jQuery-File-Upload\test\index.html" />
     <Content Include="Scripts\jQuery-File-Upload\test\test.js" />
-    <Content Include="Scripts\jquery.noty.packaged.js" />
     <Content Include="Scripts\layout.js" />
     <Content Include="Scripts\PersianDatePicker.js" />
     <Content Include="Scripts\product-page.js" />
@@ -1390,7 +1406,6 @@
     <Content Include="fonts\IRANYekan\woff\iranyekanwebbold%28fanum%29.woff" />
     <Content Include="fonts\IRANYekan\woff\iranyekanweblight%28fanum%29.woff" />
     <None Include="Properties\PublishProfiles\IrisStore.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ckeditor\styles.js" />
     <Content Include="Scripts\RoxyFileManager\css\images\animated-overlay.gif" />
     <Content Include="Scripts\RoxyFileManager\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -1667,13 +1682,6 @@
     <Content Include="Scripts\RoxyFileManager\Uploads\LICENSE.txt" />
     <Content Include="Scripts\RoxyFileManager\Uploads\roxy-fileman-logo.gif" />
     <Content Include="Scripts\highcharts.src.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="Scripts\jquery-2.1.4.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.map" />
     <Content Include="Scripts\jQuery-File-Upload\.gitignore" />
     <Content Include="Scripts\jQuery-File-Upload\.jshintrc" />
     <Content Include="Scripts\jQuery-File-Upload\bower.json" />
@@ -1688,16 +1696,6 @@
     <Content Include="Scripts\jQuery-File-Upload\server\php\files\.htaccess" />
     <Content Include="Scripts\jQuery-File-Upload\server\php\index.php" />
     <Content Include="Scripts\jQuery-File-Upload\server\php\UploadHandler.php" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery-ui-1.11.4.js" />
-    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
-    <Content Include="Scripts\jquery.magnific-popup.js" />
-    <Content Include="Scripts\jquery.number.js" />
-    <Content Include="Scripts\jquery.ui.slider-rtl.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\path.js" />
     <Content Include="Scripts\path.min.js" />
@@ -1709,6 +1707,8 @@
     <Content Include="Scripts\starRating-plugin.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\jquery-2.1.4.min.map" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>

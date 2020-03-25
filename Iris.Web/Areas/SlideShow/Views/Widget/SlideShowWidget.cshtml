@@ -2,6 +2,7 @@
 @{
     var isFirst = true;
 }
+@*
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -47,4 +48,131 @@
     <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
         <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
+</div>
+*@
+<div class="row mb-5">
+
+    <!--Begin Mini Slider-->
+    <aside class="sidebar col-xl-2 col-lg-3 col-12 order-2 order-lg-1 pl-0 hidden-md">
+        <!-- Start banner -->
+        <div class="sidebar-inner dt-sl">
+            <div class="sidebar-banner">
+                <a href="#" target="_top">
+                    <img src="~/Content/img/banner/sidebar-banner-1.gif" width="100%" height="329" alt="">
+                </a>
+            </div>
+        </div>
+        <!-- End banner -->
+    </aside>
+    <!--End Mini Slider-->
+
+    <!--Begin Big Slider-->
+    <div class="col-xl-10 col-lg-9 col-12 order-1 order-lg-2">
+        <!-- Start main-slider -->
+        <section id="main-slider" class="main-slider carousel slide carousel-fade card hidden-sm"
+                 data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                @for (int i = 0; i < Model.Count(); i++)
+                {
+                    <li data-target="#main-slider" data-slide-to="@i" class="@if (i == 0){<text>active</text>}"></li>
+                    isFirst = false;
+                }
+            </ol>
+            @{ isFirst = true; }
+            <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            
+            @foreach (var item in Model)
+            {
+                <div class="carousel-item @if (isFirst){<text>active</text>}">
+
+                    @*if (!string.IsNullOrEmpty(item.Link))
+                    {
+                        @:<a class="main-slider-slide" href="@item.Link">
+                    }
+                    @*<img src=".@item.Image" alt="@item.Title">*@
+                    <a class="main-slider-slide" style="background-image: url(.@item.Image.Replace(" ","%20"))">
+                    </a>
+                    @*if (!string.IsNullOrEmpty(item.Title) || !string.IsNullOrEmpty(item.Description))
+                    {
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <h1 class="animated lightSpeedIn">@item.Title</h1>
+                                <span class="lead animated fadeInDown">@item.Description</span>
+                            </div>
+                        </div>
+                    }
+                    if (!string.IsNullOrEmpty(item.Link))
+                    {
+                    @:</a>
+                    }*@
+                </div>
+                isFirst = false;
+            }
+        </div>
+            <a class="carousel-control-prev" href="#main-slider" role="button" data-slide="prev">
+                <i class="mdi mdi-chevron-right"></i>
+            </a>
+            <a class="carousel-control-next" href="#main-slider" data-slide="next">
+                <i class="mdi mdi-chevron-left"></i>
+            </a>
+        </section>
+        <section id="main-slider-res"
+                    class="main-slider carousel slide carousel-fade card d-none show-sm" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#main-slider-res" data-slide-to="0" class="active"></li>
+                <li data-target="#main-slider-res" data-slide-to="1"></li>
+                <li data-target="#main-slider-res" data-slide-to="2"></li>
+                <li data-target="#main-slider-res" data-slide-to="3"></li>
+                <li data-target="#main-slider-res" data-slide-to="4"></li>
+                <li data-target="#main-slider-res" data-slide-to="5"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <a class="main-slider-slide" href="#">
+                        <img src="../../Content/img/main-slider/slider-responsive/1.jpg" alt=""
+                                class="img-fluid">
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a class="main-slider-slide" href="#">
+                        <img src="../../Content/img/main-slider/slider-responsive/2.jpg" alt=""
+                                class="img-fluid">
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a class="main-slider-slide" href="#">
+                        <img src="../../Content/img/main-slider/slider-responsive/3.jpg" alt=""
+                                class="img-fluid">
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a class="main-slider-slide" href="#">
+                        <img src="../../Content/img/main-slider/slider-responsive/4.jpg" alt=""
+                                class="img-fluid">
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a class="main-slider-slide" href="#">
+                        <img src="../../Content/img/main-slider/slider-responsive/5.jpg" alt=""
+                                class="img-fluid">
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a class="main-slider-slide" href="#">
+                        <img src="../../Content/img/main-slider/slider-responsive/6.jpg" alt=""
+                                class="img-fluid">
+                    </a>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#main-slider-res" role="button" data-slide="prev">
+                <i class="mdi mdi-chevron-right"></i>
+            </a>
+            <a class="carousel-control-next" href="#main-slider-res" data-slide="next">
+                <i class="mdi mdi-chevron-left"></i>
+            </a>
+        </section>
+        <!-- End main-slider -->
+    </div>
 </div>

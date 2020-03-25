@@ -49,7 +49,7 @@ $.widget("custom.catcomplete", $.ui.autocomplete, {
     }
 });
 
-$(function () {
+$(function ($) {
 
     toastr.options = {
         "positionClass": "toast-top-center",
@@ -59,6 +59,16 @@ $(function () {
     }
 
     $("#searchInput").catcomplete({
+        delay: 300,
+        source: autocompleteSource,
+        minLength: 2,
+        select: function (event, ui) {
+            window.location = ui.item.url;
+        },
+        position: { my: "right top", at: "right bottom", collision: "none" }
+    });
+
+    $("#searchInputmini").catcomplete({
         delay: 300,
         source: autocompleteSource,
         minLength: 2,
@@ -85,7 +95,7 @@ $(function () {
         $('#shoppingCartIcon').attr('data-count', 0);
     }
 
-
+    $('#shoppingCartIcon').text($('#shoppingCartIcon').attr('data-count'));
 
     $('#btnAddToShoppingCart').on('click', function (event) {
         event.preventDefault();
@@ -111,7 +121,7 @@ $(function () {
         toastr.info('کالای مورد نظر با موفقیت به سبد خرید اضافه شد');
         shoppingCartsStorage.push(productId);
         localStorage.setItem('shopping_carts', JSON.stringify(shoppingCartsStorage));
-
+        $('#shoppingCartIcon').text($('#shoppingCartIcon').attr('data-count'));
     });
 
 

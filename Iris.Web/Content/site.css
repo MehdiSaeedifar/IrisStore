@@ -1,5 +1,5 @@
 ﻿
-@font-face {
+/*@font-face {
     font-family: 'Vazir';
     src: url('../fonts/Vazir-persian-digits-overwrite.eot');
     src: url('../fonts/Vazir-persian-digits-overwrite.eot?#iefix') format('embedded-opentype'), url('../fonts/Vazir-persian-digits-overwrite.woff') format('woff'), url('../fonts/Vazir-persian-digits-overwrite.ttf') format('truetype');
@@ -13,6 +13,59 @@ body {
     font-size: 16px;
     line-height: 1.5;
     background: url(../Content/shattered.png);
+
+}*/
+
+@font-face {
+    font-family: iranyekan;
+    font-style: normal;
+    font-weight: bold;
+    src: url('../../fonts/IRANYekan/eot/iranyekanwebbold(fanum).eot');
+    src: url('../../fonts/IRANYekan/eot/iranyekanwebbold(fanum).eot?#iefix') format('embedded-opentype'),
+    /* IE6-8 */
+    url('../../fonts/IRANYekan/woff2/iranyekanwebbold(fanum).woff2') format('woff2'),
+    /* FF39+,Chrome36+, Opera24+*/
+    url('../../fonts/IRANYekan/woff/iranyekanwebbold(fanum).woff') format('woff'),
+    /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../../fonts/IRANYekan/ttf/iranyekanwebbold(fanum).ttf') format('truetype');
+}
+
+@font-face {
+    font-family: iranyekan;
+    font-style: normal;
+    font-weight: 300;
+    src: url('../../fonts/IRANYekan/eot/iranyekanweblight(fanum).eot');
+    src: url('../../fonts/IRANYekan/eot/iranyekanweblight(fanum).eot?#iefix') format('embedded-opentype'),
+    /* IE6-8 */
+    url('../../fonts/IRANYekan/woff2/iranyekanweblight(fanum).woff2') format('woff2'),
+    /* FF39+,Chrome36+, Opera24+*/
+    url('../../fonts/IRANYekan/woff/iranyekanweblight(fanum).woff') format('woff'),
+    /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../../fonts/IRANYekan/ttf/iranyekanweblight(fanum).ttf') format('truetype');
+}
+
+@font-face {
+    font-family: iranyekan;
+    font-style: normal;
+    font-weight: normal;
+    src: url('../../fonts/IRANYekan/eot/iranyekanwebregular(fanum).eot');
+    src: url('../../fonts/IRANYekan/eot/iranyekanwebregular(fanum).eot?#iefix') format('embedded-opentype'),
+    /* IE6-8 */
+    url('../../fonts/IRANYekan/woff2/iranyekanwebregular(fanum).woff2') format('woff2'),
+    /* FF39+,Chrome36+, Opera24+*/
+    url('../../fonts/IRANYekan/woff/iranyekanwebregular(fanum).woff') format('woff'),
+    /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../../fonts/IRANYekan/ttf/iranyekanwebregular(fanum).ttf') format('truetype');
+}
+
+/* IRANYekan Font */
+
+body {
+    font-family: iranyekan !important;
+    font-size: 14px !important;
+    text-align: right !important;
+    background-color: #f3fefb !important;
+    overflow-x: hidden !important;
 }
 
 a {

@@ -57,6 +57,7 @@
                                     productIds.splice(i, 1);
                                     localStorage.setItem('shopping_carts', JSON.stringify(productIds));
                                     $('#shoppingCartIcon').attr('data-count', +($('#shoppingCartIcon').attr('data-count')) - 1);
+                                    $('#shoppingCartIcon').text($('#shoppingCartIcon').attr('data-count'));
                                 }
                             }
 

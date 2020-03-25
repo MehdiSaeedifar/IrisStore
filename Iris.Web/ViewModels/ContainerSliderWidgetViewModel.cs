@@ -9,6 +9,7 @@ namespace Iris.Web.ViewModels
         public string CarouselId { get; set; }
         public string LinkText { get; set; }
         public string Link { get; set; }
+        public int ShowCount { get; set; } = 0;
         public IList<ProductWidgetViewModel> Products { get; set; }
     }
 }

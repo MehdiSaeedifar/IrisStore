@@ -1,5 +1,5 @@
 ﻿@model Iris.Web.ViewModels.ProductSliderWidgetViewModel
-<section class="container-widget">
+@*<section class="container-widget">
     <div class="panel panel-default" style="margin-bottom: 0;">
         <header class="panel-heading" style="padding-bottom: 0; padding-top: 0;height: 35px;">
             <span class="panel-title">
@@ -38,5 +38,43 @@
                 @Model.LinkText
             </a>
         </footer>
+    </div>
+</section>
+*@
+
+@*
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
+*@
+
+<section class="slider-section dt-sl mb-5">
+    <div class="row mb-3">
+
+        <!--More BTN-->
+        <div class="col-12">
+            <div class="section-title text-sm-title title-wide no-after-title-wide">
+                <h2>@Model.Title</h2>
+                <a href="@Model.Link">@Model.LinkText</a>
+            </div>
+        </div>
+
+        <!-- Start Product-Slider -->
+        <div class="col-12 px-res-0">
+            <div class="product-carousel carousel-md owl-carousel owl-theme">
+                <!--Begin Product-->
+                @for (int i = 0; i < Model.Products.Count(); i += Model.ShowCount)
+                {
+                    
+                    foreach (var product in Model.Products.Skip(i).Take(Model.ShowCount))
+                    {
+                        <div class="item">
+                            @Html.Partial(MVC.Product.Widget.Views._ProductWidget, product)
+                        </div>
+                    }
+                }
+                    <!--End Product-->
+                </div>
+        </div>
+        <!-- End Product-Slider -->
+
     </div>
 </section>

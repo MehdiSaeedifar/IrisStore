@@ -2,88 +2,38 @@
 @using Utilities
 @using Iris.DomainClasses
 @model Iris.ViewModels.ProductWidgetViewModel
-<div class="product-widget">
-    <a href="@Url.Action(MVC.Product.Home.ActionNames.Index, MVC.Product.Home.Name, new { area = MVC.Product.Name, id=Model.Id, slugUrl = Model.SlugUrl})" data-toggle="tooltip" data-placement="top" title="@Model.Name">
-        <figure>
-            <img src="@Model.Image" alt="@Model.Name">
-        </figure>
-        <span class="product-name">
-            @Model.Name
-        </span>
-        <div class="price">
-            <span>
+<div>
+    <div class="product-card">
+        <div class="product-head">
+            <!--Rate Star-->
+            <div class="rating-stars">
+                <i class="mdi mdi-star active"></i>
+                <i class="mdi mdi-star active"></i>
+                <i class="mdi mdi-star active"></i>
+                <i class="mdi mdi-star active"></i>
+                <i class="mdi mdi-star active"></i>
+            </div>
+            <div class="discount">
+                <!--Offer-->
                 @if (Model.Discount > 0)
                 {
-                    foreach (var discount in Model.Discounts)
-                    {
-                        var discountEndDate = discount.EndDate;
-
-                        if (Model.ProductStatus == ProductStatus.Available)
-                        {
-                            if (Model.Discount > 0 && discount.EndDate >= DateTime.Now)
-                            {
-                                <strong style="color:red">
-                                    <strong class="price-number">@Html.DisplayFor(m => m.CalcDiscount)</strong> تومان
-                                </strong>
-                                <br />
-                                <strike style="color:gray">
-                                    <strong class="price-number">@Html.DisplayFor(m => m.Price)</strong> تومان
-                                </strike>
-                                <br />
-                                <small style="color:red">
-                                    <span class="discount-number">@Html.DisplayFor(m => m.Discount)</span> % تخفیف
-                                </small>
-                                break;
-                            }
-
-                            else if (discount.EndDate < DateTime.Now && Model.Discount <= 0)
-                            {
-                                if (Model.Price > 0)
-                                {
-                                    <span class="product-price-name">
-                                        قـیمـت:
-                                    </span>
-                                    <span class="product-price">@Html.DisplayFor(model => model.Price)</span>
-                                    <span class="product-price-currency">تومان</span>
-                                }
-                                break;
-                            }
-                        }
-
-                        else if (Model.ProductStatus == ProductStatus.NotAvailable)
-                        {
-                            <label class="label label-danger product-status">نا موجود</label>
-                            break;
-                        }
-
-                        else if (Model.ProductStatus == ProductStatus.ComingSoon)
-                        {
-                            <label class="label label-danger product-status">نا موجود</label>
-                            break;
-                        }
-                    }
+                    <span>@Html.DisplayFor(m => m.Discount)%</span>
                 }
-
-                else
-                {
-                    switch (Model.ProductStatus)
-                    {
-                        case ProductStatus.Available:
-                            <span class="product-price-name">
-                                قـیمـت:
-                            </span>
-                            <span class="product-price">@Html.DisplayFor(model => model.Price)</span>
-                            <span class="product-price-currency">تومان</span>
-                            break;
-                        case ProductStatus.NotAvailable:
-                            <label class="label label-danger" style="font-size: 26px;">نا‌موجود</label>
-                            break;
-                        case ProductStatus.ComingSoon:
-                            <label class="label label-info" style="font-size: 26px;">به زودی</label>
-                            break;
-                    }
-                }
-            </span>
+            </div>
         </div>
-    </a>
+        <!--Product Image-->
+        <a class="product-thumb" style="height:152px;" href="@Url.Action(MVC.Product.Home.ActionNames.Index, MVC.Product.Home.Name, new { area = MVC.Product.Name, id=Model.Id, slugUrl = Model.SlugUrl})">
+            <img src="@Model.Image" alt="@Model.Name" style="max-width:151.766px;max-height:151.766px; overflow:hidden" >
+        </a>
+        <div class="product-card-body">
+            <!--Product Name-->
+            <h5 class="product-title">
+                <a href="@Url.Action(MVC.Product.Home.ActionNames.Index, MVC.Product.Home.Name, new { area = MVC.Product.Name, id=Model.Id, slugUrl = Model.SlugUrl})">@Model.Name</a>
+            </h5>
+            <!--Product Category-->
+            <a class="product-meta" href="@Url.Action(MVC.Product.Home.ActionNames.Index, MVC.Product.Home.Name, new { area = MVC.Product.Name, id=Model.Id, slugUrl = Model.SlugUrl})">@Model.Category</a>
+            <!--Product Price-->
+            <span class="product-price">@Html.DisplayFor(model => model.Price) تومان</span>
+        </div>
+    </div>
 </div>

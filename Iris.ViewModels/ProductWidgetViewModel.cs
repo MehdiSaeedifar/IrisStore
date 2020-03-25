@@ -50,7 +50,15 @@ namespace Iris.ViewModels
                     opt =>
                         opt.MapFrom(
                             product =>
-                                product.Images.OrderBy(image => image.Order).Select(image => image.ThumbnailUrl).FirstOrDefault()));
+                                product.Images.OrderBy(image => image.Order).Select(image => image.ThumbnailUrl).FirstOrDefault()))
+
+                .ForMember(productModel => productModel.Category,
+                    opt =>
+                        opt.MapFrom(
+                            product =>
+                                product.Categories.OrderByDescending(Category => Category.Name)
+                                .Select(Category => Category.Name)
+                                .FirstOrDefault()));
         }
 
         #region Calculator Properties
