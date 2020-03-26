@@ -195,6 +195,13 @@ namespace Iris.ServiceLayer
                            .ProjectTo<ProductWidgetViewModel>(parameters: null, mappingEngine: _mappingEngine)
                               .Cacheable().ToListAsync();
         }
+        
+        public async Task<IList<ProductWidgetViewModel>> GetSuggestionProducts(int count)
+        {
+            return await _products
+                           .ProjectTo<ProductWidgetViewModel>(parameters: null, mappingEngine: _mappingEngine)
+                              .Cacheable().ToListAsync();
+        }
 
         public async Task<IList<ProductWidgetViewModel>> GetPopularProducts(int count)
         {

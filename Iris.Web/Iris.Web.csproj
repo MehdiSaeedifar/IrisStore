@@ -647,6 +647,7 @@
     <Content Include="Content\img\theme\title-circles.png" />
     <Content Include="Content\video\download.mp4" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="Areas\Product\Views\Widget\_HorizontalProductWidget.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap-confirmation.js" />
     <Content Include="Scripts\bootstrap-editable.js" />
@@ -1750,6 +1751,8 @@
     <Content Include="Views\Account\UserLogin.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ChangeUserPassword.cshtml" />
+    <Content Include="Views\Widgets\Listwidget.cshtml" />
+    <Content Include="Views\Widgets\SuggestionSliderWidger.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\AdminPanel\Models\" />

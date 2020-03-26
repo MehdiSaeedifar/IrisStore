@@ -22,6 +22,7 @@ namespace Iris.ServiceLayer.Contracts
         void DeleteProduct(int productId);
         Task<IList<ProductWidgetViewModel>> GetNewestProducts(int count);
         Task<IList<ProductWidgetViewModel>> GetMostViewedProducts(int count);
+        Task<IList<ProductWidgetViewModel>> GetSuggestionProducts(int count);
         Task<IList<ProductWidgetViewModel>> GetPopularProducts(int count);
         Task<IList<decimal>> GetAvailableProductPrices();
         Task<IList<decimal>> GetAvailableProductDiscounts();

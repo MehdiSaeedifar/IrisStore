@@ -39,12 +39,16 @@ namespace T4MVC
             public class _ViewNamesClass
             {
                 public readonly string ContainerSliderWidget = "ContainerSliderWidget";
+                public readonly string Listwidget = "Listwidget";
                 public readonly string SimilarPostsWidget = "SimilarPostsWidget";
                 public readonly string SimilarProductsWidget = "SimilarProductsWidget";
+                public readonly string SuggestionSliderWidger = "SuggestionSliderWidger";
             }
             public readonly string ContainerSliderWidget = "~/Views/Widgets/ContainerSliderWidget.cshtml";
+            public readonly string Listwidget = "~/Views/Widgets/Listwidget.cshtml";
             public readonly string SimilarPostsWidget = "~/Views/Widgets/SimilarPostsWidget.cshtml";
             public readonly string SimilarProductsWidget = "~/Views/Widgets/SimilarProductsWidget.cshtml";
+            public readonly string SuggestionSliderWidger = "~/Views/Widgets/SuggestionSliderWidger.cshtml";
         }
     }
 

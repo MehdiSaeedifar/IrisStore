@@ -7,6 +7,7 @@ namespace Iris.ViewModels
         public IList<ProductWidgetViewModel> NewestProducts { get; set; }
         public IList<ProductWidgetViewModel> MostViewedProducts { get; set; }
         public IList<ProductWidgetViewModel> PopularProducts { get; set; }
+        public IList<ProductWidgetViewModel> SuggestionProducts { get; set; }
         public IList<SidebarCategoryViewModel> Categories { get; set; }
         public IList<SlideShowViewModel> SlideShows { get; set; }
         public IList<LinkViewModel> PageLinks { get; set; }

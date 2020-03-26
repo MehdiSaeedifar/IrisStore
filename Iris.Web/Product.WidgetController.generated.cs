@@ -38,8 +38,10 @@ namespace T4MVC.Product
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _HorizontalProductWidget = "_HorizontalProductWidget";
                 public readonly string _ProductWidget = "_ProductWidget";
             }
+            public readonly string _HorizontalProductWidget = "~/Areas/Product/Views/Widget/_HorizontalProductWidget.cshtml";
             public readonly string _ProductWidget = "~/Areas/Product/Views/Widget/_ProductWidget.cshtml";
         }
     }

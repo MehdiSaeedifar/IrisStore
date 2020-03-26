@@ -37,6 +37,7 @@ namespace Iris.Web.Controllers
 
             var model = new HomePageViewModel
             {
+                SuggestionProducts = await _productService.GetSuggestionProducts(9),
                 NewestProducts = await _productService.GetNewestProducts(8),
                 MostViewedProducts = await _productService.GetMostViewedProducts(8),
                 PopularProducts = await _productService.GetPopularProducts(8),
