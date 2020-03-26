@@ -117,7 +117,7 @@
                 CarouselId = "SuggestionProductsCarousel",
                 LinkText = "مشاهده همه",
                 Link = $"{Url.Action(MVC.Product.SearchProduct.ActionNames.Index, MVC.Product.SearchProduct.Name, new { area = MVC.Product.Name })}#/page/all/empty/1/ViewNumber/desc",
-                Products = Model.SuggestionProducts ,
+                Products = Model.SuggestionProducts.OrderBy(q=>q.Discount).Reverse().Take(5).ToList() ,
                 ShowCount = 1
             });
             }
