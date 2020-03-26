@@ -1,0 +1,32 @@
+﻿@model Iris.Web.ViewModels.ProductSliderWidgetViewModel
+
+<section class="slider-section dt-sl dt-sn mb-5">
+    <!--More BTN-->
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="section-title text-sm-title title-wide no-after-title-wide">
+                <h2>@Model.Title</h2>
+                <a href="@Model.Link">@Model.LinkText</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Start Product-Slider -->
+    <div class="row mb-3">
+        <!--Begin Product-->
+        @for (int i = 0; i < 3; i ++)
+        {
+            <div class="col-lg-4 col-md-6 col-sm-12 col-12 pt-4">
+                <div class="row">
+                    @foreach (var product in Model.Products.Skip(i*(Model.Products.Count/Model.ShowCount)).Take((Model.Products.Count/Model.ShowCount)))
+                    {
+                        <div class="col-12">
+                            @Html.Partial(MVC.Product.Widget.Views._HorizontalProductWidget, product)
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        <!--End Product-->
+    </div>
+</section>

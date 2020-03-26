@@ -1,0 +1,37 @@
+﻿@using Utilities
+@using Iris.DomainClasses
+@model Iris.ViewModels.ProductWidgetViewModel
+<div class="card-horizontal-product">
+    <div class="card-horizontal-product-thumb">
+        <a href="@Url.Action(MVC.Product.Home.ActionNames.Index, MVC.Product.Home.Name, new { area = MVC.Product.Name, id=Model.Id, slugUrl = Model.SlugUrl})">
+            <img src="@Model.Image" alt="@Model.Name">
+        </a>
+    </div>
+    <div class="card-horizontal-product-content">
+        <div class="card-horizontal-product-title">
+            <a href="@Url.Action(MVC.Product.Home.ActionNames.Index, MVC.Product.Home.Name, new { area = MVC.Product.Name, id=Model.Id, slugUrl = Model.SlugUrl})">
+                <h3>@Model.Name</h3>
+            </a>
+        </div>
+        <div class="rating-stars">
+            <i class="mdi mdi-star active"></i>
+            <i class="mdi mdi-star active"></i>
+            <i class="mdi mdi-star active"></i>
+            <i class="mdi mdi-star active"></i>
+            <i class="mdi mdi-star"></i>
+        </div>
+        <div class="discount">
+            <!--Offer-->
+            @if (Model.Discount > 0)
+            {
+                <span>@Html.DisplayFor(m => m.Discount)%</span>
+            }
+        </div>
+        <div class="card-horizontal-product-price">
+            <span>@Html.DisplayFor(model => model.Price) تومان</span>
+        </div>
+        <div class="card-horizontal-product-buttons">
+            <a href="@Url.Action(MVC.Product.Home.ActionNames.Index, MVC.Product.Home.Name, new { area = MVC.Product.Name, id=Model.Id, slugUrl = Model.SlugUrl})" class="btn btn-outline-info">جزئیات محصول</a>
+        </div>
+    </div>
+</div>

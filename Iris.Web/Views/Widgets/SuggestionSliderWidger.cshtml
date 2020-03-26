@@ -1,0 +1,24 @@
+﻿@model Iris.Web.ViewModels.ProductSliderWidgetViewModel
+
+<div class="widget-suggestion dt-sn pt-3 mt-3">
+    <div class="widget-suggestion-title">
+        <img src="~/Content/img/theme/suggestion-title.png" alt="">
+    </div>
+    <div id="progressBar">
+        <div class="slide-progress"></div>
+    </div>
+    <div id="suggestion-slider" class="owl-carousel owl-theme">
+        <!--Begin Product-->
+        @for (int i = 0; i < Model.Products.Count(); i += Model.ShowCount)
+        {
+
+            foreach (var product in Model.Products.Skip(i).Take(Model.ShowCount))
+            {
+                <div class="item">
+                    @Html.Partial(MVC.Product.Widget.Views._ProductWidget, product)
+                </div>
+            }
+        }
+        <!--End Product-->
+    </div>
+</div>
