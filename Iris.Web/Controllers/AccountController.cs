@@ -34,9 +34,14 @@ namespace Iris.Web.Controllers
         public virtual ActionResult Login(string returnUrl, bool isUser = false)
         {
             ViewBag.ReturnUrl = returnUrl;
-            if (!isUser)
-                return View();
 
+            if (!isUser || true)
+            {
+                //Private Page Login
+                return View();
+            }
+
+            //Internall Page Login
             return View("UserLogin");
         }
 
@@ -174,7 +179,6 @@ namespace Iris.Web.Controllers
             return redirectToLocal(returnUrl);
         }
 
-        //
         // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
         public virtual ActionResult ResetPasswordConfirmation()
