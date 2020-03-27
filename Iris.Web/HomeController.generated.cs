@@ -76,6 +76,7 @@ namespace Iris.Web.Controllers
             public readonly string MenuBar = "MenuBar";
             public readonly string Header = "Header";
             public readonly string Footer = "Footer";
+            public readonly string FooterMini = "FooterMini";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -85,6 +86,7 @@ namespace Iris.Web.Controllers
             public const string MenuBar = "MenuBar";
             public const string Header = "Header";
             public const string Footer = "Footer";
+            public const string FooterMini = "FooterMini";
         }
 
 
@@ -99,12 +101,14 @@ namespace Iris.Web.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _Footer = "_Footer";
+                public readonly string _FooterMini = "_FooterMini";
                 public readonly string _Header = "_Header";
                 public readonly string _MenuBar = "_MenuBar";
                 public readonly string _PostCategorySidebar = "_PostCategorySidebar";
                 public readonly string Index = "Index";
             }
             public readonly string _Footer = "~/Views/Home/_Footer.cshtml";
+            public readonly string _FooterMini = "~/Views/Home/_FooterMini.cshtml";
             public readonly string _Header = "~/Views/Home/_Header.cshtml";
             public readonly string _MenuBar = "~/Views/Home/_MenuBar.cshtml";
             public readonly string _PostCategorySidebar = "~/Views/Home/_PostCategorySidebar.cshtml";
@@ -158,6 +162,17 @@ namespace Iris.Web.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Footer);
             FooterOverride(callInfo);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+        }
+
+        [NonAction]
+        partial void FooterMiniOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> FooterMini()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.FooterMini);
+            FooterMiniOverride(callInfo);
             return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 

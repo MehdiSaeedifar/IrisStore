@@ -1,21 +1,95 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/bootstrap")
-    @Styles.Render("~/Content/themes/base/jqueryUi")
-    @Styles.Render("~/Content/AdminLTE/admintheme")
-    @Styles.Render("~/Content/admin")
-    <link href="~/Content/AdminLTE/AdminLTE.css" rel="stylesheet" />
-    @RenderSection("styles", false)
+﻿@*
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>@ViewBag.Title</title>
+        @Styles.Render("~/Content/bootstrap")
+        @Styles.Render("~/Content/themes/base/jqueryUi")
+        @Styles.Render("~/Content/AdminLTE/admintheme")
+        @Styles.Render("~/Content/admin")
+        <link href="~/Content/AdminLTE/AdminLTE.css" rel="stylesheet" />
+        @RenderSection("styles", false)
 
+    </head>
+    <body class="hold-transition ">
+        @RenderBody()
+        <input id="message" type="hidden" value="@TempData["message"]" />
+        @Scripts.Render("~/bundles/common")
+        @Scripts.Render("~/bundles/adminlayout")
+    </body>
+    </html>
+*@
+
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#f7858d">
+    <meta name="msapplication-navbutton-color" content="#f7858d">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#f7858d">
+    <title>Login Page</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="~/Content/css/vendor/bootstrap.min.css">
+    <!-- Plugins -->
+    <link rel="stylesheet" href="~/Content/css/vendor/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/css/vendor/jquery.horizontalmenu.css">
+    <link rel="stylesheet" href="~/Content/css/vendor/nouislider.min.css">
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="~/Content/css/vendor/materialdesignicons.min.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="~/Content/css/main.css">
 </head>
-<body class="hold-transition ">
-    @RenderBody()
-    <input id="message" type="hidden" value="@TempData["message"]" />
-    @Scripts.Render("~/bundles/common")
-    @Scripts.Render("~/bundles/adminlayout")
+
+<body>
+
+    <div class="wrapper">
+        <!-- Start mini-header -->
+        <header class="mini-header pt-4 pb-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="logo-area-mini-header">
+                            <a href="@Url.Action(MVC.Home.ActionNames.Index, MVC.Home.Name, new {area = ""})">
+                                <img src="~/Content/img/logo.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- End mini-header -->
+        <!-- Start main-content -->
+        <main class="main-content dt-sl mt-4 mb-3">
+            @RenderBody()
+        </main>
+        <!-- End main-content -->
+        <!-- Start mini-footer -->
+        @{
+            Html.RenderAction(MVC.Home.ActionNames.FooterMini, MVC.Home.Name, new { area = "" });
+        }
+        <!-- End mini-footer -->
+
+    </div>
+
+
+    <!-- Core JS Files -->
+    <script src="~/Scripts/js/vendor/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/js/vendor/popper.min.js"></script>
+    <script src="~/Scripts/js/vendor/bootstrap.min.js"></script>
+    <!-- Plugins -->
+    <script src="~/Scripts/js/vendor/owl.carousel.min.js"></script>
+    <script src="~/Scripts/js/vendor/jquery.horizontalmenu.js"></script>
+    <script src="~/Scripts/js/vendor/nouislider.min.js"></script>
+    <script src="~/Scripts/js/vendor/wNumb.js"></script>
+    <script src="~/Scripts/js/vendor/ResizeSensor.min.js"></script>
+    <script src="~/Scripts/js/vendor/theia-sticky-sidebar.min.js"></script>
+    <!-- Main JS File -->
+    <script src="~/Scripts/js/main.js"></script>
 </body>
+
 </html>

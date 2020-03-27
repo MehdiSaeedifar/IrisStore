@@ -3,6 +3,7 @@
     ViewBag.Title = "ورود به سیستم";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
+@*
 @section styles{
     <style>
         body {
@@ -35,7 +36,7 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                @*@Html.CheckBoxFor(m => m.RememberMe) مرا به یاد داشته باش*@
+                                @* @Html.CheckBoxFor(m => m.RememberMe) مرا به یاد داشته باش@
                             </label>
                         </div>
                     </div>
@@ -46,8 +47,72 @@
                     <!-- /.col -->
                 </div>
             }
-            @*<a href="@Url.Action(MVC.Account.ActionNames.ForgotPassword,MVC.Account.Name,new {area=""})">کلمه عبور را فراموش کردم</a><br>*@
+            @*<a href="@Url.Action(MVC.Account.ActionNames.ForgotPassword,MVC.Account.Name,new {area=""})">کلمه عبور را فراموش کردم</a><br>* @
         </div>
         <!-- /.login-box-body -->
     </div>
+</div>
+*@
+
+<div class="container main-container">
+
+    <div class="row">
+        <div class="col-xl-4 col-lg-5 col-md-7 col-12 mx-auto">
+            <div class="form-ui dt-sl dt-sn pt-4">
+
+                <div class="section-title title-wide mb-1 no-after-title-wide">
+                    <h2 class="font-weight-bold">ورود به @ViewBag.SiteName</h2>
+                </div>
+
+                @using (Html.BeginForm(MVC.Account.ActionNames.Login, MVC.Account.Name, new { area = "", ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                {
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-row-title">
+                        <h3>ایمیل</h3>
+                    </div>
+                    <div class="form-row with-icon">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "input-ui pr-2", placeholder = "ایمیل خود را وارد نمایید", type = "email" })
+                        <i class="mdi mdi-account-circle-outline"></i>
+                    </div>
+
+                    <div class="form-row-title">
+                        <h3>رمز عبور</h3>
+                    </div>
+                    
+                    <div class="form-row with-icon">
+                        @Html.PasswordFor(m => m.Password, new { @class = "input-ui pr-2", placeholder = "رمز عبور خود را وارد نمایید" })
+                        <i class="mdi mdi-lock-open-variant-outline" ></i>
+                    </div>
+                    
+                    <div class="form-row mt-2">
+                        <div class="custom-control custom-checkbox float-right mt-2">
+                            <a href="@Url.Action(MVC.Account.ActionNames.ForgotPassword,MVC.Account.Name,new {area=""})" >کلمه عبور را فراموش کردم</a>
+                        </div>
+                    </div>
+
+                    <div class="form-row mt-2">
+                        <div class="custom-control custom-checkbox float-right mt-2">
+                            @Html.CheckBoxFor(m => m.RememberMe, new { @class = "custom-control-input" })
+                            @Html.LabelFor(model => model.RememberMe, "مرا به خاطر بسپار", new { @class = "custom-control-label" })
+                        </div>
+                    </div>
+
+                    <div class="form-row mt-3">
+                        <button class="btn-primary-cm btn-with-icon mx-auto w-100" type="submit">
+                            <i class="mdi mdi-login-variant"></i>
+                            ورود به @ViewBag.SiteName
+                        </button>
+                    </div>
+
+                    <div class="form-footer text-right mt-3">
+                        <span class="d-block font-weight-bold">کاربر جدید هستید؟</span>
+                        <a href="@Url.Action("Register", "Account", new { area = "", returnUrl = Request.Url?.AbsolutePath })" class="d-inline-block mr-3 mt-2">ثبت نام در @ViewBag.SiteName</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
 </div>

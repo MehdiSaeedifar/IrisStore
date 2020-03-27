@@ -1753,6 +1753,7 @@
     <Content Include="Views\Account\ChangeUserPassword.cshtml" />
     <Content Include="Views\Widgets\Listwidget.cshtml" />
     <Content Include="Views\Widgets\SuggestionSliderWidger.cshtml" />
+    <Content Include="Views\Home\_FooterMini.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\AdminPanel\Models\" />

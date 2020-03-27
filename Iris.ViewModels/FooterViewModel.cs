@@ -6,5 +6,6 @@ namespace Iris.ViewModels
     {
         public IList<LinkViewModel> PageLinks { get; set; }
         public IList<LinkViewModel> PostCategoryLinks { get; set; }
+        public string FooterDiscription { get; set; }
     }
 }

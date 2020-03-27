@@ -82,5 +82,17 @@ namespace Iris.Web.Controllers
             return PartialView(MVC.Home.Views._Footer, links);
         }
 
+        [Route("FooterMini")]
+        public virtual async Task<ActionResult> FooterMini()
+        {
+            var links = new FooterViewModel
+            {
+                PageLinks = await _pageService.GetPageLinks(),
+                PostCategoryLinks = await _postCategoryService.GetCategoryLinks()
+            };
+
+            return PartialView(MVC.Home.Views._FooterMini, links);
+        }
+
     }
 }
