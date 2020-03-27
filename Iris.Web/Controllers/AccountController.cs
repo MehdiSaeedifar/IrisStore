@@ -46,6 +46,8 @@ namespace Iris.Web.Controllers
         [ValidateAntiForgeryToken]
         public virtual async Task<ActionResult> Login(LoginViewModel model, string returnUrl, bool isUser = false)
         {
+            ViewBag.returnUrl = returnUrl;
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -68,7 +70,7 @@ namespace Iris.Web.Controllers
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
                 default:
-
+                    
                     ModelState.AddModelError("", "نام کاربری یا کلمه عبور اشتباه است");
                     if (!isUser)
                         return View(model);
